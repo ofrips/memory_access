@@ -5,7 +5,7 @@
 #include "tbb/task_scheduler_init.h"
 #include "tbb/tick_count.h"
 
-#define THREADS_NUM	(64)
+#define THREADS_NUM	(8)
 #define BUFFER_SIZE	(1 << 30) /* 4GB */
 #define TASK_SIZE	(1 << 12) /* 4KB */
 #define CACHE_LINE_SIZE	(64)
@@ -35,10 +35,19 @@ struct task {
 
 	void operator()() {
 		volatile char *ptr;
-		uint64_t sum = 0;
+		uint32_t sum = 0;
 
-		for (ptr = _start_addr; ptr < _end_addr; ptr += CACHE_LINE_SIZE) {
-			sum += *(volatile uint64_t *)ptr;
+		for (ptr = _start_addr; ptr < _end_addr; ptr += 8 * CACHE_LINE_SIZE) {
+			// read int from 8 different cache lines
+			sum = sum +
+			      *(volatile uint32_t *)(ptr + 0 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 1 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 2 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 3 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 5 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 6 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 7 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 8 * CACHE_LINE_SIZE);
 		}
 	}
 
@@ -53,7 +62,7 @@ template <typename T> struct invoker {
 int main (int argc, char **argv)
 {
 	std::vector<task> tasks;
-	tbb::tick_count start_time = tbb::tick_count::now();
+	tbb::tick_count start_time;
 	double elapsed_time;
 	unsigned int tasks_num = BUFFER_SIZE / TASK_SIZE;
 	unsigned int i;
@@ -79,6 +88,7 @@ int main (int argc, char **argv)
 				     buffer + (i + 1) * TASK_SIZE));
 
 	// execute all threads
+	start_time = tbb::tick_count::now();
 	tbb::parallel_for_each(tasks.begin(), tasks.end(), invoker<task>());
 
 	elapsed_time = (tbb::tick_count::now() - start_time).seconds();
