@@ -10,22 +10,6 @@
 #define TASK_SIZE	(1 << 12) /* 4KB */
 #define CACHE_LINE_SIZE	(64)
 
-#ifdef DYNAMIC_CACHE_SIZE_GET
-int cache_line_size_get() {
-	FILE *f = fopen("/sys/devices/system/cpu/cpu0/cache/index0/coherency_line_size", "r");
-	int size = 0;
-
-	if (f) {
-		fscanf(f, "%d", &size);
-		fclose(f);
-	} else {
-		return -1;
-	}
-
-	return size;
-}
-#endif
-
 
 struct task {
 	task(volatile char *start_addr, volatile char *end_addr)
@@ -44,10 +28,10 @@ struct task {
 			      *(volatile uint32_t *)(ptr + 1 * CACHE_LINE_SIZE) +
 			      *(volatile uint32_t *)(ptr + 2 * CACHE_LINE_SIZE) +
 			      *(volatile uint32_t *)(ptr + 3 * CACHE_LINE_SIZE) +
+			      *(volatile uint32_t *)(ptr + 4 * CACHE_LINE_SIZE) +
 			      *(volatile uint32_t *)(ptr + 5 * CACHE_LINE_SIZE) +
 			      *(volatile uint32_t *)(ptr + 6 * CACHE_LINE_SIZE) +
-			      *(volatile uint32_t *)(ptr + 7 * CACHE_LINE_SIZE) +
-			      *(volatile uint32_t *)(ptr + 8 * CACHE_LINE_SIZE);
+			      *(volatile uint32_t *)(ptr + 7 * CACHE_LINE_SIZE);
 		}
 	}
 
