@@ -12,6 +12,11 @@
 #define TASK_SIZE	(1 << 12) /* 4KB */
 #define CACHE_LINE_SIZE	(64)
 
+using std::endl;
+using std::cout;
+
+uint32_t cpus_num;
+
 struct task {
 	task(volatile char *start_addr, volatile char *end_addr)
 	: _start_addr(start_addr),
@@ -56,17 +61,19 @@ int main(int argc, char **argv)
 	volatile char *buffer;
 	struct cmd_params params;
 
+	cpus_num = sysconf(_SC_NPROCESSORS_ONLN);
+
 	// parse cmd parameters
 	parse_cmd(argc, argv, &params);
 
 	// init
 	srand((unsigned)time(&time_sec));
-	tbb::task_scheduler_init init(THREADS_NUM);
+	tbb::task_scheduler_init init(params.threads_num);
 
 	// first allocate huge buffer and fill it with random values
 	buffer = (char *)aligned_alloc(CACHE_LINE_SIZE, BUFFER_SIZE);
 	if (!buffer) {
-		std::cerr << "Failure in allocating huge buffer, aborting" << std::endl;
+		cout << "Failure in allocating huge buffer, aborting" << endl;
 		return -1;
 	}
 	for (i = 0; i < BUFFER_SIZE; i += sizeof(int))
@@ -82,7 +89,7 @@ int main(int argc, char **argv)
 	tbb::parallel_for_each(tasks.begin(), tasks.end(), invoker<task>());
 
 	elapsed_time = (tbb::tick_count::now() - start_time).seconds();
-	std::cout << "Elapsed time: " << elapsed_time << std::endl;
+	cout << "Elapsed time: " << elapsed_time << endl;
 
 	return 0;
 }

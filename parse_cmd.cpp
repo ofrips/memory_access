@@ -6,6 +6,9 @@
 
 #define ACCESS_TYPE_NAME_MAX_LEN	(32)
 
+using std::endl;
+using std::cout;
+
 static const char *memory_access_type_strings[MEMORY_ACCESS_TYPE_NUM] = {
 		[MEMORY_ACCESS_TYPE_SEQUENTIAL] =		"sequential",
 		[MEMORY_ACCESS_TYPE_RANDOM] =			"random",
@@ -15,27 +18,22 @@ static const char *memory_access_type_strings[MEMORY_ACCESS_TYPE_NUM] = {
 
 static void print_usage(char *program_name)
 {
-	std::cout << "Usage: " << program_name <<
-			" --threads_num=<threads_num>" <<
-			" --access_num=<access_num>" <<
-			" --access_type=<access_type>" <<
-			std::endl;
+	cout << "Usage: " << program_name <<
+		" --threads_num=<threads_num>" <<
+		" --access_num=<access_num>" <<
+		" --access_type=<sequential/random/random_sqewed/moving_random_sqewed>" <<
+		endl;
 }
 
-static void print_usage_error_and_exit(const char *error_message)
-{
-	std::cout << "Error: " << error_message << std::endl;
-	exit(-1);
-}
+static struct option long_options[] = {
+	{"threads_num",	required_argument, 0, 'a'},
+	{"access_num",	required_argument, 0, 'b'},
+	{"access_type",	required_argument, 0, 'c'},
+};
 
 void parse_cmd(int argc, char **argv, struct cmd_params *params)
 {
-	static struct option long_options[] = {
-			{"threads_num",	required_argument, 0, 'a'},
-			{"access_num",	required_argument, 0, 'b'},
-			{"access_type",	required_argument, 0, 'c'},
-	};
-
+	extern uint32_t cpus_num;
 	int long_index;
 	int opt;
 	int i;
@@ -43,13 +41,16 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	while ((opt = getopt_long(argc, argv, "a:b:c:", long_options, &long_index)) != -1) {
 		switch (opt) {
 		case 'a':
-			params->threads_num = std::atoi(optarg);
-//			if (__builtin_popcount(params->threads_num) != 1)
-//				print_usage_error_and_exit("threads num must be power of 2!");
+			params->threads_num = atoi(optarg);
+			if (params->threads_num > cpus_num || params->threads_num == 0) {
+				cout << "Error: invalid threads num [" << params->threads_num <<
+					"] must be between 0-" << cpus_num << endl;
+				exit(-1);
+			}
 
 			break;
 		case 'b':
-			params->access_num = std::atoi(optarg);
+			params->access_num = atoi(optarg);
 
 			break;
 		case 'c':
@@ -63,7 +64,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 			}
 
 			if (i == MEMORY_ACCESS_TYPE_NUM)
-				print_usage_error_and_exit("invalid access type!");
+				cout << "Error: invalid access type!" << endl;
 
 			break;
 		default:
