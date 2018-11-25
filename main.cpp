@@ -1,6 +1,8 @@
 #include <iostream>
+#include <string.h>
 #include <vector>
 
+#include "parse_cmd.h"
 #include "tbb/parallel_for_each.h"
 #include "tbb/task_scheduler_init.h"
 #include "tbb/tick_count.h"
@@ -9,7 +11,6 @@
 #define BUFFER_SIZE	(1 << 30) /* 4GB */
 #define TASK_SIZE	(1 << 12) /* 4KB */
 #define CACHE_LINE_SIZE	(64)
-
 
 struct task {
 	task(volatile char *start_addr, volatile char *end_addr)
@@ -43,7 +44,8 @@ template <typename T> struct invoker {
 	void operator()(T& it) const {it();}
 };
 
-int main (int argc, char **argv)
+
+int main(int argc, char **argv)
 {
 	std::vector<task> tasks;
 	tbb::tick_count start_time;
@@ -52,6 +54,10 @@ int main (int argc, char **argv)
 	unsigned int i;
 	time_t time_sec;
 	volatile char *buffer;
+	struct cmd_params params;
+
+	// parse cmd parameters
+	parse_cmd(argc, argv, &params);
 
 	// init
 	srand((unsigned)time(&time_sec));
