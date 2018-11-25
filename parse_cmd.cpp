@@ -6,8 +6,8 @@
 
 #define ACCESS_TYPE_NAME_MAX_LEN	(32)
 
-using std::endl;
 using std::cout;
+using std::endl;
 
 static const char *memory_access_type_strings[MEMORY_ACCESS_TYPE_NUM] = {
 		[MEMORY_ACCESS_TYPE_SEQUENTIAL] =		"sequential",

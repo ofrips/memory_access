@@ -12,8 +12,8 @@
 #define TASK_SIZE	(1 << 12) /* 4KB */
 #define CACHE_LINE_SIZE	(64)
 
-using std::endl;
 using std::cout;
+using std::endl;
 
 uint32_t cpus_num;
 
@@ -49,7 +49,6 @@ template <typename T> struct invoker {
 	void operator()(T& it) const {it();}
 };
 
-
 int main(int argc, char **argv)
 {
 	std::vector<task> tasks;
@@ -65,6 +64,8 @@ int main(int argc, char **argv)
 
 	// parse cmd parameters
 	parse_cmd(argc, argv, &params);
+
+	return 0;
 
 	// init
 	srand((unsigned)time(&time_sec));
