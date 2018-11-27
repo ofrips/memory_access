@@ -5,6 +5,7 @@
 #include "parse_cmd.h"
 
 #define ACCESS_TYPE_NAME_MAX_LEN	(32)
+#define SET_ARGS_MASK(args_mask)	((args_mask) |= (1 << (opt - 'a')))
 
 using std::cout;
 using std::endl;
@@ -37,6 +38,13 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	int long_index;
 	int opt;
 	int i;
+	uint32_t args_mask = 0;
+	const uint32_t expected_args_num = 3;
+
+	if (argc != expected_args_num + 1) {
+		cout << "Error: invalid number of arguments!" << endl;
+		goto parse_err;
+	}
 
 	while ((opt = getopt_long(argc, argv, "a:b:c:", long_options, &long_index)) != -1) {
 		switch (opt) {
@@ -48,9 +56,13 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 				exit(-1);
 			}
 
+			SET_ARGS_MASK(args_mask);
+
 			break;
 		case 'b':
 			params->access_num = atoi(optarg);
+
+			SET_ARGS_MASK(args_mask);
 
 			break;
 		case 'c':
@@ -66,12 +78,22 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 			if (i == MEMORY_ACCESS_TYPE_NUM)
 				cout << "Error: invalid access type!" << endl;
 
+			SET_ARGS_MASK(args_mask);
+
 			break;
 		default:
-			print_usage(argv[0]);
-			exit(-1);
+			goto parse_err;
 		}
 	}
+
+	if (args_mask != ((1 << expected_args_num) - 1))
+		goto parse_err;
+
+	return;
+
+parse_err:
+	print_usage(argv[0]);
+	exit(-1);
 }
 
 
