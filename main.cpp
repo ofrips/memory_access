@@ -17,13 +17,17 @@ using std::endl;
 uint32_t cpus_num;
 
 struct task {
-	task(uint32_t core_id, volatile char *start_addr, volatile char *end_addr)
+	task(uint32_t core_id, uint32_t access_num)
 	: _core_id(core_id),
-	  _start_addr(start_addr),
-	  _end_addr(end_addr)
+	  _access_num(access_num)
 	{}
 
 	void operator()() {
+		volatile char *ptr;
+		char *buffer;
+		uint64_t sum = 0;
+		uint32_t buffer_size;
+		uint32_t i;
 		int err;
 
 		// pin thread to a specific core
@@ -34,33 +38,44 @@ struct task {
 		if (err) {
 			cout << "Error in pinning thread to core id " << _core_id <<
 				" aborting..." << endl;
-			exit(1);
+			exit(-1);
 		}
 
-		volatile char *ptr;
-		uint32_t sum = 0;
-		int i;
+		// allocate and initialize buffer
+		// since each access is to a different cache line, buffer size
+		// should be access_num * CACHE_LINE_SIZE
+		buffer_size = _access_num * CACHE_LINE_SIZE;
+		buffer = (char *)aligned_alloc(CACHE_LINE_SIZE, buffer_size);
+		if (!buffer) {
+			cout << "Failure in allocating huge buffer, aborting" << endl;
+			exit(-1);
+		}
+		for (i = 0; i < buffer_size; i += sizeof(int))
+			*((int *)(buffer + i)) = rand();
 
-		for (i = 0; i < 2048; ++i) {
-
-			for (ptr = _start_addr; ptr < _end_addr; ptr += 8 * CACHE_LINE_SIZE) {
-				// read int from 8 different cache lines
+		// access the memory
+		for (i = 0; i < 1; ++i) {
+			for (ptr = buffer;
+			     ptr < buffer + buffer_size - 8 * CACHE_LINE_SIZE + 1;
+			     ptr += 8 * CACHE_LINE_SIZE) {
+				// read uint64_t from 8 different cache lines
 				sum = sum +
-				      *(volatile uint32_t *)(ptr + 0 * CACHE_LINE_SIZE) +
-				      *(volatile uint32_t *)(ptr + 1 * CACHE_LINE_SIZE) +
-				      *(volatile uint32_t *)(ptr + 2 * CACHE_LINE_SIZE) +
-				      *(volatile uint32_t *)(ptr + 3 * CACHE_LINE_SIZE) +
-				      *(volatile uint32_t *)(ptr + 4 * CACHE_LINE_SIZE) +
-				      *(volatile uint32_t *)(ptr + 5 * CACHE_LINE_SIZE) +
-				      *(volatile uint32_t *)(ptr + 6 * CACHE_LINE_SIZE) +
-				      *(volatile uint32_t *)(ptr + 7 * CACHE_LINE_SIZE);
+				      *(volatile uint64_t *)(ptr + 0 * CACHE_LINE_SIZE) +
+				      *(volatile uint64_t *)(ptr + 1 * CACHE_LINE_SIZE) +
+				      *(volatile uint64_t *)(ptr + 2 * CACHE_LINE_SIZE) +
+				      *(volatile uint64_t *)(ptr + 3 * CACHE_LINE_SIZE) +
+				      *(volatile uint64_t *)(ptr + 4 * CACHE_LINE_SIZE) +
+				      *(volatile uint64_t *)(ptr + 5 * CACHE_LINE_SIZE) +
+				      *(volatile uint64_t *)(ptr + 6 * CACHE_LINE_SIZE) +
+				      *(volatile uint64_t *)(ptr + 7 * CACHE_LINE_SIZE);
 			}
 		}
+
+		free(buffer);
 	}
 
 	uint32_t _core_id;
-	volatile char *_start_addr;
-	volatile char *_end_addr;
+	uint32_t _access_num;
 };
 
 template <typename T> struct invoker {
@@ -75,10 +90,8 @@ int main(int argc, char **argv)
 	time_t time_sec;
 	double elapsed_time;
 	uint32_t i;
-	char *buffer;
 
 	cpus_num = sysconf(_SC_NPROCESSORS_ONLN);
-	uint32_t task_size = BUFFER_SIZE / cpus_num; // TODO - delete it
 
 	// parse cmd parameters
 	parse_cmd(argc, argv, &params);
@@ -87,18 +100,9 @@ int main(int argc, char **argv)
 	srand((unsigned)time(&time_sec));
 	tbb::task_scheduler_init init(params.threads_num);
 
-	// first allocate huge buffer and fill it with random values
-	buffer = (char *)aligned_alloc(CACHE_LINE_SIZE, BUFFER_SIZE);
-	if (!buffer) {
-		cout << "Failure in allocating huge buffer, aborting" << endl;
-		return -1;
-	}
-	for (i = 0; i < BUFFER_SIZE; i += sizeof(int))
-		*((int *)(buffer + i)) = rand();
-
 	// generate tasks, single task for each thread
 	for (i = 0; i < cpus_num; ++i)
-		tasks.push_back(task(i, buffer + i * task_size, buffer + (i + 1) * task_size));
+		tasks.push_back(task(i, params.access_num));
 
 	// execute all threads
 	start_time = tbb::tick_count::now();
@@ -106,9 +110,7 @@ int main(int argc, char **argv)
 
 	elapsed_time = (tbb::tick_count::now() - start_time).seconds();
 
-	free(buffer);
 	cout << "Elapsed time: " << elapsed_time << endl;
-
 
 	return 0;
 }
