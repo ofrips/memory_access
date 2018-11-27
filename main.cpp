@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "parse_cmd.h"
-#include "tbb/enumerable_thread_specific.h"
 #include "tbb/parallel_for_each.h"
 #include "tbb/task_scheduler_init.h"
 #include "tbb/tick_count.h"
