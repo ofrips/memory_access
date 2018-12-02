@@ -22,7 +22,7 @@ static void print_usage(char *program_name)
 	cout << "Usage: " << program_name << endl <<
 		"  --threads-num=<threads_num>" << endl <<
 		"  --buffer_size=<buffer_size_per_thread_in_MB>" << endl <<
-		"  --access-num=<access_num_in_thousands>" << endl <<
+		"  --access-num=<access_num_in_millions>" << endl <<
 		"  --access-type=<sequential/random/random_sqewed/moving_random_sqewed>" <<
 		endl;
 }
@@ -40,7 +40,9 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	const uint32_t expected_args_num = 4;
 	uint32_t args_mask = 0;
 	double buffer_pretty_size;
+	double access_pretty_num;
 	std::string buffer_pretty_size_units;
+	std::string access_pretty_num_units;
 	int long_index;
 	int opt;
 	int i;
@@ -76,8 +78,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 
 			break;
 		case 'c':
-			params->access_num = 1024 * atoi(optarg);
-			params->access_num = atoi(optarg);
+			params->access_num = 1024 * 1024 * atoi(optarg);
 			if (params->access_num == 0) {
 				cout << "Error: invalid access num [" <<
 					params->access_num <<
@@ -120,11 +121,20 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 		buffer_pretty_size = (double)params->thread_buffer_size / (1 << 20);
 	}
 
+	if (params->access_num >> 30) {
+		access_pretty_num_units = "Giga";
+		access_pretty_num = (double)params->access_num / (1 << 30);
+	} else if (params->access_num >> 20) {
+		access_pretty_num_units = "Mega";
+		access_pretty_num = (double)params->access_num / (1 << 20);
+	}
+
 
 	cout << "############################################" << endl <<
 		"# Running Memory Micro Benchmark" << endl <<
 		"# Number of threads: " << params->threads_num << endl <<
-		"# Number of memory access per thread: " << params->access_num << endl <<
+		"# Number of memory access per thread: " << access_pretty_num << " " <<
+		access_pretty_num_units << endl <<
 		"# Buffer size per thread: " << buffer_pretty_size << buffer_pretty_size_units <<
 		endl <<
 		"# Memory access pattern: " << memory_access_type_strings[params->access_type]

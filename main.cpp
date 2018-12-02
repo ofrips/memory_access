@@ -3,7 +3,10 @@
 #include <string.h>
 #include <vector>
 
+#include "main.h"
 #include "parse_cmd.h"
+#include "tbb/blocked_range.h"
+#include "tbb/enumerable_thread_specific.h"
 #include "tbb/parallel_for_each.h"
 #include "tbb/task_scheduler_init.h"
 #include "tbb/tick_count.h"
@@ -16,51 +19,85 @@
 using std::cout;
 using std::endl;
 
+// global variables
 uint32_t cpus_num;
+typedef tbb::enumerable_thread_specific<struct thread_local_vars> thread_vars;
+thread_vars local_thread_vars((uint32_t)-1, (uint32_t)-1);
 
-struct task {
-	task(uint32_t core_id, uint32_t thread_buffer_size, uint32_t access_num)
-	: _core_id(core_id),
-	  _thread_buffer_size(thread_buffer_size),
-	  _access_num(access_num)
-	{
-		_access_num_per_buffer = _thread_buffer_size / CACHE_LINE_SIZE;
+// buffer allocation and initialization task
+struct init_buffer_task {
+	uint32_t core_id;
+	uint32_t thread_buffer_size;
+
+	init_buffer_task(uint32_t _core_id, uint32_t _thread_buffer_size)
+	: core_id(_core_id),
+	  thread_buffer_size(_thread_buffer_size)
+	{ }
+
+	void operator()() {
+		int err;
+		thread_vars::reference my_vars = local_thread_vars.local();
+
+		my_vars.core_id = core_id;
+
+		// pin thread to a specific core
+		cpu_set_t cpus;
+		CPU_ZERO(&cpus);
+		CPU_SET(core_id, &cpus);
+		err = sched_setaffinity(0, sizeof(cpu_set_t), &cpus);
+		if (err) {
+			cout << "Error in pinning thread to core id " << core_id <<
+				" aborting..." << endl;
+			exit(-1);
+		}
+
+		// allocate and initialize buffer, add 2 * 2KB pad size from each side
+		my_vars.buffer_size = thread_buffer_size + 2 * PAD_SIZE;
+		my_vars.buffer = aligned_alloc(CACHE_LINE_SIZE, my_vars.buffer_size);
+		if (!my_vars.buffer) {
+			cout << "Failure in allocating huge buffer, aborting" << endl;
+			exit(-1);
+		}
+
+		memset(my_vars.buffer, 0xCC, my_vars.buffer_size);
 	}
+};
+
+// buffer free task
+struct free_buffer_task {
+	free_buffer_task() { }
+
+	void operator()() {
+		thread_vars::reference my_vars = local_thread_vars.local();
+
+		free(my_vars.buffer);
+	}
+};
+
+// sequential memory access task
+struct sequential_access_task {
+	uint32_t access_num;
+
+	sequential_access_task(uint32_t _access_num)
+	: access_num(_access_num)
+	{ }
 
 	void operator()() {
 		volatile char *ptr;
 		volatile char *base_ptr;
 		char *buffer;
 		uint64_t sum = 0;
-		uint32_t buffer_size;
+		uint32_t access_num_per_buffer;
 		uint32_t i;
-		int err;
+		thread_vars::reference my_vars = local_thread_vars.local();
 
-		// pin thread to a specific core
-		cpu_set_t cpus;
-		CPU_ZERO(&cpus);
-		CPU_SET(_core_id, &cpus);
-		err = sched_setaffinity(0, sizeof(cpu_set_t), &cpus);
-		if (err) {
-			cout << "Error in pinning thread to core id " << _core_id <<
-				" aborting..." << endl;
-			exit(-1);
-		}
-
-		// allocate and initialize buffer, add 2 * 2KB pad size from each side
-		buffer_size = _thread_buffer_size + 2 * PAD_SIZE;
-		buffer = (char *)aligned_alloc(CACHE_LINE_SIZE, buffer_size);
-		if (!buffer) {
-			cout << "Failure in allocating huge buffer, aborting" << endl;
-			exit(-1);
-		}
-		for (i = 0; i < buffer_size; i += sizeof(int))
-			memset(buffer + i, 0xCCCCCCCC, sizeof(int));
+		buffer = (char *)(my_vars.buffer);
+		access_num_per_buffer = (my_vars.buffer_size - 2 * PAD_SIZE) / CACHE_LINE_SIZE;
 
 		// access the memory
 		base_ptr = buffer + PAD_SIZE;
-		for (i = 0; i < _access_num; i += 8) {
-			ptr = base_ptr + (i % _access_num_per_buffer) * CACHE_LINE_SIZE;
+		for (i = 0; i < access_num; i += 8) {
+			ptr = base_ptr + (i % access_num_per_buffer) * CACHE_LINE_SIZE;
 
 			// read uint64_t from 8 consecutive cache lines
 			sum = sum +
@@ -73,14 +110,7 @@ struct task {
 			      *(volatile uint64_t *)(ptr + 6 * CACHE_LINE_SIZE) +
 			      *(volatile uint64_t *)(ptr + 7 * CACHE_LINE_SIZE);
 		}
-
-		free(buffer);
 	}
-
-	uint32_t _core_id;
-	uint32_t _thread_buffer_size;
-	uint32_t _access_num;
-	uint32_t _access_num_per_buffer;
 };
 
 template <typename T> struct invoker {
@@ -90,29 +120,43 @@ template <typename T> struct invoker {
 int main(int argc, char **argv)
 {
 	struct cmd_params params;
-	std::vector<task> tasks;
+	std::vector<init_buffer_task> init_tasks;
+	std::vector<sequential_access_task> access_tasks;
+	std::vector<free_buffer_task> free_tasks;
 	tbb::tick_count start_time;
 	double elapsed_time;
 	uint32_t i;
 
-	cpus_num = sysconf(_SC_NPROCESSORS_ONLN);
-
 	// parse cmd parameters
+	cpus_num = sysconf(_SC_NPROCESSORS_ONLN);
 	parse_cmd(argc, argv, &params);
 
 	// init
 	tbb::task_scheduler_init init(params.threads_num);
 
+	// generate and execute buffer initialization tasks
+	for (i = 0; i < params.threads_num; ++i)
+		init_tasks.push_back(init_buffer_task(i, params.thread_buffer_size));
+	tbb::parallel_for_each(init_tasks.begin(), init_tasks.end(), invoker<init_buffer_task>());
+
 	// generate tasks, single task for each thread
-	for (i = 0; i < cpus_num; ++i)
-		tasks.push_back(task(i, params.thread_buffer_size, params.access_num));
+	for (i = 0; i < params.threads_num; ++i)
+		access_tasks.push_back(sequential_access_task(params.access_num));
 
 	// execute all threads
 	start_time = tbb::tick_count::now();
-	tbb::parallel_for_each(tasks.begin(), tasks.end(), invoker<task>());
+	tbb::parallel_for_each(access_tasks.begin(),
+			       access_tasks.end(),
+			       invoker<sequential_access_task>());
 
 	elapsed_time = (tbb::tick_count::now() - start_time).seconds();
-	cout << "Elapsed time: " << elapsed_time << endl;
+
+	// generate and execute buffer free tasks
+	for (i = 0; i < params.threads_num; ++i)
+		free_tasks.push_back(free_buffer_task());
+	tbb::parallel_for_each(free_tasks.begin(), free_tasks.end(), invoker<free_buffer_task>());
+
+	cout << "Elapsed time: " << elapsed_time << "seconds" << endl;
 
 	return 0;
 }
