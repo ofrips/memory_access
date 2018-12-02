@@ -19,13 +19,17 @@ using std::endl;
 uint32_t cpus_num;
 
 struct task {
-	task(uint32_t core_id, uint32_t access_num)
+	task(uint32_t core_id, uint32_t thread_buffer_size, uint32_t access_num)
 	: _core_id(core_id),
+	  _thread_buffer_size(thread_buffer_size),
 	  _access_num(access_num)
-	{}
+	{
+		_access_num_per_buffer = _thread_buffer_size / CACHE_LINE_SIZE;
+	}
 
 	void operator()() {
 		volatile char *ptr;
+		volatile char *base_ptr;
 		char *buffer;
 		uint64_t sum = 0;
 		uint32_t buffer_size;
@@ -43,10 +47,8 @@ struct task {
 			exit(-1);
 		}
 
-		// allocate and initialize buffer
-		// since each access is to a different cache line, buffer size
-		// should be access_num * CACHE_LINE_SIZE + 2 * 2KB padding
-		buffer_size = _access_num * CACHE_LINE_SIZE + 2 * PAD_SIZE;
+		// allocate and initialize buffer, add 2 * 2KB pad size from each side
+		buffer_size = _thread_buffer_size + 2 * PAD_SIZE;
 		buffer = (char *)aligned_alloc(CACHE_LINE_SIZE, buffer_size);
 		if (!buffer) {
 			cout << "Failure in allocating huge buffer, aborting" << endl;
@@ -56,28 +58,30 @@ struct task {
 			memset(buffer + i, rand(), sizeof(int));
 
 		// access the memory
-		for (i = 0; i < 1; ++i) {
-			for (ptr = buffer + PAD_SIZE;
-			     ptr < buffer + buffer_size - 8 * CACHE_LINE_SIZE - PAD_SIZE + 1;
-			     ptr += 8 * CACHE_LINE_SIZE) {
-				// read uint64_t from 8 different cache lines
-				sum = sum +
-				      *(volatile uint64_t *)(ptr + 0 * CACHE_LINE_SIZE) +
-				      *(volatile uint64_t *)(ptr + 1 * CACHE_LINE_SIZE) +
-				      *(volatile uint64_t *)(ptr + 2 * CACHE_LINE_SIZE) +
-				      *(volatile uint64_t *)(ptr + 3 * CACHE_LINE_SIZE) +
-				      *(volatile uint64_t *)(ptr + 4 * CACHE_LINE_SIZE) +
-				      *(volatile uint64_t *)(ptr + 5 * CACHE_LINE_SIZE) +
-				      *(volatile uint64_t *)(ptr + 6 * CACHE_LINE_SIZE) +
-				      *(volatile uint64_t *)(ptr + 7 * CACHE_LINE_SIZE);
-			}
+		base_ptr = buffer + PAD_SIZE;
+		cout << " running " << _access_num << " iterations" << endl;
+		for (i = 0; i < _access_num; i += 8) {
+			ptr = base_ptr + (i % _access_num_per_buffer) * CACHE_LINE_SIZE;
+
+			// read uint64_t from 8 consecutive cache lines
+			sum = sum +
+			      *(volatile uint64_t *)(ptr + 0 * CACHE_LINE_SIZE) +
+			      *(volatile uint64_t *)(ptr + 1 * CACHE_LINE_SIZE) +
+			      *(volatile uint64_t *)(ptr + 2 * CACHE_LINE_SIZE) +
+			      *(volatile uint64_t *)(ptr + 3 * CACHE_LINE_SIZE) +
+			      *(volatile uint64_t *)(ptr + 4 * CACHE_LINE_SIZE) +
+			      *(volatile uint64_t *)(ptr + 5 * CACHE_LINE_SIZE) +
+			      *(volatile uint64_t *)(ptr + 6 * CACHE_LINE_SIZE) +
+			      *(volatile uint64_t *)(ptr + 7 * CACHE_LINE_SIZE);
 		}
 
 		free(buffer);
 	}
 
 	uint32_t _core_id;
+	uint32_t _thread_buffer_size;
 	uint32_t _access_num;
+	uint32_t _access_num_per_buffer;
 };
 
 template <typename T> struct invoker {
@@ -104,7 +108,7 @@ int main(int argc, char **argv)
 
 	// generate tasks, single task for each thread
 	for (i = 0; i < cpus_num; ++i)
-		tasks.push_back(task(i, params.access_num));
+		tasks.push_back(task(i, params.thread_buffer_size, params.access_num));
 
 	// execute all threads
 	start_time = tbb::tick_count::now();

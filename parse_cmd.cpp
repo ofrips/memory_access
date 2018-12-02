@@ -19,17 +19,19 @@ static const char *memory_access_type_strings[MEMORY_ACCESS_TYPE_NUM] = {
 
 static void print_usage(char *program_name)
 {
-	cout << "Usage: " << program_name <<
-		" --threads_num=<threads_num>" <<
-		" --access_num=<access_num>" <<
-		" --access_type=<sequential/random/random_sqewed/moving_random_sqewed>" <<
+	cout << "Usage: " << program_name << endl <<
+		"  --threads-num=<threads_num>" << endl <<
+		"  --buffer_size=<buffer_size_per_thread_in_MB>" << endl <<
+		"  --access-num=<access_num_in_thousands>" << endl <<
+		"  --access-type=<sequential/random/random_sqewed/moving_random_sqewed>" <<
 		endl;
 }
 
 static struct option long_options[] = {
-	{"threads_num",	required_argument, 0, 'a'},
-	{"access_num",	required_argument, 0, 'b'},
-	{"access_type",	required_argument, 0, 'c'},
+	{"threads-num",	required_argument, 0, 'a'},
+	{"buffer-size",	required_argument, 0, 'b'},
+	{"access-num",	required_argument, 0, 'c'},
+	{"access-type",	required_argument, 0, 'd'},
 };
 
 void parse_cmd(int argc, char **argv, struct cmd_params *params)
@@ -39,7 +41,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	int opt;
 	int i;
 	uint32_t args_mask = 0;
-	const uint32_t expected_args_num = 3;
+	const uint32_t expected_args_num = 4;
 
 	if (argc != expected_args_num + 1) {
 		cout << "Error: invalid number of arguments!" << endl;
@@ -60,12 +62,31 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 
 			break;
 		case 'b':
-			params->access_num = atoi(optarg);
+			params->thread_buffer_size = 1024 * 1024 * atoi(optarg);
+			if (params->thread_buffer_size == 0) {
+				cout << "Error: invalid thread buffer size [" <<
+					params->thread_buffer_size <<
+					"] must be greater than 0!" << endl;
+				exit(-1);
+			}
 
 			SET_ARGS_MASK(args_mask);
 
 			break;
 		case 'c':
+			params->access_num = 1024 * atoi(optarg);
+			params->access_num = atoi(optarg);
+			if (params->access_num == 0) {
+				cout << "Error: invalid access num [" <<
+					params->access_num <<
+					"] must be greater than 0!" << endl;
+				exit(-1);
+			}
+
+			SET_ARGS_MASK(args_mask);
+
+			break;
+		case 'd':
 			for (i = 0; i < MEMORY_ACCESS_TYPE_NUM; ++i) {
 				if (strncmp(optarg,
 					    memory_access_type_strings[i],
@@ -88,6 +109,14 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 
 	if (args_mask != ((1 << expected_args_num) - 1))
 		goto parse_err;
+
+	cout << "############################################" << endl <<
+		"# Running Memory Micro Benchmark" << endl <<
+		"# Number of threads: " << params->threads_num << endl <<
+		"# Number of memory access per thread: " << params->access_num << endl <<
+		"# Buffer size per thread: " << params->thread_buffer_size << endl <<
+		"# Memory access pattern: " << memory_access_type_strings[params->access_type]
+		<< endl <<"############################################" << endl;
 
 	return;
 
