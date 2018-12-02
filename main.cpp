@@ -55,7 +55,7 @@ struct task {
 			exit(-1);
 		}
 		for (i = 0; i < buffer_size; i += sizeof(int))
-			memset(buffer + i, rand(), sizeof(int));
+			memset(buffer + i, 0xCCCCCCCC, sizeof(int));
 
 		// access the memory
 		base_ptr = buffer + PAD_SIZE;
@@ -93,7 +93,6 @@ int main(int argc, char **argv)
 	struct cmd_params params;
 	std::vector<task> tasks;
 	tbb::tick_count start_time;
-	time_t time_sec;
 	double elapsed_time;
 	uint32_t i;
 
@@ -103,7 +102,6 @@ int main(int argc, char **argv)
 	parse_cmd(argc, argv, &params);
 
 	// init
-	srand((unsigned)time(&time_sec));
 	tbb::task_scheduler_init init(params.threads_num);
 
 	// generate tasks, single task for each thread
