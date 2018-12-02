@@ -37,18 +37,20 @@ static struct option long_options[] = {
 void parse_cmd(int argc, char **argv, struct cmd_params *params)
 {
 	extern uint32_t cpus_num;
+	const uint32_t expected_args_num = 4;
+	uint32_t args_mask = 0;
+	double buffer_pretty_size;
+	std::string buffer_pretty_size_units;
 	int long_index;
 	int opt;
 	int i;
-	uint32_t args_mask = 0;
-	const uint32_t expected_args_num = 4;
 
 	if (argc != expected_args_num + 1) {
 		cout << "Error: invalid number of arguments!" << endl;
 		goto parse_err;
 	}
 
-	while ((opt = getopt_long(argc, argv, "a:b:c:", long_options, &long_index)) != -1) {
+	while ((opt = getopt_long(argc, argv, "a:b:c:d:", long_options, &long_index)) != -1) {
 		switch (opt) {
 		case 'a':
 			params->threads_num = atoi(optarg);
@@ -110,11 +112,21 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	if (args_mask != ((1 << expected_args_num) - 1))
 		goto parse_err;
 
+	if (params->thread_buffer_size >> 30) {
+		buffer_pretty_size_units = "GB";
+		buffer_pretty_size = (double)params->thread_buffer_size / (1 << 30);
+	} else if (params->thread_buffer_size >> 20) {
+		buffer_pretty_size_units = "MB";
+		buffer_pretty_size = (double)params->thread_buffer_size / (1 << 20);
+	}
+
+
 	cout << "############################################" << endl <<
 		"# Running Memory Micro Benchmark" << endl <<
 		"# Number of threads: " << params->threads_num << endl <<
 		"# Number of memory access per thread: " << params->access_num << endl <<
-		"# Buffer size per thread: " << params->thread_buffer_size << endl <<
+		"# Buffer size per thread: " << buffer_pretty_size << buffer_pretty_size_units <<
+		endl <<
 		"# Memory access pattern: " << memory_access_type_strings[params->access_type]
 		<< endl <<"############################################" << endl;
 

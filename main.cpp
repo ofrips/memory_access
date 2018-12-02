@@ -59,7 +59,6 @@ struct task {
 
 		// access the memory
 		base_ptr = buffer + PAD_SIZE;
-		cout << " running " << _access_num << " iterations" << endl;
 		for (i = 0; i < _access_num; i += 8) {
 			ptr = base_ptr + (i % _access_num_per_buffer) * CACHE_LINE_SIZE;
 
@@ -113,7 +112,6 @@ int main(int argc, char **argv)
 	tbb::parallel_for_each(tasks.begin(), tasks.end(), invoker<task>());
 
 	elapsed_time = (tbb::tick_count::now() - start_time).seconds();
-
 	cout << "Elapsed time: " << elapsed_time << endl;
 
 	return 0;
