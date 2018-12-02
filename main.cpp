@@ -10,6 +10,8 @@
 
 #define BUFFER_SIZE	(1 << 30) /* 4GB */
 #define CACHE_LINE_SIZE	(64)
+#define PAGE_SIZE	(4 * 1024)
+#define PAD_SIZE	(PAGE_SIZE / 2)
 
 using std::cout;
 using std::endl;
@@ -43,20 +45,20 @@ struct task {
 
 		// allocate and initialize buffer
 		// since each access is to a different cache line, buffer size
-		// should be access_num * CACHE_LINE_SIZE
-		buffer_size = _access_num * CACHE_LINE_SIZE;
+		// should be access_num * CACHE_LINE_SIZE + 2 * 2KB padding
+		buffer_size = _access_num * CACHE_LINE_SIZE + 2 * PAD_SIZE;
 		buffer = (char *)aligned_alloc(CACHE_LINE_SIZE, buffer_size);
 		if (!buffer) {
 			cout << "Failure in allocating huge buffer, aborting" << endl;
 			exit(-1);
 		}
 		for (i = 0; i < buffer_size; i += sizeof(int))
-			*((int *)(buffer + i)) = rand();
+			memset(buffer + i, rand(), sizeof(int));
 
 		// access the memory
 		for (i = 0; i < 1; ++i) {
-			for (ptr = buffer;
-			     ptr < buffer + buffer_size - 8 * CACHE_LINE_SIZE + 1;
+			for (ptr = buffer + PAD_SIZE;
+			     ptr < buffer + buffer_size - 8 * CACHE_LINE_SIZE - PAD_SIZE + 1;
 			     ptr += 8 * CACHE_LINE_SIZE) {
 				// read uint64_t from 8 different cache lines
 				sum = sum +
