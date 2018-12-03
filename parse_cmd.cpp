@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string.h>
 
+#include "main.h"
 #include "parse_cmd.h"
 
 #define ACCESS_TYPE_NAME_MAX_LEN	(32)
