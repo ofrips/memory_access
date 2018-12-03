@@ -12,10 +12,11 @@
 #include "tbb/task_scheduler_init.h"
 #include "tbb/tick_count.h"
 
-#define BUFFER_SIZE	(1 << 30) /* 4GB */
-#define CACHE_LINE_SIZE	(64)
-#define PAGE_SIZE	(4 * 1024)
-#define PAD_SIZE	(PAGE_SIZE / 2)
+#define BUFFER_SIZE		(1 << 30) /* 4GB */
+#define CACHE_LINE_SIZE		(64)
+#define PAGE_SIZE		(4 * 1024)
+#define PAD_SIZE		(PAGE_SIZE / 2)
+#define DUMMY_BUFFER_SIZE	(128 * 1024 * 1024) /* 128MB */
 
 using std::cout;
 using std::endl;
@@ -114,6 +115,25 @@ struct sequential_access_task {
 	}
 };
 
+static void clear_cache()
+{
+	void *dummy_buffer_1;
+	void *dummy_buffer_2;
+
+	dummy_buffer_1 = malloc(DUMMY_BUFFER_SIZE);
+	dummy_buffer_2 = malloc(DUMMY_BUFFER_SIZE);
+	if (!dummy_buffer_1 || !dummy_buffer_2) {
+		cout << "Failure in allocating dummy buffers, aborting" << endl;
+		exit(-1);
+	}
+
+	memset(dummy_buffer_1, 0xAB, DUMMY_BUFFER_SIZE);
+	memcpy(dummy_buffer_2, dummy_buffer_1, DUMMY_BUFFER_SIZE);
+
+	free(dummy_buffer_1);
+	free(dummy_buffer_2);
+}
+
 template <typename T> struct invoker {
 	void operator()(T& it) const {it();}
 };
@@ -139,6 +159,9 @@ int main(int argc, char **argv)
 	for (i = 0; i < params.threads_num; ++i)
 		init_tasks.push_back(init_buffer_task(i, params.thread_buffer_size));
 	tbb::parallel_for_each(init_tasks.begin(), init_tasks.end(), invoker<init_buffer_task>());
+
+	// make sure buffers are not in the cache, read and write to some dummy buffers
+	clear_cache();
 
 	// generate tasks, single task for each thread
 	for (i = 0; i < params.threads_num; ++i)
