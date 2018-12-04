@@ -131,7 +131,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	}
 
 
-	cout << "############################################" << endl <<
+	cout << "********************************************" << endl <<
 		"# Running Memory Micro Benchmark" << endl <<
 		"# Number of threads: " << params->threads_num << endl <<
 		"# Number of memory access per thread: " << access_pretty_num << " " <<
@@ -139,7 +139,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 		"# Buffer size per thread: " << buffer_pretty_size << buffer_pretty_size_units <<
 		endl <<
 		"# Memory access pattern: " << memory_access_type_strings[params->access_type]
-		<< endl <<"############################################" << endl;
+		<< endl <<"********************************************" << endl;
 
 	return;
 

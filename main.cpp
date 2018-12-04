@@ -144,15 +144,15 @@ struct random_access_task {
 		thread_vars::reference my_vars = local_thread_vars.local();
 
 		buffer = (char *)(my_vars.buffer);
+		base_addr = buffer + PAD_SIZE;
 
 		// access the memory
-		base_addr = buffer + PAD_SIZE;
-		for (i = 0; i < access_num; i += 8) {
+		for (i = 0; i < access_num; ++i) {
 			rand_addr = base_addr +
-				    (uint64_t)rand_addr_get(my_vars.rand_generator) %
-				    (uint64_t)my_vars.buffer_size;
+				    ((uint64_t)rand_addr_get(my_vars.rand_generator) %
+				    (uint64_t)my_vars.buffer_size);
 
-			// read uint64_t from 8 consecutive cache lines
+			// read
 			sum = sum + *(volatile uint64_t *)rand_addr;
 		}
 	}
@@ -185,10 +185,12 @@ static void cache_clear()
 
 int main(int argc, char **argv)
 {
+	std::vector<init_task>		init_tasks;
+	std::vector<tear_down_task>	free_tasks;
+	// different vector for each possible access pattern
+	std::vector<sequential_access_task>	seq_access_tasks;
+	std::vector<random_access_task>		rand_access_tasks;
 	struct cmd_params params;
-	std::vector<init_task> init_tasks;
-	std::vector<sequential_access_task> access_tasks;
-	std::vector<tear_down_task> free_tasks;
 	tbb::tick_count start_time;
 	double elapsed_time;
 	uint32_t i;
@@ -209,14 +211,39 @@ int main(int argc, char **argv)
 	cache_clear();
 
 	// generate tasks, single task for each thread
-	for (i = 0; i < params.threads_num; ++i)
-		access_tasks.push_back(sequential_access_task(params.access_num));
+	switch (params.access_type) {
+	case MEMORY_ACCESS_TYPE_SEQUENTIAL:
+		for (i = 0; i < params.threads_num; ++i)
+			seq_access_tasks.push_back(sequential_access_task(params.access_num));
+		break;
+	case MEMORY_ACCESS_TYPE_RANDOM:
+		for (i = 0; i < params.threads_num; ++i)
+			rand_access_tasks.push_back(random_access_task(params.access_num));
+		break;
+	default:
+		break;
+	}
+
+	cout << "# Initialization done! strating test..." << endl <<
+		"********************************************" << endl;
 
 	// execute all threads
 	start_time = tbb::tick_count::now();
-	tbb::parallel_for_each(access_tasks.begin(),
-			       access_tasks.end(),
-			       invoker<sequential_access_task>());
+	
+	switch (params.access_type) {
+	case MEMORY_ACCESS_TYPE_SEQUENTIAL:
+		tbb::parallel_for_each(seq_access_tasks.begin(),
+				       seq_access_tasks.end(),
+				       invoker<sequential_access_task>());
+		break;
+	case MEMORY_ACCESS_TYPE_RANDOM:
+		tbb::parallel_for_each(rand_access_tasks.begin(),
+				       rand_access_tasks.end(),
+				       invoker<random_access_task>());
+		break;
+	default:
+		break;
+	}
 
 	elapsed_time = (tbb::tick_count::now() - start_time).seconds();
 
@@ -225,7 +252,8 @@ int main(int argc, char **argv)
 		free_tasks.push_back(tear_down_task());
 	tbb::parallel_for_each(free_tasks.begin(), free_tasks.end(), invoker<tear_down_task>());
 
-	cout << "Elapsed time: " << elapsed_time << "seconds" << endl;
+	cout << "# Elapsed time: " << elapsed_time << " seconds" << endl <<
+		"********************************************" << endl;
 
 	return 0;
 }
