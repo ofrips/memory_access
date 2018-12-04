@@ -121,6 +121,7 @@ struct sequential_access_task {
 };
 
 /**************************************************************************************************/
+
 static inline void *rand_addr_get(std::mt19937 *generator)
 {
 	std::uniform_int_distribution<uint64_t> distribution(0, MAX_UNSIGNED_LONG);
@@ -160,6 +161,59 @@ struct random_access_task {
 
 /**************************************************************************************************/
 
+static inline uint32_t rand_skewed_bin_get(std::mt19937 *generator)
+{
+	// use normal distribution between limited to values in range 0-1023
+	// so that to probability to get a value in the range of 461-563,
+	// which is 10% of the total range, is 90%
+	std::normal_distribution<> distribution(511, 31);
+	return (uint32_t)std::round(distribution(*generator)) & ((1 << 10) - 1);
+}
+
+// random skewed memory access task
+struct random_skewed_access_task {
+	uint32_t access_num;
+
+	random_skewed_access_task(uint32_t _access_num)
+	: access_num(_access_num)
+	{ }
+
+	void operator()() {
+		volatile char *base_addr;
+		volatile char *rand_addr;
+		char *buffer;
+		uint64_t sum = 0;
+		uint32_t access_num_per_buffer;
+		uint32_t access_num_per_bin;
+		uint32_t bytes_per_bin;
+		uint32_t rand_bin;
+		uint32_t i;
+		thread_vars::reference my_vars = local_thread_vars.local();
+
+		buffer = (char *)(my_vars.buffer);
+		base_addr = buffer + PAD_SIZE;
+
+		access_num_per_buffer = (my_vars.buffer_size - 2 * PAD_SIZE) / sizeof(uint64_t);
+		access_num_per_bin = access_num_per_buffer / 1024;
+		bytes_per_bin = (my_vars.buffer_size - 2 * PAD_SIZE) / 1024;
+
+		// access the memory
+		for (i = 0; i < access_num; ++i) {
+			rand_bin = rand_skewed_bin_get(my_vars.rand_generator);
+			// first advance address to the right bin, then use pseudo random to
+			// chose cache line in the bin
+			rand_addr = base_addr +
+				    rand_bin * bytes_per_bin +
+				    access_num % access_num_per_bin * sizeof(uint64_t);
+
+			// read
+			sum = sum + *(volatile uint64_t *)rand_addr;
+		}
+	}
+};
+
+/**************************************************************************************************/
+
 template <typename T> struct invoker {
 	void operator()(T& it) const {it();}
 };
@@ -190,6 +244,7 @@ int main(int argc, char **argv)
 	// different vector for each possible access pattern
 	std::vector<sequential_access_task>	seq_access_tasks;
 	std::vector<random_access_task>		rand_access_tasks;
+	std::vector<random_skewed_access_task>	rand_skewed_access_tasks;
 	struct cmd_params params;
 	tbb::tick_count start_time;
 	double elapsed_time;
@@ -220,6 +275,11 @@ int main(int argc, char **argv)
 		for (i = 0; i < params.threads_num; ++i)
 			rand_access_tasks.push_back(random_access_task(params.access_num));
 		break;
+	case MEMORY_ACCESS_TYPE_RANDOM_SKEWED:
+		for (i = 0; i < params.threads_num; ++i)
+			rand_skewed_access_tasks.push_back(
+					random_skewed_access_task(params.access_num));
+		break;
 	default:
 		break;
 	}
@@ -240,6 +300,11 @@ int main(int argc, char **argv)
 		tbb::parallel_for_each(rand_access_tasks.begin(),
 				       rand_access_tasks.end(),
 				       invoker<random_access_task>());
+		break;
+	case MEMORY_ACCESS_TYPE_RANDOM_SKEWED:
+		tbb::parallel_for_each(rand_skewed_access_tasks.begin(),
+				       rand_skewed_access_tasks.end(),
+				       invoker<random_skewed_access_task>());
 		break;
 	default:
 		break;

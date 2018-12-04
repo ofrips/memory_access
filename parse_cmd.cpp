@@ -14,8 +14,8 @@ using std::endl;
 static const char *memory_access_type_strings[MEMORY_ACCESS_TYPE_NUM] = {
 		[MEMORY_ACCESS_TYPE_SEQUENTIAL] =		"sequential",
 		[MEMORY_ACCESS_TYPE_RANDOM] =			"random",
-		[MEMORY_ACCESS_TYPE_RANDOM_SQEWED] =		"random_sqewed",
-		[MEMORY_ACCESS_TYPE_MOVING_RANDOM_SQEWED] =	"moving_random_sqewed",
+		[MEMORY_ACCESS_TYPE_RANDOM_SKEWED] =		"random_skewed",
+		[MEMORY_ACCESS_TYPE_MOVING_RANDOM_SKEWED] =	"moving_random_skewed",
 };
 
 static void print_usage(char *program_name)
@@ -24,7 +24,7 @@ static void print_usage(char *program_name)
 		"  --threads-num=<threads_num>" << endl <<
 		"  --buffer_size=<buffer_size_per_thread_in_MB>" << endl <<
 		"  --access-num=<access_num_in_millions>" << endl <<
-		"  --access-type=<sequential/random/random_sqewed/moving_random_sqewed>" <<
+		"  --access-type=<sequential/random/random_skewed/moving_random_skewed>" <<
 		endl;
 }
 
