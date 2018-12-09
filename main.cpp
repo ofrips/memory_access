@@ -16,7 +16,6 @@
 #define BUFFER_SIZE		(1 << 30) /* 4GB */
 #define CACHE_LINE_SIZE		(64)
 #define PAGE_SIZE		(4 * 1024)
-#define PAD_SIZE		(PAGE_SIZE / 2)
 #define DUMMY_BUFFER_SIZE	(128 * 1024 * 1024) /* 128MB */
 #define MAX_UNSIGNED_LONG	(0xFFFFFFFFFFFFFFFFL)
 
@@ -55,9 +54,9 @@ struct init_task {
 			exit(-1);
 		}
 
-		// allocate and initialize buffer, add 2 * 2KB pad size from each side
-		my_vars.buffer_size = thread_buffer_size + 2 * PAD_SIZE;
-		my_vars.buffer = aligned_alloc(CACHE_LINE_SIZE, my_vars.buffer_size);
+		// allocate and initialize buffer
+		my_vars.buffer_size = thread_buffer_size;
+		my_vars.buffer = aligned_alloc(PAGE_SIZE, my_vars.buffer_size);
 		if (!my_vars.buffer) {
 			cout << "Failure in allocating huge buffer, aborting" << endl;
 			exit(-1);
@@ -91,7 +90,6 @@ struct sequential_access_task {
 
 	void operator()() {
 		volatile char *ptr;
-		volatile char *base_ptr;
 		char *buffer;
 		uint64_t sum = 0;
 		uint32_t access_num_per_buffer;
@@ -99,12 +97,11 @@ struct sequential_access_task {
 		thread_vars::reference my_vars = local_thread_vars.local();
 
 		buffer = (char *)(my_vars.buffer);
-		access_num_per_buffer = (my_vars.buffer_size - 2 * PAD_SIZE) / CACHE_LINE_SIZE;
+		access_num_per_buffer = my_vars.buffer_size / CACHE_LINE_SIZE;
 
 		// access the memory
-		base_ptr = buffer + PAD_SIZE;
 		for (i = 0; i < access_num; i += 8) {
-			ptr = base_ptr + (i % access_num_per_buffer) * CACHE_LINE_SIZE;
+			ptr = buffer + (i % access_num_per_buffer) * CACHE_LINE_SIZE;
 
 			// read uint64_t from 8 consecutive cache lines
 			sum = sum +
@@ -137,7 +134,6 @@ struct random_access_task {
 	{ }
 
 	void operator()() {
-		volatile char *base_addr;
 		volatile char *rand_addr;
 		char *buffer;
 		uint64_t sum = 0;
@@ -145,11 +141,10 @@ struct random_access_task {
 		thread_vars::reference my_vars = local_thread_vars.local();
 
 		buffer = (char *)(my_vars.buffer);
-		base_addr = buffer + PAD_SIZE;
 
 		// access the memory
 		for (i = 0; i < access_num; ++i) {
-			rand_addr = base_addr +
+			rand_addr = buffer +
 				    ((uint64_t)rand_addr_get(my_vars.rand_generator) %
 				    (uint64_t)my_vars.buffer_size);
 
@@ -179,7 +174,6 @@ struct random_skewed_access_task {
 	{ }
 
 	void operator()() {
-		volatile char *base_addr;
 		volatile char *rand_addr;
 		char *buffer;
 		uint64_t sum = 0;
@@ -191,18 +185,17 @@ struct random_skewed_access_task {
 		thread_vars::reference my_vars = local_thread_vars.local();
 
 		buffer = (char *)(my_vars.buffer);
-		base_addr = buffer + PAD_SIZE;
 
-		access_num_per_buffer = (my_vars.buffer_size - 2 * PAD_SIZE) / sizeof(uint64_t);
+		access_num_per_buffer = my_vars.buffer_size / sizeof(uint64_t);
 		access_num_per_bin = access_num_per_buffer / 1024;
-		bytes_per_bin = (my_vars.buffer_size - 2 * PAD_SIZE) / 1024;
+		bytes_per_bin = my_vars.buffer_size / 1024;
 
 		// access the memory
 		for (i = 0; i < access_num; ++i) {
 			rand_bin = rand_skewed_bin_get(my_vars.rand_generator);
 			// first advance address to the right bin, then use pseudo random to
 			// chose cache line in the bin
-			rand_addr = base_addr +
+			rand_addr = buffer +
 				    rand_bin * bytes_per_bin +
 				    access_num % access_num_per_bin * sizeof(uint64_t);
 
