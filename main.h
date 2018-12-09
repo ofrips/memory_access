@@ -17,14 +17,16 @@ enum memory_access_type {
 struct thread_local_vars {
 	uint32_t core_id;
 	uint32_t buffer_size;
+	uint32_t access_num;
 	void *buffer;
-	std::mt19937 *rand_generator;
+	uint32_t *access_offsets;
 
-	thread_local_vars(uint32_t _core_id, uint32_t _buffer_size)
+	thread_local_vars(uint32_t _core_id)
 	: core_id(_core_id),
-	  buffer_size(_buffer_size),
+	  buffer_size(0),
+	  access_num(0),
 	  buffer(0),
-	  rand_generator(0)
+	  access_offsets(0)
 	{ }
 };
 
