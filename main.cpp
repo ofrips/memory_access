@@ -57,6 +57,10 @@ static void access_offsets_generate(uint32_t *access_offsets,
 	uint32_t access_num_per_bin = access_num_per_buffer / SKEWED_BIN_NUM;
 	uint32_t bytes_per_bin = thread_buffer_size / SKEWED_BIN_NUM;
 
+	// random skewed access pattern variables
+	uint32_t access_num_per_tenth_buffer = access_num_per_buffer / 10;
+	uint32_t bytes_per_tenth_buffer = thread_buffer_size / 10;
+
 	switch (access_type) {
 	case MEMORY_ACCESS_TYPE_SEQUENTIAL:
 		for (i = 0; i < access_num; ++i)
@@ -76,6 +80,20 @@ static void access_offsets_generate(uint32_t *access_offsets,
 			// chose cache line in the bin
 			access_offsets[i] = rand_skewed_bin_get(generator) * bytes_per_bin +
 					    (access_num % access_num_per_bin) * CACHE_LINE_SIZE;
+		}
+
+		break;
+	case MEMORY_ACCESS_TYPE_MOVING_RANDOM_SKEWED:
+		// first, generate access pattern identical to random skewed, then
+		// shift each sector of the offsets to achieve moving most accessed addresses
+		for (i = 0; i < access_num; ++i) {
+			// first advance offset to the right bin, then use pseudo random to
+			// chose cache line in the bin
+			access_offsets[i] = rand_skewed_bin_get(generator) * bytes_per_bin +
+					    (access_num % access_num_per_bin) * CACHE_LINE_SIZE;
+
+			access_offsets[i] = (access_offsets[i] + (i / access_num_per_tenth_buffer) *
+					     bytes_per_tenth_buffer) % thread_buffer_size;
 		}
 
 		break;
