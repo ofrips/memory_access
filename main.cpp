@@ -13,6 +13,7 @@
 #include "tbb/task_scheduler_init.h"
 #include "tbb/tick_count.h"
 
+#define TEST_RUNS_NUM		(512)
 #define CACHE_LINE_SIZE		(64)
 #define PAGE_SIZE		(4 * 1024)
 #define DUMMY_BUFFER_SIZE	(128 * 1024 * 1024) /* 128MB */
@@ -190,24 +191,27 @@ struct access_task {
 		uint64_t sum = 0;
 		uint32_t *offsets;
 		uint32_t i;
+		uint32_t j;
 		thread_vars::reference my_vars = local_thread_vars.local();
 
 		buffer = (char *)(my_vars.buffer);
 		offsets = my_vars.access_offsets;
 
 		// access the memory
-		for (i = 0; i < my_vars.access_num; i += 8) {
-			// read uint64_t from 8 addresses
-			sum = sum +
-			      *(volatile uint64_t *)(buffer + offsets[i + 0]) +
-			      *(volatile uint64_t *)(buffer + offsets[i + 1]) +
-			      *(volatile uint64_t *)(buffer + offsets[i + 2]) +
-			      *(volatile uint64_t *)(buffer + offsets[i + 3]) +
-			      *(volatile uint64_t *)(buffer + offsets[i + 4]) +
-			      *(volatile uint64_t *)(buffer + offsets[i + 5]) +
-			      *(volatile uint64_t *)(buffer + offsets[i + 6]) +
-			      *(volatile uint64_t *)(buffer + offsets[i + 7]);
+		for (j = 0; j < TEST_RUNS_NUM; ++j) {
+			for (i = 0; i < my_vars.access_num; i += 8) {
+				// read uint64_t from 8 addresses
+				sum = sum +
+				      *(volatile uint64_t *)(buffer + offsets[i + 0]) +
+				      *(volatile uint64_t *)(buffer + offsets[i + 1]) +
+				      *(volatile uint64_t *)(buffer + offsets[i + 2]) +
+				      *(volatile uint64_t *)(buffer + offsets[i + 3]) +
+				      *(volatile uint64_t *)(buffer + offsets[i + 4]) +
+				      *(volatile uint64_t *)(buffer + offsets[i + 5]) +
+				      *(volatile uint64_t *)(buffer + offsets[i + 6]) +
+				      *(volatile uint64_t *)(buffer + offsets[i + 7]);
 
+			}
 		}
 	}
 };
