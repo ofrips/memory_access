@@ -22,7 +22,7 @@ static void print_usage(char *program_name)
 {
 	cout << "Usage: " << program_name << endl <<
 		"  --threads-num=<threads_num>" << endl <<
-		"  --buffer_size=<buffer_size_per_thread_in_MB>" << endl <<
+		"  --buffer_size=<buffer_size_per_thread_in_MiB>" << endl <<
 		"  --access-num=<access_num_in_millions>" << endl <<
 		"  --access-type=<sequential/random/random_skewed/moving_random_skewed>" <<
 		endl;
@@ -115,10 +115,10 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 		goto parse_err;
 
 	if (params->thread_buffer_size >> 30) {
-		buffer_pretty_size_units = "GB";
+		buffer_pretty_size_units = "GiB";
 		buffer_pretty_size = (double)params->thread_buffer_size / (1 << 30);
 	} else if (params->thread_buffer_size >> 20) {
-		buffer_pretty_size_units = "MB";
+		buffer_pretty_size_units = "MiB";
 		buffer_pretty_size = (double)params->thread_buffer_size / (1 << 20);
 	}
 

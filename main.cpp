@@ -16,7 +16,7 @@
 #define TEST_RUNS_NUM		(512)
 #define CACHE_LINE_SIZE		(64)
 #define PAGE_SIZE		(4 * 1024)
-#define DUMMY_BUFFER_SIZE	(128 * 1024 * 1024) /* 128MB */
+#define DUMMY_BUFFER_SIZE	(128 * 1024 * 1024) /* 128MiB */
 #define MAX_UNSIGNED_INT	(0xFFFFFFFF)
 #define SKEWED_BIN_NUM		(1024)
 
@@ -247,7 +247,7 @@ int main(int argc, char **argv)
 	struct cmd_params params;
 	tbb::tick_count start_time;
 	double elapsed_time;
-	double bw_MBPS;
+	double bw_MiBPS;
 	uint32_t i;
 
 	// parse cmd parameters
@@ -290,10 +290,10 @@ int main(int argc, char **argv)
 	cout << "# Elapsed time: " << elapsed_time << " seconds" << endl <<
 		"********************************************" << endl;
 
-	bw_MBPS = ((double)params.access_num * params.threads_num / (1024 * 1024)) *
-		  CACHE_LINE_SIZE * TEST_RUNS_NUM / elapsed_time / 1024;
+	bw_MiBPS = ((double)params.access_num * params.threads_num / (1024 * 1024)) *
+		   CACHE_LINE_SIZE * TEST_RUNS_NUM / elapsed_time / 1024;
 
-	cout << "# Bandwidth: " << bw_MBPS << " GB per second" << endl <<
+	cout << "# Bandwidth: " << bw_MiBPS << " GiB per second" << endl <<
 		"********************************************" << endl;
 
 	return 0;
