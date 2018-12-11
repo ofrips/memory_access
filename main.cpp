@@ -30,7 +30,7 @@ thread_vars local_thread_vars((uint32_t)-1);
 
 /**************************************************************************************************/
 
-static inline uint32_t rand_addr_get(std::mt19937 *generator)
+static inline uint32_t rand_uint32_get(std::mt19937 *generator)
 {
 	std::uniform_int_distribution<uint32_t> distribution(0, MAX_UNSIGNED_INT);
 	return distribution(*generator);
@@ -38,8 +38,8 @@ static inline uint32_t rand_addr_get(std::mt19937 *generator)
 
 static inline uint32_t rand_skewed_bin_get(std::mt19937 *generator)
 {
-	// use normal distribution between limited to values in range 0-1023
-	// so that to probability to get a value in the range of 461-563,
+	// use normal distribution between limited values in range 0-1023
+	// so that the probability to get a value in the range of 461-563,
 	// which is 10% of the total range, is 90%
 	std::normal_distribution<> distribution(511, 31);
 	return (uint32_t)std::round(distribution(*generator)) % SKEWED_BIN_NUM;
@@ -53,11 +53,9 @@ static void access_offsets_generate(uint32_t *access_offsets,
 {
 	uint32_t access_num_per_buffer = thread_buffer_size / CACHE_LINE_SIZE;
 	uint32_t i;
-
 	// random skewed access pattern variables
 	uint32_t access_num_per_bin = access_num_per_buffer / SKEWED_BIN_NUM;
 	uint32_t bytes_per_bin = thread_buffer_size / SKEWED_BIN_NUM;
-
 	// random skewed access pattern variables
 	uint32_t access_num_per_tenth_buffer = access_num_per_buffer / 10;
 	uint32_t bytes_per_tenth_buffer = thread_buffer_size / 10;
@@ -70,7 +68,7 @@ static void access_offsets_generate(uint32_t *access_offsets,
 		break;
 	case MEMORY_ACCESS_TYPE_RANDOM:
 		for (i = 0; i < access_num; ++i) {
-			access_offsets[i] = (rand_addr_get(generator) % access_num_per_buffer) *
+			access_offsets[i] = (rand_uint32_get(generator) % access_num_per_buffer) *
 					    CACHE_LINE_SIZE;
 		}
 
@@ -85,8 +83,8 @@ static void access_offsets_generate(uint32_t *access_offsets,
 
 		break;
 	case MEMORY_ACCESS_TYPE_MOVING_RANDOM_SKEWED:
-		// first, generate access pattern identical to random skewed, then
-		// shift each sector of the offsets to achieve moving most accessed addresses
+		// generate access pattern identical to random skewed, then
+		// shift each sector of the offsets to achieve moving "most accessed" addresses
 		for (i = 0; i < access_num; ++i) {
 			// first advance offset to the right bin, then use pseudo random to
 			// chose cache line in the bin
@@ -244,8 +242,8 @@ static void cache_clear()
 int main(int argc, char **argv)
 {
 	std::vector<init_task>		init_tasks;
-	std::vector<tear_down_task>	free_tasks;
 	std::vector<access_task>	access_tasks;
+	std::vector<tear_down_task>	free_tasks;
 	struct cmd_params params;
 	tbb::tick_count start_time;
 	double elapsed_time;
