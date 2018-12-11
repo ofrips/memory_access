@@ -249,6 +249,7 @@ int main(int argc, char **argv)
 	struct cmd_params params;
 	tbb::tick_count start_time;
 	double elapsed_time;
+	double bw_MBPS;
 	uint32_t i;
 
 	// parse cmd parameters
@@ -289,6 +290,12 @@ int main(int argc, char **argv)
 	tbb::parallel_for_each(free_tasks.begin(), free_tasks.end(), invoker<tear_down_task>());
 
 	cout << "# Elapsed time: " << elapsed_time << " seconds" << endl <<
+		"********************************************" << endl;
+
+	bw_MBPS = ((double)params.access_num * params.threads_num / (1024 * 1024)) *
+		  CACHE_LINE_SIZE * TEST_RUNS_NUM / elapsed_time / 1024;
+
+	cout << "# Bandwidth: " << bw_MBPS << " GB per second" << endl <<
 		"********************************************" << endl;
 
 	return 0;
