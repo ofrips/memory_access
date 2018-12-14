@@ -144,6 +144,11 @@ struct init_task {
 			cout << "Failure in allocating huge buffer, aborting" << endl;
 			exit(-1);
 		}
+		my_vars.dst_buffer = aligned_alloc(PAGE_SIZE, my_vars.buffer_size);
+		if (!my_vars.dst_buffer) {
+			cout << "Failure in allocating dst huge buffer, aborting" << endl;
+			exit(-1);
+		}
 
 		memset(my_vars.buffer, 0xCC, my_vars.buffer_size);
 
@@ -186,31 +191,38 @@ struct access_task {
 
 	void operator()() {
 		volatile char *buffer;
-		uint64_t sum = 0;
-		uint32_t *offsets;
+//		uint64_t sum = 0;
+//		uint32_t *offsets;
 		uint32_t i;
-		uint32_t j;
+//		uint32_t j;
 		thread_vars::reference my_vars = local_thread_vars.local();
 
 		buffer = (char *)(my_vars.buffer);
-		offsets = my_vars.access_offsets;
+//		offsets = my_vars.access_offsets;
+
+		volatile uint64_t *src_buffer = (uint64_t *)(buffer);
+		volatile uint64_t *dst_buffer = (uint64_t *)(my_vars.dst_buffer);
+
+		for (i = 0; i < my_vars.buffer_size / sizeof(uint64_t); i += 8) {
+			dst_buffer[i] = src_buffer[i];
+		}
 
 		// access the memory
-		for (j = 0; j < TEST_RUNS_NUM; ++j) {
-			for (i = 0; i < my_vars.access_num; i += 8) {
-				// read uint64_t from 8 addresses
-				sum = sum +
-				      *(volatile uint64_t *)(buffer + offsets[i + 0]) +
-				      *(volatile uint64_t *)(buffer + offsets[i + 1]) +
-				      *(volatile uint64_t *)(buffer + offsets[i + 2]) +
-				      *(volatile uint64_t *)(buffer + offsets[i + 3]) +
-				      *(volatile uint64_t *)(buffer + offsets[i + 4]) +
-				      *(volatile uint64_t *)(buffer + offsets[i + 5]) +
-				      *(volatile uint64_t *)(buffer + offsets[i + 6]) +
-				      *(volatile uint64_t *)(buffer + offsets[i + 7]);
-
-			}
-		}
+//		for (j = 0; j < TEST_RUNS_NUM; ++j) {
+//			for (i = 0; i < my_vars.access_num; i += 8) {
+//				// read uint64_t from 8 addresses
+//				sum = sum +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 0]) +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 1]) +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 2]) +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 3]) +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 4]) +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 5]) +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 6]) +
+//				      *(volatile uint64_t *)(buffer + offsets[i + 7]);
+//
+//			}
+//		}
 	}
 };
 
@@ -290,8 +302,9 @@ int main(int argc, char **argv)
 	cout << "# Elapsed time: " << elapsed_time << " seconds" << endl <<
 		"********************************************" << endl;
 
-	bw_GiBPS = ((double)params.access_num * params.threads_num / (1024 * 1024)) *
-		   CACHE_LINE_SIZE * TEST_RUNS_NUM / elapsed_time / 1024;
+//	bw_GiBPS = ((double)params.access_num * params.threads_num / (1024 * 1024)) *
+//		   CACHE_LINE_SIZE * TEST_RUNS_NUM / elapsed_time / 1024;
+	bw_GiBPS = ((double)params.thread_buffer_size * params.threads_num / (1024 * 1024 * 1024)) / elapsed_time;
 
 	cout << "# Bandwidth: " << bw_GiBPS << " GiB per second" << endl <<
 		"********************************************" << endl;

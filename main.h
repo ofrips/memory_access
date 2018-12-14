@@ -19,6 +19,7 @@ struct thread_local_vars {
 	uint32_t buffer_size;
 	uint32_t access_num;
 	void *buffer;
+	void *dst_buffer;
 	uint32_t *access_offsets;
 
 	thread_local_vars(uint32_t _core_id)
@@ -26,6 +27,7 @@ struct thread_local_vars {
 	  buffer_size(0),
 	  access_num(0),
 	  buffer(0),
+	  dst_buffer(0),
 	  access_offsets(0)
 	{ }
 };
