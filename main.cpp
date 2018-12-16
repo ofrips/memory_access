@@ -4,6 +4,9 @@
 #include <string.h>
 #include <vector>
 
+#include <sys/time.h>
+#include <time.h>
+
 #include "main.h"
 #include "parse_cmd.h"
 
@@ -191,21 +194,57 @@ struct access_task {
 
 	void operator()() {
 		volatile char *buffer;
-//		uint64_t sum = 0;
-//		uint32_t *offsets;
-		uint32_t i;
-//		uint32_t j;
+//		uint32_t i;
 		thread_vars::reference my_vars = local_thread_vars.local();
-
 		buffer = (char *)(my_vars.buffer);
-//		offsets = my_vars.access_offsets;
+		long *src_buffer = (long *)(buffer);
+		long *dst_buffer = (long *)(my_vars.dst_buffer);
 
-		volatile uint64_t *src_buffer = (uint64_t *)(buffer);
-		volatile uint64_t *dst_buffer = (uint64_t *)(my_vars.dst_buffer);
+		struct timeval starttime, endtime;
+		double te;
+		int t;
+		long asize = (1 << 30) / sizeof(long);
 
-		for (i = 0; i < my_vars.buffer_size / sizeof(uint64_t); i += 8) {
-			dst_buffer[i] = src_buffer[i];
+		/**********************************************************************************/
+		for(t = 0; t < asize; t++) {
+			src_buffer[t] = 0xaa;
+			dst_buffer[t] = 0xaa;
 		}
+
+		gettimeofday(&starttime, NULL);
+		for(t = 0; t < asize; t++) {
+			dst_buffer[t] = src_buffer[t];
+		}
+		gettimeofday(&endtime, NULL);
+
+		te=((double)(endtime.tv_sec*1000000-starttime.tv_sec*1000000+endtime.tv_usec-starttime.tv_usec))/1000000;
+
+		printf("First Copy:  %.3f MiB/s\n", (1 << 10)/te);
+
+		/**********************************************************************************/
+
+		long *a= (long *)calloc(asize, sizeof(long));
+		long *b= (long *)calloc(asize, sizeof(long));
+
+		for(t = 0; t < asize; t++) {
+			a[t]=0xaa;
+			b[t]=0xaa;
+		}
+
+		gettimeofday(&starttime, NULL);
+		for(t = 0; t < asize; t++) {
+			b[t] = a[t];
+		}
+		gettimeofday(&endtime, NULL);
+
+		te=((double)(endtime.tv_sec*1000000-starttime.tv_sec*1000000+endtime.tv_usec-starttime.tv_usec))/1000000;
+
+		printf("Second Copy: %.3f MiB/s\n", (1 << 10)/te);
+
+		free(a);
+		free(b);
+
+		/**********************************************************************************/
 
 		// access the memory
 //		for (j = 0; j < TEST_RUNS_NUM; ++j) {
