@@ -194,9 +194,14 @@ struct access_task {
 
 	void operator()() {
 		volatile char *buffer;
-//		uint32_t i;
+		uint64_t sum = 0;
+		uint32_t *offsets;
+		uint32_t i;
 		thread_vars::reference my_vars = local_thread_vars.local();
+
 		buffer = (char *)(my_vars.buffer);
+		offsets = my_vars.access_offsets;
+
 		long *src_buffer = (long *)(buffer);
 		long *dst_buffer = (long *)(my_vars.dst_buffer);
 
@@ -246,6 +251,12 @@ struct access_task {
 
 		/**********************************************************************************/
 
+		for(t = 0; t < asize; t++) {
+			buffer[t] = 0xaa;
+		}
+
+		gettimeofday(&starttime, NULL);
+
 		// access the memory
 //		for (j = 0; j < TEST_RUNS_NUM; ++j) {
 //			for (i = 0; i < my_vars.access_num; i += 8) {
@@ -261,7 +272,21 @@ struct access_task {
 //				      *(volatile uint64_t *)(buffer + offsets[i + 7]);
 //
 //			}
+			for (i = 0; i < my_vars.access_num; i++) {
+				// read uint64_t from 8 addresses
+				sum = sum + *(volatile uint64_t *)(buffer + offsets[i]);
+
+			}
 //		}
+
+		gettimeofday(&endtime, NULL);
+
+		te=((double)(endtime.tv_sec*1000000-starttime.tv_sec*1000000+endtime.tv_usec-starttime.tv_usec))/1000000;
+
+		printf("Third Copy:  %.3f MiB/s\n", (1 << 10)/te);
+
+		/**********************************************************************************/
+
 	}
 };
 
