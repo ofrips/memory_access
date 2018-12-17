@@ -48,8 +48,8 @@ static inline uint32_t rand_skewed_bin_get(std::mt19937 *generator)
 	return (uint32_t)std::round(distribution(*generator)) % SKEWED_BIN_NUM;
 }
 
-static void access_offsets_generate(uint32_t *access_offsets,
-				    uint32_t thread_buffer_size,
+static void access_offsets_generate(uint64_t *access_offsets,
+				    uint64_t thread_buffer_size,
 				    uint32_t access_num,
 				    std::mt19937 *generator,
 				    enum memory_access_type access_type)
@@ -107,12 +107,12 @@ static void access_offsets_generate(uint32_t *access_offsets,
 // buffer allocation and initialization task
 struct init_task {
 	uint32_t core_id;
-	uint32_t thread_buffer_size;
+	uint64_t thread_buffer_size;
 	uint32_t access_num;
 	enum memory_access_type access_type;
 
 	init_task(uint32_t _core_id,
-		  uint32_t _thread_buffer_size,
+		  uint64_t _thread_buffer_size,
 		  uint32_t _access_num,
 		  enum memory_access_type _access_type)
 	: core_id(_core_id),
@@ -156,8 +156,9 @@ struct init_task {
 		memset(my_vars.buffer, 0xCC, my_vars.buffer_size);
 
 		// generate access offsets according to access pattern
-		my_vars.access_offsets = (uint32_t *)aligned_alloc(PAGE_SIZE,
-								   access_num * sizeof(uint32_t));
+		my_vars.access_offsets = (uint64_t *)aligned_alloc(PAGE_SIZE,
+								   access_num *
+								   sizeof(*my_vars.access_offsets));
 		if (!my_vars.access_offsets) {
 			cout << "Failure in allocating offsets buffer, aborting" << endl;
 			exit(-1);
@@ -195,7 +196,7 @@ struct access_task {
 	void operator()() {
 		volatile char *buffer;
 		uint64_t sum = 0;
-		uint32_t *offsets;
+		uint64_t *offsets;
 		uint32_t i;
 		thread_vars::reference my_vars = local_thread_vars.local();
 

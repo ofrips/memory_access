@@ -3,7 +3,7 @@
 
 struct cmd_params {
 	uint32_t threads_num;
-	uint32_t thread_buffer_size;
+	uint64_t thread_buffer_size;
 	uint32_t access_num;
 	enum memory_access_type access_type;
 };

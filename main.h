@@ -16,11 +16,11 @@ enum memory_access_type {
 // thread local vars
 struct thread_local_vars {
 	uint32_t core_id;
-	uint32_t buffer_size;
+	uint64_t buffer_size;
 	uint32_t access_num;
 	void *buffer;
 	void *dst_buffer;
-	uint32_t *access_offsets;
+	uint64_t *access_offsets;
 
 	thread_local_vars(uint32_t _core_id)
 	: core_id(_core_id),

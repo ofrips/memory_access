@@ -67,7 +67,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 
 			break;
 		case 'b':
-			params->thread_buffer_size = 1024 * 1024 * atoi(optarg);
+			params->thread_buffer_size = 1024 * 1024 * atol(optarg);
 			if (params->thread_buffer_size == 0) {
 				cout << "Error: invalid thread buffer size [" <<
 					params->thread_buffer_size <<
