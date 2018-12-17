@@ -154,6 +154,7 @@ struct init_task {
 		}
 
 		memset(my_vars.buffer, 0xCC, my_vars.buffer_size);
+		memset(my_vars.dst_buffer, 0x33, my_vars.buffer_size);
 
 		// generate access offsets according to access pattern
 		my_vars.access_offsets = (uint64_t *)aligned_alloc(PAGE_SIZE,
@@ -212,10 +213,6 @@ struct access_task {
 		long asize = (1 << 30) / sizeof(long);
 
 		/**********************************************************************************/
-		for(t = 0; t < asize; t++) {
-			src_buffer[t] = 0xaa;
-			dst_buffer[t] = 0xaa;
-		}
 
 		gettimeofday(&starttime, NULL);
 		for(t = 0; t < asize; t++) {
