@@ -142,10 +142,11 @@ _ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_b
 	testq	%rsi, %rsi
 	je	.L12
 	movl	8(%rdi), %eax
-	movq	$0, 4(%rsi)
-	movq	$0, 16(%rsi)
+	movq	$0, 8(%rsi)
+	movl	$0, 16(%rsi)
 	movq	$0, 24(%rsi)
 	movq	$0, 32(%rsi)
+	movq	$0, 40(%rsi)
 	movl	%eax, (%rsi)
 .L12:
 	rep ret
@@ -339,42 +340,6 @@ _ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_b
 	.cfi_endproc
 .LFE6647:
 	.size	_ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_by_argsIS3_JjEEEE7destroyEv, .-_ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_by_argsIS3_JjEEEE7destroyEv
-	.section	.rodata.str1.8,"aMS",@progbits,1
-	.align 8
-.LC0:
-	.string	"Error in pinning thread to core id "
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.LC1:
-	.string	" aborting..."
-	.section	.text.unlikely,"ax",@progbits
-	.align 2
-	.type	_ZN9init_taskclEv.part.39, @function
-_ZN9init_taskclEv.part.39:
-.LFB6895:
-	.cfi_startproc
-	pushq	%rbx
-	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
-	leaq	.LC0(%rip), %rsi
-	movq	%rdi, %rbx
-	leaq	_ZSt4cout(%rip), %rdi
-	movl	$35, %edx
-	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-	movl	(%rbx), %esi
-	leaq	_ZSt4cout(%rip), %rdi
-	call	_ZNSo9_M_insertImEERSoT_@PLT
-	leaq	.LC1(%rip), %rsi
-	movq	%rax, %rbx
-	movl	$12, %edx
-	movq	%rax, %rdi
-	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-	movq	%rbx, %rdi
-	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-	orl	$-1, %edi
-	call	exit@PLT
-	.cfi_endproc
-.LFE6895:
-	.size	_ZN9init_taskclEv.part.39, .-_ZN9init_taskclEv.part.39
 	.section	.text._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EE12create_localEv,"axG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EE12create_localEv,comdat
 	.align 2
 	.p2align 4,,15
@@ -416,17 +381,18 @@ _ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_al
 	movq	(%rdi), %rdx
 	movq	32(%rdx), %rdx
 	cmpq	%rcx, %rdx
-	jne	.L47
+	jne	.L45
 	testq	%rax, %rax
-	je	.L48
+	je	.L46
 	movl	8(%rdi), %edx
-	movq	$0, 4(%rax)
-	movq	$0, 16(%rax)
+	movq	$0, 8(%rax)
+	movl	$0, 16(%rax)
 	movq	$0, 24(%rax)
 	movq	$0, 32(%rax)
+	movq	$0, 40(%rax)
 	movl	%edx, (%rax)
-.L48:
-	movb	$1, 40(%rax)
+.L46:
+	movb	$1, 48(%rax)
 	addq	$16, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 16
@@ -435,13 +401,13 @@ _ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_al
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L47:
+.L45:
 	.cfi_restore_state
 	movq	%rax, 8(%rsp)
 	movq	%rax, %rsi
 	call	*%rdx
 	movq	8(%rsp), %rax
-	movb	$1, 40(%rax)
+	movb	$1, 48(%rax)
 	addq	$16, %rsp
 	.cfi_def_cfa_offset 16
 	popq	%rbx
@@ -450,148 +416,6 @@ _ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_al
 	.cfi_endproc
 .LFE6649:
 	.size	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EE12create_localEv, .-_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EE12create_localEv
-	.section	.text._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev,"axG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
-	.align 2
-	.p2align 4,,15
-	.weak	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev
-	.type	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev, @function
-_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev:
-.LFB6653:
-	.cfi_startproc
-	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
-	.cfi_lsda 0x1b,.LLSDA6653
-	pushq	%r14
-	.cfi_def_cfa_offset 16
-	.cfi_offset 14, -16
-	pushq	%r13
-	.cfi_def_cfa_offset 24
-	.cfi_offset 13, -24
-	leaq	16+_ZTVN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EEE(%rip), %rax
-	pushq	%r12
-	.cfi_def_cfa_offset 32
-	.cfi_offset 12, -32
-	pushq	%rbp
-	.cfi_def_cfa_offset 40
-	.cfi_offset 6, -40
-	pushq	%rbx
-	.cfi_def_cfa_offset 48
-	.cfi_offset 3, -48
-	movq	24(%rdi), %rbp
-	movq	%rdi, %rbx
-	movq	%rax, (%rdi)
-	testq	%rbp, %rbp
-	je	.L57
-	movq	0(%rbp), %rax
-	leaq	_ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_by_argsIS3_JjEEEE7destroyEv(%rip), %rcx
-	movq	%rbp, %rdi
-	movq	8(%rax), %rdx
-	cmpq	%rcx, %rdx
-	jne	.L55
-	call	*16(%rax)
-	movq	%rbp, %rdi
-.LEHB0:
-	call	_ZN3tbb8internal25deallocate_via_handler_v3EPv@PLT
-.LEHE0:
-	jmp	.L57
-	.p2align 4,,10
-	.p2align 3
-.L73:
-	movq	(%rdi), %rax
-	movq	%rax, 8(%rbx)
-	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
-.L57:
-	movq	8(%rbx), %rdi
-	testq	%rdi, %rdi
-	jne	.L73
-	movq	$0, 16(%rbx)
-	leaq	40(%rbx), %rbp
-	movq	64(%rbx), %r13
-	movq	48(%rbx), %r12
-	leaq	_ZN3tbb17concurrent_vectorINS_8internal6paddedINS_10interface68internal11ets_elementI17thread_local_varsEELm128EEENS_23cache_aligned_allocatorIS8_EEE13destroy_arrayEPvm(%rip), %rsi
-	movq	%rbp, %rdi
-	call	_ZN3tbb8internal25concurrent_vector_base_v314internal_clearEPFvPvmE@PLT
-	cmpq	%rax, %r12
-	jnb	.L64
-	leaq	-8(%r13), %rdx
-	leaq	(%rdx,%rax,8), %rbx
-	leaq	(%rdx,%r12,8), %r14
-	jmp	.L59
-	.p2align 4,,10
-	.p2align 3
-.L60:
-	subq	$8, %rbx
-	cmpq	%r14, %rbx
-	je	.L58
-.L59:
-	movq	(%rbx), %rdi
-	movq	$0, (%rbx)
-	cmpq	$63, %rdi
-	jbe	.L60
-	subq	$8, %rbx
-	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
-	cmpq	%r14, %rbx
-	jne	.L59
-.L58:
-	movq	0(%r13), %rdi
-	cmpq	$63, %rdi
-	jbe	.L61
-	testq	%r12, %r12
-	je	.L62
-	leaq	-8(%r13), %rdx
-	leaq	(%rdx,%r12,8), %rax
-	.p2align 4,,10
-	.p2align 3
-.L63:
-	movq	$0, (%rax)
-	subq	$8, %rax
-	cmpq	%rax, %rdx
-	jne	.L63
-.L62:
-	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
-.L61:
-	popq	%rbx
-	.cfi_remember_state
-	.cfi_def_cfa_offset 40
-	movq	%rbp, %rdi
-	popq	%rbp
-	.cfi_def_cfa_offset 32
-	popq	%r12
-	.cfi_def_cfa_offset 24
-	popq	%r13
-	.cfi_def_cfa_offset 16
-	popq	%r14
-	.cfi_def_cfa_offset 8
-	jmp	_ZN3tbb8internal25concurrent_vector_base_v3D2Ev@PLT
-	.p2align 4,,10
-	.p2align 3
-.L64:
-	.cfi_restore_state
-	movq	%rax, %r12
-	jmp	.L58
-	.p2align 4,,10
-	.p2align 3
-.L55:
-	call	*%rdx
-	jmp	.L57
-	.cfi_endproc
-.LFE6653:
-	.globl	__gxx_personality_v0
-	.section	.gcc_except_table._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev,"aG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
-.LLSDA6653:
-	.byte	0xff
-	.byte	0xff
-	.byte	0x1
-	.uleb128 .LLSDACSE6653-.LLSDACSB6653
-.LLSDACSB6653:
-	.uleb128 .LEHB0-.LFB6653
-	.uleb128 .LEHE0-.LEHB0
-	.uleb128 0
-	.uleb128 0
-.LLSDACSE6653:
-	.section	.text._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev,"axG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
-	.size	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev, .-_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev
-	.weak	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED1Ev
-	.set	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED1Ev,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev
 	.section	.text._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED0Ev,"axG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
 	.align 2
 	.p2align 4,,15
@@ -627,29 +451,29 @@ _ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_al
 	movq	24(%rdi), %rbx
 	movq	%rax, (%rdi)
 	testq	%rbx, %rbx
-	je	.L78
+	je	.L55
 	movq	(%rbx), %rax
 	leaq	_ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_by_argsIS3_JjEEEE7destroyEv(%rip), %rcx
 	movq	%rbx, %rdi
 	movq	8(%rax), %rdx
 	cmpq	%rcx, %rdx
-	jne	.L76
+	jne	.L53
 	call	*16(%rax)
 	movq	%rbx, %rdi
-.LEHB1:
+.LEHB0:
 	call	_ZN3tbb8internal25deallocate_via_handler_v3EPv@PLT
-.LEHE1:
-	jmp	.L78
+.LEHE0:
+	jmp	.L55
 	.p2align 4,,10
 	.p2align 3
-.L94:
+.L71:
 	movq	(%rdi), %rax
 	movq	%rax, 8(%rbp)
 	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
-.L78:
+.L55:
 	movq	8(%rbp), %rdi
 	testq	%rdi, %rdi
-	jne	.L94
+	jne	.L71
 	movq	$0, 16(%rbp)
 	leaq	40(%rbp), %r12
 	movq	64(%rbp), %r14
@@ -658,44 +482,44 @@ _ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_al
 	movq	%r12, %rdi
 	call	_ZN3tbb8internal25concurrent_vector_base_v314internal_clearEPFvPvmE@PLT
 	cmpq	%rax, %r13
-	jnb	.L85
+	jnb	.L62
 	leaq	-8(%r14), %rdx
 	leaq	(%rdx,%rax,8), %rbx
 	leaq	(%rdx,%r13,8), %r15
-	jmp	.L80
+	jmp	.L57
 	.p2align 4,,10
 	.p2align 3
-.L81:
+.L58:
 	subq	$8, %rbx
 	cmpq	%r15, %rbx
-	je	.L79
-.L80:
+	je	.L56
+.L57:
 	movq	(%rbx), %rdi
 	movq	$0, (%rbx)
 	cmpq	$63, %rdi
-	jbe	.L81
+	jbe	.L58
 	subq	$8, %rbx
 	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
 	cmpq	%r15, %rbx
-	jne	.L80
-.L79:
+	jne	.L57
+.L56:
 	movq	(%r14), %rdi
 	cmpq	$63, %rdi
-	jbe	.L82
+	jbe	.L59
 	testq	%r13, %r13
-	je	.L83
+	je	.L60
 	leaq	-8(%r14), %rdx
 	leaq	(%rdx,%r13,8), %rax
 	.p2align 4,,10
 	.p2align 3
-.L84:
+.L61:
 	movq	$0, (%rax)
 	subq	$8, %rax
 	cmpq	%rax, %rdx
-	jne	.L84
-.L83:
+	jne	.L61
+.L60:
 	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
-.L82:
+.L59:
 	movq	%r12, %rdi
 	call	_ZN3tbb8internal25concurrent_vector_base_v3D2Ev@PLT
 	addq	$8, %rsp
@@ -718,17 +542,18 @@ _ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_al
 	jmp	_ZdlPvm@PLT
 	.p2align 4,,10
 	.p2align 3
-.L85:
+.L62:
 	.cfi_restore_state
 	movq	%rax, %r13
-	jmp	.L79
+	jmp	.L56
 	.p2align 4,,10
 	.p2align 3
-.L76:
+.L53:
 	call	*%rdx
-	jmp	.L78
+	jmp	.L55
 	.cfi_endproc
 .LFE6655:
+	.globl	__gxx_personality_v0
 	.section	.gcc_except_table._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED0Ev,"aG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
 .LLSDA6655:
 	.byte	0xff
@@ -736,20 +561,160 @@ _ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_al
 	.byte	0x1
 	.uleb128 .LLSDACSE6655-.LLSDACSB6655
 .LLSDACSB6655:
-	.uleb128 .LEHB1-.LFB6655
-	.uleb128 .LEHE1-.LEHB1
+	.uleb128 .LEHB0-.LFB6655
+	.uleb128 .LEHE0-.LEHB0
 	.uleb128 0
 	.uleb128 0
 .LLSDACSE6655:
 	.section	.text._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED0Ev,"axG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
 	.size	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED0Ev, .-_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED0Ev
-	.section	.text._ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb,"axG",@progbits,_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb,comdat
+	.section	.text._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev,"axG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
 	.align 2
 	.p2align 4,,15
-	.weak	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
-	.type	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb, @function
-_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb:
-.LFB5515:
+	.weak	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev
+	.type	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev, @function
+_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev:
+.LFB6653:
+	.cfi_startproc
+	.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
+	.cfi_lsda 0x1b,.LLSDA6653
+	pushq	%r14
+	.cfi_def_cfa_offset 16
+	.cfi_offset 14, -16
+	pushq	%r13
+	.cfi_def_cfa_offset 24
+	.cfi_offset 13, -24
+	leaq	16+_ZTVN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EEE(%rip), %rax
+	pushq	%r12
+	.cfi_def_cfa_offset 32
+	.cfi_offset 12, -32
+	pushq	%rbp
+	.cfi_def_cfa_offset 40
+	.cfi_offset 6, -40
+	pushq	%rbx
+	.cfi_def_cfa_offset 48
+	.cfi_offset 3, -48
+	movq	24(%rdi), %rbp
+	movq	%rdi, %rbx
+	movq	%rax, (%rdi)
+	testq	%rbp, %rbp
+	je	.L76
+	movq	0(%rbp), %rax
+	leaq	_ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_by_argsIS3_JjEEEE7destroyEv(%rip), %rcx
+	movq	%rbp, %rdi
+	movq	8(%rax), %rdx
+	cmpq	%rcx, %rdx
+	jne	.L74
+	call	*16(%rax)
+	movq	%rbp, %rdi
+.LEHB1:
+	call	_ZN3tbb8internal25deallocate_via_handler_v3EPv@PLT
+.LEHE1:
+	jmp	.L76
+	.p2align 4,,10
+	.p2align 3
+.L92:
+	movq	(%rdi), %rax
+	movq	%rax, 8(%rbx)
+	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
+.L76:
+	movq	8(%rbx), %rdi
+	testq	%rdi, %rdi
+	jne	.L92
+	movq	$0, 16(%rbx)
+	leaq	40(%rbx), %rbp
+	movq	64(%rbx), %r13
+	movq	48(%rbx), %r12
+	leaq	_ZN3tbb17concurrent_vectorINS_8internal6paddedINS_10interface68internal11ets_elementI17thread_local_varsEELm128EEENS_23cache_aligned_allocatorIS8_EEE13destroy_arrayEPvm(%rip), %rsi
+	movq	%rbp, %rdi
+	call	_ZN3tbb8internal25concurrent_vector_base_v314internal_clearEPFvPvmE@PLT
+	cmpq	%rax, %r12
+	jnb	.L83
+	leaq	-8(%r13), %rdx
+	leaq	(%rdx,%rax,8), %rbx
+	leaq	(%rdx,%r12,8), %r14
+	jmp	.L78
+	.p2align 4,,10
+	.p2align 3
+.L79:
+	subq	$8, %rbx
+	cmpq	%r14, %rbx
+	je	.L77
+.L78:
+	movq	(%rbx), %rdi
+	movq	$0, (%rbx)
+	cmpq	$63, %rdi
+	jbe	.L79
+	subq	$8, %rbx
+	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
+	cmpq	%r14, %rbx
+	jne	.L78
+.L77:
+	movq	0(%r13), %rdi
+	cmpq	$63, %rdi
+	jbe	.L80
+	testq	%r12, %r12
+	je	.L81
+	leaq	-8(%r13), %rdx
+	leaq	(%rdx,%r12,8), %rax
+	.p2align 4,,10
+	.p2align 3
+.L82:
+	movq	$0, (%rax)
+	subq	$8, %rax
+	cmpq	%rax, %rdx
+	jne	.L82
+.L81:
+	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
+.L80:
+	popq	%rbx
+	.cfi_remember_state
+	.cfi_def_cfa_offset 40
+	movq	%rbp, %rdi
+	popq	%rbp
+	.cfi_def_cfa_offset 32
+	popq	%r12
+	.cfi_def_cfa_offset 24
+	popq	%r13
+	.cfi_def_cfa_offset 16
+	popq	%r14
+	.cfi_def_cfa_offset 8
+	jmp	_ZN3tbb8internal25concurrent_vector_base_v3D2Ev@PLT
+	.p2align 4,,10
+	.p2align 3
+.L83:
+	.cfi_restore_state
+	movq	%rax, %r12
+	jmp	.L77
+	.p2align 4,,10
+	.p2align 3
+.L74:
+	call	*%rdx
+	jmp	.L76
+	.cfi_endproc
+.LFE6653:
+	.section	.gcc_except_table._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev,"aG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
+.LLSDA6653:
+	.byte	0xff
+	.byte	0xff
+	.byte	0x1
+	.uleb128 .LLSDACSE6653-.LLSDACSB6653
+.LLSDACSB6653:
+	.uleb128 .LEHB1-.LFB6653
+	.uleb128 .LEHE1-.LEHB1
+	.uleb128 0
+	.uleb128 0
+.LLSDACSE6653:
+	.section	.text._ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev,"axG",@progbits,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED5Ev,comdat
+	.size	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev, .-_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev
+	.weak	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED1Ev
+	.set	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED1Ev,_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EED2Ev
+	.text
+	.align 2
+	.p2align 4,,15
+	.type	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128, @function
+_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128:
+.LFB6983:
 	.cfi_startproc
 	pushq	%r15
 	.cfi_def_cfa_offset 16
@@ -763,74 +728,68 @@ _ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookup
 	pushq	%r12
 	.cfi_def_cfa_offset 40
 	.cfi_offset 12, -40
-	movq	%rdi, %r13
 	pushq	%rbp
 	.cfi_def_cfa_offset 48
 	.cfi_offset 6, -48
 	pushq	%rbx
 	.cfi_def_cfa_offset 56
 	.cfi_offset 3, -56
-	movq	%rsi, %r12
+	movq	%rdi, %rbp
 	subq	$24, %rsp
 	.cfi_def_cfa_offset 80
 	call	_ZN3tbb8internal16thread_get_id_v3Ev@PLT
 	movabsq	$-7046029254386353131, %rdx
-	movq	%rax, %rbp
-	movq	8(%r13), %rsi
-	movq	%rdx, %rbx
-	imulq	%rax, %rbx
-	testq	%rsi, %rsi
-	je	.L96
+	movq	%rax, %rbx
+	imulq	%rax, %rdx
+	movq	%rdx, %r12
+	movq	8+local_thread_vars(%rip), %rdx
+	testq	%rdx, %rdx
+	je	.L94
 	movl	$64, %r8d
 	movq	$-1, %r9
-.L105:
-	movq	8(%rsi), %rdi
+.L103:
+	movq	8(%rdx), %rdi
 	movl	%r8d, %ecx
-	movq	%rbx, %rax
+	movq	%r12, %rax
 	subl	%edi, %ecx
 	shrq	%cl, %rax
 	addq	$1, %rax
-	movq	%rax, %rdx
-	salq	$4, %rdx
-	addq	%rsi, %rdx
-	movq	(%rdx), %rcx
-	testq	%rcx, %rcx
-	je	.L97
-	cmpq	%rcx, %rbp
-	je	.L98
+	movq	%rax, %rcx
+	salq	$4, %rcx
+	addq	%rdx, %rcx
+	movq	(%rcx), %rsi
+	testq	%rsi, %rsi
+	je	.L95
+	cmpq	%rsi, %rbx
+	je	.L96
 	movl	%edi, %ecx
-	movq	%r9, %rdx
-	salq	%cl, %rdx
-	movq	%rdx, %rdi
+	movq	%r9, %rsi
+	salq	%cl, %rsi
+	movq	%rsi, %rdi
 	notq	%rdi
-	jmp	.L100
+	jmp	.L98
 	.p2align 4,,10
 	.p2align 3
-.L104:
-	cmpq	%rcx, %rbp
-	je	.L98
-.L100:
+.L102:
+	cmpq	%rsi, %rbx
+	je	.L96
+.L98:
 	andq	%rdi, %rax
 	addq	$1, %rax
-	movq	%rax, %rdx
-	salq	$4, %rdx
-	addq	%rsi, %rdx
-	movq	(%rdx), %rcx
-	testq	%rcx, %rcx
-	jne	.L104
-.L97:
-	movq	(%rsi), %rsi
+	movq	%rax, %rcx
+	salq	$4, %rcx
+	addq	%rdx, %rcx
+	movq	(%rcx), %rsi
 	testq	%rsi, %rsi
-	jne	.L105
-.L96:
-	movq	0(%r13), %rax
-	leaq	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EE12create_localEv(%rip), %rdx
-	movb	$0, (%r12)
-	movq	(%rax), %rax
-	cmpq	%rdx, %rax
-	jne	.L106
-	leaq	40(%r13), %rdi
+	jne	.L102
+.L95:
+	movq	(%rdx), %rdx
+	testq	%rdx, %rdx
+	jne	.L103
+.L94:
 	leaq	_ZN3tbb17concurrent_vectorINS_8internal6paddedINS_10interface68internal11ets_elementI17thread_local_varsEELm128EEENS_23cache_aligned_allocatorIS8_EEE16initialize_arrayEPvPKvm(%rip), %rcx
+	leaq	40+local_thread_vars(%rip), %rdi
+	movb	$0, 0(%rbp)
 	xorl	%r8d, %r8d
 	movl	$128, %edx
 	movl	$1, %esi
@@ -842,155 +801,140 @@ _ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookup
 	xorq	$63, %rdx
 	movslq	%edx, %rdx
 	subq	%rdx, %rcx
-	movq	64(%r13), %rdx
+	movq	64+local_thread_vars(%rip), %rdx
 	movl	$1, %esi
 	leaq	(%rdx,%rcx,8), %rdx
-	movq	24(%r13), %rdi
+	movq	24+local_thread_vars(%rip), %rdi
 	salq	%cl, %rsi
 	movq	(%rdx), %rdx
 	andq	$-2, %rsi
 	subq	%rsi, %rax
 	salq	$7, %rax
-	leaq	(%rdx,%rax), %r14
+	leaq	(%rdx,%rax), %r13
 	movq	(%rdi), %rax
 	leaq	_ZN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_by_argsIS3_JjEEEE9constructEPv(%rip), %rdx
-	movq	%r14, %r12
+	movq	%r13, %rbp
 	movq	32(%rax), %rax
 	cmpq	%rdx, %rax
-	jne	.L107
-	testq	%r14, %r14
-	je	.L108
+	jne	.L104
+	testq	%r13, %r13
+	je	.L105
 	movl	8(%rdi), %eax
-	movq	$0, 4(%r14)
-	movq	$0, 16(%r14)
-	movq	$0, 24(%r14)
-	movq	$0, 32(%r14)
-	movl	%eax, (%r14)
-.L108:
-	movb	$1, 40(%r14)
-.L109:
-	movl	$1, %edx
-	lock xaddq	%rdx, 16(%r13)
-	movq	8(%r13), %r14
-	addq	$1, %rdx
-	testq	%r14, %r14
-	je	.L119
-	movq	8(%r14), %r15
-	movl	$1, %eax
-	movq	%rax, %rdi
-	movl	%r15d, %ecx
-	movl	%r15d, %r9d
-	salq	%cl, %rdi
-	movq	%rdi, %rcx
-	shrq	%rcx
-	cmpq	%rdx, %rcx
-	jnb	.L103
-	leal	-1(%r15), %ecx
-	salq	%cl, %rax
-.L110:
-	cmpq	%rax, %rdx
-	jbe	.L111
+	movq	$0, 8(%r13)
+	movl	$0, 16(%r13)
+	movq	$0, 24(%r13)
+	movq	$0, 32(%r13)
+	movq	$0, 40(%r13)
+	movl	%eax, 0(%r13)
+.L105:
+	movb	$1, 48(%r13)
 	movl	$1, %esi
+	lock xaddq	%rsi, 16+local_thread_vars(%rip)
+	movq	8+local_thread_vars(%rip), %r13
+	addq	$1, %rsi
+	testq	%r13, %r13
+	je	.L112
+	movq	8(%r13), %r14
+	movl	$1, %edx
+	movq	%rdx, %rax
+	movl	%r14d, %ecx
+	movl	%r14d, %r8d
+	salq	%cl, %rax
+	movq	%rax, %rcx
+	shrq	%rcx
+	cmpq	%rcx, %rsi
+	jbe	.L101
+	leal	-1(%r14), %ecx
+	salq	%cl, %rdx
+.L106:
+	cmpq	%rdx, %rsi
+	jbe	.L107
+	movl	$1, %eax
 	.p2align 4,,10
 	.p2align 3
-.L112:
-	addq	$1, %r15
-	movq	%rsi, %rax
-	leal	-1(%r15), %ecx
-	movl	%r15d, %r9d
+.L108:
+	addq	$1, %r14
+	movq	%rax, %rdx
+	leal	-1(%r14), %ecx
+	movl	%r14d, %r8d
+	salq	%cl, %rdx
+	cmpq	%rdx, %rsi
+	ja	.L108
+	movl	%r14d, %ecx
 	salq	%cl, %rax
-	cmpq	%rdx, %rax
-	jb	.L112
-.L111:
-	movq	0(%r13), %rax
-	movl	%r9d, %ecx
-	movl	%r9d, 8(%rsp)
-	movq	8(%rax), %rdx
-	movl	$1, %eax
-	salq	%cl, %rax
-	leaq	1(%rax), %rdi
-	leaq	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EE12create_arrayEm(%rip), %rax
-	salq	$4, %rdi
-	cmpq	%rax, %rdx
-	jne	.L113
-	shrq	$3, %rdi
+.L107:
+	salq	$4, %rax
 	xorl	%edx, %edx
 	movl	$8, %esi
+	leaq	23(%rax), %rdi
+	movl	%r8d, 12(%rsp)
+	shrq	$3, %rdi
 	call	_ZN3tbb8internal12NFS_AllocateEmmPv@PLT
-	movl	8(%rsp), %r9d
-	movq	%rax, %r8
-.L114:
-	movl	%r9d, %ecx
-	leaq	16(%r8), %rdi
+	movl	12(%rsp), %r8d
 	movl	$16, %edx
-	movq	%r15, 8(%r8)
-	salq	%cl, %rdx
+	leaq	16(%rax), %rdi
+	movq	%r14, 8(%rax)
 	xorl	%esi, %esi
-	movq	%r8, 8(%rsp)
+	movq	%rax, %r15
+	movl	%r8d, %ecx
+	salq	%cl, %rdx
 	call	memset@PLT
-	movq	8(%rsp), %r8
-	leaq	8(%r13), %rdx
 	.p2align 4,,10
 	.p2align 3
-.L115:
-	movq	%r14, %rax
-	movq	%r14, (%r8)
-	lock cmpxchgq	%r8, (%rdx)
-	cmpq	%rax, %r14
-	je	.L103
-	cmpq	%r15, 8(%rax)
-	movq	%rax, %r14
-	jb	.L115
-	movq	0(%r13), %rax
-	leaq	_ZN3tbb10interface626enumerable_thread_specificI17thread_local_varsNS_23cache_aligned_allocatorIS2_EELNS_18ets_key_usage_typeE1EE10free_arrayEPvm(%rip), %rdx
-	movq	16(%rax), %rax
-	cmpq	%rdx, %rax
-	jne	.L116
-	movq	%r8, %rdi
+.L109:
+	movq	%r13, %rax
+	movq	%r13, (%r15)
+	lock cmpxchgq	%r15, 8+local_thread_vars(%rip)
+	cmpq	%rax, %r13
+	je	.L101
+	cmpq	%r14, 8(%rax)
+	movq	%rax, %r13
+	jb	.L109
+	movq	%r15, %rdi
 	call	_ZN3tbb8internal8NFS_FreeEPv@PLT
-	jmp	.L103
+	jmp	.L101
 	.p2align 4,,10
 	.p2align 3
-.L98:
-	movq	8(%r13), %rax
-	cmpq	%rax, %rsi
-	movb	$1, (%r12)
-	movq	8(%rdx), %r12
-	je	.L95
-.L103:
-	movq	8(%r13), %rdi
+.L96:
+	movq	8+local_thread_vars(%rip), %rax
+	cmpq	%rax, %rdx
+	movb	$1, 0(%rbp)
+	movq	8(%rcx), %rbp
+	je	.L93
+.L101:
+	movq	8+local_thread_vars(%rip), %rdi
 	movq	8(%rdi), %rax
 	movl	$64, %ecx
+	movq	%r12, %rdx
 	movq	$-1, %rsi
 	xorl	%r8d, %r8d
 	subl	%eax, %ecx
-	shrq	%cl, %rbx
+	shrq	%cl, %rdx
 	movl	%eax, %ecx
 	salq	%cl, %rsi
-	movq	%rbx, %rdx
 	notq	%rsi
-	jmp	.L118
+	jmp	.L111
 	.p2align 4,,10
 	.p2align 3
-.L117:
+.L110:
 	andq	%rsi, %rdx
-.L118:
+.L111:
 	addq	$1, %rdx
 	movq	%rdx, %rcx
 	salq	$4, %rcx
 	addq	%rdi, %rcx
 	cmpq	$0, (%rcx)
-	jne	.L117
+	jne	.L110
 	movq	%r8, %rax
-	lock cmpxchgq	%rbp, (%rcx)
+	lock cmpxchgq	%rbx, (%rcx)
 	testq	%rax, %rax
-	jne	.L117
-	movq	%r12, 8(%rcx)
-.L95:
+	jne	.L110
+	movq	%rbp, 8(%rcx)
+.L93:
 	addq	$24, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
-	movq	%r12, %rax
+	movq	%rbp, %rax
 	popq	%rbx
 	.cfi_def_cfa_offset 48
 	popq	%rbp
@@ -1004,41 +948,20 @@ _ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookup
 	popq	%r15
 	.cfi_def_cfa_offset 8
 	ret
-.L119:
+.L112:
 	.cfi_restore_state
-	movl	$2, %eax
-	movl	$2, %r9d
-	movl	$2, %r15d
-	jmp	.L110
-.L116:
-	movq	8(%r8), %rcx
-	movl	$1, %edx
-	movq	%r8, %rsi
-	movq	%r13, %rdi
-	salq	%cl, %rdx
-	addq	$1, %rdx
-	salq	$4, %rdx
+	movl	$4, %eax
+	movl	$2, %r8d
+	movl	$2, %edx
+	movl	$2, %r14d
+	jmp	.L106
+.L104:
+	movq	%r13, %rsi
 	call	*%rax
-	jmp	.L103
-.L106:
-	movq	%r13, %rdi
-	call	*%rax
-	movq	%rax, %r12
-	jmp	.L109
-.L107:
-	movq	%r14, %rsi
-	call	*%rax
-	jmp	.L108
-.L113:
-	movq	%rdi, %rsi
-	movq	%r13, %rdi
-	call	*%rdx
-	movl	8(%rsp), %r9d
-	movq	%rax, %r8
-	jmp	.L114
+	jmp	.L105
 	.cfi_endproc
-.LFE5515:
-	.size	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb, .-_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
+.LFE6983:
+	.size	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128, .-_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128
 	.section	.text._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,"axG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,comdat
 	.align 2
 	.p2align 4,,15
@@ -1074,47 +997,43 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 248(%rsp)
 	xorl	%eax, %eax
 	cmpq	$0, 40(%rdi)
-	jne	.L136
+	jne	.L129
 	cmpb	$0, -11(%rdi)
 	movq	$1, 40(%rdi)
-	js	.L208
-.L137:
-	movq	8(%rbx), %rcx
-	movq	16(%rbx), %rsi
-	movq	%rcx, %rdi
-	movq	%rcx, %rax
-	movq	%rsi, %rdx
-	subq	%rsi, %rdi
-	cmpq	24(%rbx), %rdi
-	ja	.L170
-.L171:
+	js	.L203
+.L130:
+	movq	8(%rbx), %rax
+	movq	16(%rbx), %rdx
+	movq	%rax, %rcx
+	subq	%rdx, %rcx
+	cmpq	24(%rbx), %rcx
+	ja	.L162
+.L163:
 	cmpq	%rdx, %rax
-	je	.L166
+	je	.L158
 	subq	%rdx, %rax
 	leaq	31(%rsp), %r13
-	leaq	local_thread_vars(%rip), %r14
-	movq	%rax, %rbx
 	xorl	%ebp, %ebp
+	movq	%rax, %rbx
 	.p2align 4,,10
 	.p2align 3
-.L150:
-	movq	%r13, %rsi
-	movq	%r14, %rdi
+.L142:
+	movq	%r13, %rdi
 	addq	$1, %rbp
 .LEHB2:
-	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
-	movq	16(%rax), %rdi
+	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128
+	movq	24(%rax), %rdi
 	movq	%rax, %r12
 	call	free@PLT
-	movq	32(%r12), %rdi
+	movq	40(%r12), %rdi
 	call	free@PLT
 	cmpq	%rbp, %rbx
-	jne	.L150
-.L166:
+	jne	.L142
+.L158:
 	xorl	%eax, %eax
 	movq	248(%rsp), %rbx
 	xorq	%fs:40, %rbx
-	jne	.L209
+	jne	.L204
 	addq	$264, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
@@ -1133,11 +1052,11 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L208:
+.L203:
 	.cfi_restore_state
 	movq	-32(%rdi), %rax
 	cmpl	$1, -24(%rax)
-	jle	.L137
+	jle	.L130
 	movb	$1, 8(%rax)
 	movzbl	52(%rdi), %edx
 	leal	1(%rdx), %eax
@@ -1147,29 +1066,27 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movb	%al, 52(%rdi)
 	.p2align 4,,10
 	.p2align 3
-.L136:
-	movq	8(%rbx), %rcx
-	movq	16(%rbx), %rsi
-	movq	%rcx, %rdi
-	movq	%rcx, %rax
-	movq	%rsi, %rdx
-	subq	%rsi, %rdi
-	cmpq	%rdi, 24(%rbx)
-	jnb	.L171
-	movq	40(%rbx), %r8
-	cmpq	$1, %r8
-	jbe	.L210
-.L140:
-	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rbp
-	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %r12
-	jmp	.L145
-	.p2align 4,,10
-	.p2align 3
-.L212:
+.L129:
+	movq	8(%rbx), %rax
+	movq	16(%rbx), %rdx
+	movq	%rax, %rcx
+	subq	%rdx, %rcx
+	cmpq	%rcx, 24(%rbx)
+	jnb	.L163
 	movq	40(%rbx), %rcx
 	cmpq	$1, %rcx
-	jbe	.L211
-.L145:
+	jbe	.L205
+.L133:
+	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rbp
+	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %r12
+	jmp	.L137
+	.p2align 4,,10
+	.p2align 3
+.L207:
+	movq	40(%rbx), %rcx
+	cmpq	$1, %rcx
+	jbe	.L206
+.L137:
 	movl	$16, %esi
 	movq	%rbx, %rdi
 	call	_ZNK3tbb8internal27allocate_continuation_proxy8allocateEm@PLT
@@ -1182,7 +1099,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	$2, -24(%rax)
 	call	_ZNK3tbb8internal20allocate_child_proxy8allocateEm@PLT
 	testq	%rax, %rax
-	je	.L144
+	je	.L136
 	movb	$1, -11(%rax)
 	movq	8(%rbx), %rdx
 	movq	%r12, (%rax)
@@ -1208,7 +1125,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movl	$2, 48(%rax)
 	movzbl	52(%rbx), %edx
 	movb	%dl, 52(%rax)
-.L144:
+.L136:
 	movq	-40(%rax), %rdi
 	leaq	-8(%rax), %rdx
 	movq	%rax, %rsi
@@ -1220,27 +1137,27 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, %rcx
 	subq	%rdx, %rcx
 	cmpq	%rcx, 24(%rbx)
-	jb	.L212
-	jmp	.L171
+	jb	.L207
+	jmp	.L163
 	.p2align 4,,10
 	.p2align 3
-.L211:
+.L206:
 	testq	%rcx, %rcx
 	movzbl	52(%rbx), %edi
-	je	.L141
+	je	.L134
 	testb	%dil, %dil
-	je	.L171
+	je	.L163
 	subl	$1, %edi
 	movq	$0, 40(%rbx)
 	movb	%dil, 52(%rbx)
-	jmp	.L145
-.L210:
-	testq	%r8, %r8
+	jmp	.L137
+.L205:
+	testq	%rcx, %rcx
 	movzbl	52(%rbx), %edi
-	jne	.L170
-.L141:
+	jne	.L162
+.L134:
 	testb	%dil, %dil
-	je	.L171
+	je	.L163
 	movdqu	8(%rbx), %xmm0
 	leaq	48(%rsp), %rbp
 	movl	$1, %r14d
@@ -1250,32 +1167,32 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 64(%rsp)
 	.p2align 4,,10
 	.p2align 3
-.L149:
+.L141:
 	cmpb	$7, %r14b
-	ja	.L154
+	ja	.L146
 	movzbl	32(%rsp), %eax
 	movslq	%eax, %r8
 	cmpb	%dil, 35(%rsp,%r8)
-	jnb	.L154
+	jnb	.L146
 	leaq	(%rax,%rax,2), %rdx
 	leaq	0(%rbp,%rdx,8), %rdx
 	movq	(%rdx), %rcx
 	subq	8(%rdx), %rcx
 	cmpq	16(%rdx), %rcx
-	ja	.L155
-	jmp	.L154
+	ja	.L147
+	jmp	.L146
 	.p2align 4,,10
 	.p2align 3
-.L157:
+.L149:
 	cmpb	%dil, %dl
-	jnb	.L154
+	jnb	.L146
 	leaq	(%rcx,%rcx,2), %rdx
 	leaq	0(%rbp,%rdx,8), %rdx
 	movq	(%rdx), %rcx
 	subq	8(%rdx), %rcx
 	cmpq	%rcx, 16(%rdx)
-	jnb	.L154
-.L155:
+	jnb	.L146
+.L147:
 	addl	$1, %eax
 	andl	$7, %eax
 	movl	%eax, %ecx
@@ -1284,13 +1201,13 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	leaq	(%rax,%rax,2), %rax
 	leaq	0(%rbp,%rax,8), %rax
 	testq	%rax, %rax
-	je	.L156
+	je	.L148
 	movdqu	(%rdx), %xmm0
 	movups	%xmm0, (%rax)
 	movq	16(%rdx), %rcx
 	movq	%rcx, 16(%rax)
 	movzbl	32(%rsp), %ecx
-.L156:
+.L148:
 	movzbl	%cl, %eax
 	leaq	(%rax,%rax,2), %rax
 	leaq	0(%rbp,%rax,8), %rax
@@ -1319,71 +1236,70 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movzbl	%cl, %r8d
 	movq	%r8, %rax
 	movb	%dl, 35(%rsp,%r8)
-	jbe	.L157
-.L154:
+	jbe	.L149
+.L146:
 	movq	-32(%rbx), %rax
 	movzbl	8(%rax), %eax
 	testb	%al, %al
-	je	.L213
+	je	.L208
 	movzbl	52(%rbx), %eax
 	movzbl	34(%rsp), %r14d
 	addl	$1, %eax
 	cmpb	$1, %r14b
 	movb	%al, 52(%rbx)
-	ja	.L214
+	ja	.L209
 	movzbl	32(%rsp), %edx
-	movq	%rdx, %rdi
+	movq	%rdx, %rsi
 	movb	%dl, 15(%rsp)
 	leaq	(%rdx,%rdx,2), %rdx
-	movzbl	%dil, %ecx
+	movzbl	%sil, %ecx
 	leaq	0(%rbp,%rdx,8), %rdx
 	cmpb	35(%rsp,%rcx), %al
-	movq	(%rdx), %rsi
+	movq	(%rdx), %rdi
 	movq	8(%rdx), %r12
-	movq	%rsi, (%rsp)
-	jbe	.L158
-	movq	%rsi, %rax
+	movq	%rdi, (%rsp)
+	jbe	.L150
+	movq	%rdi, %rax
 	subq	%r12, %rax
 	cmpq	%rax, 16(%rdx)
-	jb	.L161
-.L158:
+	jb	.L153
+.L150:
 	cmpq	%r12, (%rsp)
-	je	.L162
+	je	.L154
 	leaq	31(%rsp), %r13
 	.p2align 4,,10
 	.p2align 3
-.L163:
-	leaq	local_thread_vars(%rip), %rdi
-	movq	%r13, %rsi
+.L155:
+	movq	%r13, %rdi
 .LEHB3:
-	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
-	movq	16(%rax), %rdi
+	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128
+	movq	24(%rax), %rdi
 	movq	%rax, %r15
 	addq	$1, %r12
 	call	free@PLT
-	movq	32(%r15), %rdi
+	movq	40(%r15), %rdi
 	call	free@PLT
 	cmpq	%r12, (%rsp)
-	jne	.L163
-.L162:
+	jne	.L155
+.L154:
 	movzbl	15(%rsp), %eax
 	subl	$1, %r14d
 	movb	%r14b, 34(%rsp)
 	addl	$7, %eax
 	andl	$7, %eax
 	movb	%al, 32(%rsp)
-.L161:
+.L153:
 	testb	%r14b, %r14b
-	je	.L166
+	je	.L158
 	movq	-56(%rbx), %rdi
 	call	_ZNK3tbb18task_group_context28is_group_execution_cancelledEv@PLT
 	testb	%al, %al
-	jne	.L166
+	jne	.L158
 	movzbl	52(%rbx), %edi
-	jmp	.L149
+	jmp	.L141
 	.p2align 4,,10
 	.p2align 3
-.L213:
+.L208:
 	movzbl	32(%rsp), %eax
 	movzbl	34(%rsp), %r14d
 	movb	%al, 15(%rsp)
@@ -1392,19 +1308,19 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	(%rax), %rsi
 	movq	8(%rax), %r12
 	movq	%rsi, (%rsp)
-	jmp	.L158
+	jmp	.L150
 	.p2align 4,,10
 	.p2align 3
-.L214:
+.L209:
 	movzbl	33(%rsp), %eax
 	movl	$16, %esi
 	movq	%rbx, %rdi
 	movq	%rax, %r12
 	movzbl	35(%rsp,%rax), %r13d
 	call	_ZNK3tbb8internal27allocate_continuation_proxy8allocateEm@PLT
-	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rsi
+	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rdi
 	movb	$1, -11(%rax)
-	movq	%rsi, (%rax)
+	movq	%rdi, (%rax)
 	movl	$56, %esi
 	movb	$0, 8(%rax)
 	movq	%rax, %rdi
@@ -1412,7 +1328,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	$2, -24(%rax)
 	call	_ZNK3tbb8internal20allocate_child_proxy8allocateEm@PLT
 	testq	%rax, %rax
-	je	.L160
+	je	.L152
 	leaq	(%r12,%r12,2), %rdx
 	movb	$1, -11(%rax)
 	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rsi
@@ -1432,7 +1348,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movzbl	52(%rbx), %edx
 	subl	%r13d, %edx
 	movb	%dl, 52(%rax)
-.L160:
+.L152:
 	movq	-40(%rax), %rdi
 	leaq	-8(%rax), %rdx
 	movq	%rax, %rsi
@@ -1446,32 +1362,28 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	addl	$1, %eax
 	andl	$7, %eax
 	movb	%al, 33(%rsp)
-	jmp	.L161
+	jmp	.L153
 	.p2align 4,,10
 	.p2align 3
-.L170:
-	movzbl	52(%rbx), %eax
-	testb	%al, %al
-	je	.L215
-	subl	$1, %eax
+.L162:
+	movzbl	52(%rbx), %ecx
+	testb	%cl, %cl
+	je	.L163
+	subl	$1, %ecx
 	movq	$0, 40(%rbx)
-	movb	%al, 52(%rbx)
-	jmp	.L140
-.L215:
-	movq	%rcx, %rax
-	movq	%rsi, %rdx
-	jmp	.L171
-.L175:
-.L169:
+	movb	%cl, 52(%rbx)
+	jmp	.L133
+.L204:
+	call	__stack_chk_fail@PLT
+.L167:
+.L161:
 	movzbl	34(%rsp), %edx
 	testb	%dl, %dl
-	je	.L168
+	je	.L160
 	subl	$1, %edx
 	movb	%dl, 34(%rsp)
-	jmp	.L169
-.L209:
-	call	__stack_chk_fail@PLT
-.L168:
+	jmp	.L161
+.L160:
 	movq	%rax, %rdi
 .LEHB4:
 	call	_Unwind_Resume@PLT
@@ -1491,7 +1403,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	.uleb128 0
 	.uleb128 .LEHB3-.LFB6640
 	.uleb128 .LEHE3-.LEHB3
-	.uleb128 .L175-.LFB6640
+	.uleb128 .L167-.LFB6640
 	.uleb128 0
 	.uleb128 .LEHB4-.LFB6640
 	.uleb128 .LEHE4-.LEHB4
@@ -1501,10 +1413,10 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	.section	.text._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,"axG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,comdat
 	.size	_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv, .-_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv
 	.section	.rodata._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv.str1.1,"aMS",@progbits,1
-.LC4:
-	.string	"First Copy:  %.3f MiB/s\n"
-.LC5:
-	.string	"Second Copy: %.3f MiB/s\n"
+.LC0:
+	.string	"start"
+.LC1:
+	.string	"end"
 	.section	.text._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,"axG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,comdat
 	.align 2
 	.p2align 4,,15
@@ -1534,138 +1446,76 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	pushq	%rbx
 	.cfi_def_cfa_offset 56
 	.cfi_offset 3, -56
-	subq	$312, %rsp
-	.cfi_def_cfa_offset 368
+	subq	$280, %rsp
+	.cfi_def_cfa_offset 336
 	movq	%fs:40, %rax
-	movq	%rax, 296(%rsp)
+	movq	%rax, 264(%rsp)
 	xorl	%eax, %eax
 	cmpq	$0, 40(%rdi)
-	jne	.L217
+	jne	.L211
 	cmpb	$0, -11(%rdi)
 	movq	$1, 40(%rdi)
-	js	.L307
-.L218:
-	movq	8(%r12), %rdx
-	movq	16(%r12), %rcx
-	movq	%rdx, %rsi
-	movq	%rdx, %rbx
-	movq	%rcx, %rax
-	subq	%rcx, %rsi
-	cmpq	24(%r12), %rsi
-	ja	.L259
-.L260:
-	cmpq	%rbx, %rax
-	je	.L255
-	leaq	64(%rsp), %rbp
-	leaq	48(%rsp), %r13
+	js	.L302
+.L212:
+	movq	8(%r12), %rbx
+	movq	16(%r12), %rax
+	movq	%rbx, %rdx
+	subq	%rax, %rdx
+	cmpq	24(%r12), %rdx
+	ja	.L249
+.L250:
+	cmpq	%rax, %rbx
+	je	.L245
+	leaq	47(%rsp), %r13
 	subq	%rax, %rbx
-	xorl	%r12d, %r12d
-.L235:
-	leaq	local_thread_vars(%rip), %rdi
-	movq	%rbp, %rsi
+	xorl	%ebp, %ebp
+.L226:
+	movq	%r13, %rdi
 .LEHB5:
-	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
-	movq	16(%rax), %r15
-	movq	24(%rax), %r14
-	xorl	%eax, %eax
+	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128
+	movl	16(%rax), %r15d
+	leaq	.LC0(%rip), %rdi
+	movq	24(%rax), %r12
+	movq	40(%rax), %r14
+	call	puts@PLT
+	
+
+	testl	%r15d, %r15d
+	je	.L223
+	leal	-1(%r15), %eax
+	movl	$73, %esi
+	leaq	8(%r14,%rax,8), %rcx
 	.p2align 4,,10
 	.p2align 3
-.L231:
-	movq	$170, (%r15,%rax) # a[t]=0xaa;
-	movq	$170, (%r14,%rax) # b[t]=0xaa;
+.L225:
+	movq	%r14, %rax
+	.p2align 4,,10
+	.p2align 3
+.L224: # inner loop
+	movq	(%rax), %rdx		# heap - read offset
 	addq	$8, %rax
-	cmpq	$1073741824, %rax
-	jne	.L231
-	xorl	%esi, %esi
-	movq	%r13, %rdi
-	call	gettimeofday@PLT
+	addq	%r12, %rdx		# buffer + offset
+	cmpq	%rcx, %rax
+	movq	(%rdx), %rdx		# heap - read from buffer
+	jne	.L224
+	subl	$1, %esi
+	jne	.L225
+.L223:
+	leaq	.LC1(%rip), %rdi
+	addq	$1, %rbp
+	
+
+
+	call	puts@PLT
+.LEHE5:
+	cmpq	%rbp, %rbx
+	jne	.L226
+.L245:
 	xorl	%eax, %eax
-	.p2align 4,,10
-	.p2align 3
-.L232: # the actual for loop
-	movq	(%r15,%rax), %rcx
-	movq	%rcx, (%r14,%rax) # a[t] = b[t]
-	addq	$8, %rax # t++
-	cmpq	$1073741824, %rax
-	jne	.L232
-	xorl	%esi, %esi
-	movq	%rbp, %rdi
-	call	gettimeofday@PLT
-	imulq	$-1000000, 48(%rsp), %rdx
-	imulq	$1000000, 64(%rsp), %rax
-	pxor	%xmm0, %xmm0
-	leaq	.LC4(%rip), %rsi
-	movsd	.LC3(%rip), %xmm3
-	movl	$1, %edi
-	addq	%rdx, %rax
-	addq	72(%rsp), %rax
-	subq	56(%rsp), %rax
-	cvtsi2sdq	%rax, %xmm0
-	movl	$1, %eax
-	divsd	.LC2(%rip), %xmm0
-	divsd	%xmm0, %xmm3
-	movapd	%xmm3, %xmm0
-	call	__printf_chk@PLT
-	movl	$8, %esi
-	movl	$134217728, %edi
-	call	calloc@PLT
-	movl	$8, %esi
-	movl	$134217728, %edi
-	movq	%rax, %r14
-	call	calloc@PLT
-	movq	%rax, %r15
-	xorl	%eax, %eax
-	.p2align 4,,10
-	.p2align 3
-.L233:
-	movq	$170, (%r14,%rax)
-	movq	$170, (%r15,%rax)
-	addq	$8, %rax
-	cmpq	$1073741824, %rax
-	jne	.L233
-	xorl	%esi, %esi
-	movq	%r13, %rdi
-	call	gettimeofday@PLT
-	xorl	%eax, %eax
-	.p2align 4,,10
-	.p2align 3
-.L234:
-	movq	(%r14,%rax), %rcx
-	movq	%rcx, (%r15,%rax)
-	addq	$8, %rax
-	cmpq	$1073741824, %rax
-	jne	.L234
-	xorl	%esi, %esi
-	movq	%rbp, %rdi
-	addq	$1, %r12
-	call	gettimeofday@PLT
-	imulq	$-1000000, 48(%rsp), %rcx
-	imulq	$1000000, 64(%rsp), %rax
-	pxor	%xmm0, %xmm0
-	leaq	.LC5(%rip), %rsi
-	movsd	.LC3(%rip), %xmm4
-	movl	$1, %edi
-	addq	%rcx, %rax
-	addq	72(%rsp), %rax
-	subq	56(%rsp), %rax
-	cvtsi2sdq	%rax, %xmm0
-	movl	$1, %eax
-	divsd	.LC2(%rip), %xmm0
-	divsd	%xmm0, %xmm4
-	movapd	%xmm4, %xmm0
-	call	__printf_chk@PLT
-	movq	%r14, %rdi
-	call	free@PLT
-	movq	%r15, %rdi
-	call	free@PLT
-	cmpq	%r12, %rbx
-	jne	.L235
-.L255:
-	xorl	%eax, %eax
-	movq	296(%rsp), %rdi
+	movq	264(%rsp), %rdi
 	xorq	%fs:40, %rdi
-	jne	.L308
-	addq	$312, %rsp
+	jne	.L303
+	addq	$280, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
 	popq	%rbx
@@ -1681,46 +1531,212 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	popq	%r15
 	.cfi_def_cfa_offset 8
 	ret
-.L307:
+.L308:
 	.cfi_restore_state
-	movq	-32(%rdi), %rax
-	cmpl	$1, -24(%rax)
-	jle	.L218
-	movb	$1, 8(%rax)
-	movzbl	52(%rdi), %edx
-	leal	1(%rdx), %eax
+	testq	%rdx, %rdx
+	je	.L216
+.L249:
+	movzbl	52(%r12), %edx
 	testb	%dl, %dl
-	movl	$2, %edx
-	cmove	%edx, %eax
-	movb	%al, 52(%rdi)
-.L217:
-	movq	8(%r12), %rdx
-	movq	16(%r12), %rcx
-	movq	%rdx, %rsi
-	movq	%rdx, %rbx
-	movq	%rcx, %rax
-	subq	%rcx, %rsi
-	cmpq	%rsi, 24(%r12)
-	jnb	.L260
-	movq	40(%r12), %rsi
-	cmpq	$1, %rsi
-	jbe	.L309
-.L221:
-	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rbp
-	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %r13
-	jmp	.L226
+	je	.L216
+	subl	$1, %edx
+	movq	$0, 40(%r12)
+	movb	%dl, 52(%r12)
+	jmp	.L215
 	.p2align 4,,10
 	.p2align 3
-.L311:
-	movq	40(%r12), %rdx
-	cmpq	$1, %rdx
-	jbe	.L310
-.L226:
+.L216:
+	movzbl	52(%r12), %r9d
+	testb	%r9b, %r9b
+	je	.L250
+	movq	24(%r12), %rax
+	movl	$65536, 48(%rsp)
+	movl	$1, %r13d
+	movdqu	8(%r12), %xmm0
+	movq	%rax, 80(%rsp)
+	leaq	48(%rsp), %rax
+	movaps	%xmm0, 64(%rsp)
+	movq	%rax, 8(%rsp)
+	leaq	47(%rsp), %rax
+	movq	%rax, 24(%rsp)
+.L222:
+	cmpb	$7, %r13b
+	ja	.L230
+	movzbl	48(%rsp), %eax
+	movslq	%eax, %rdi
+	cmpb	%r9b, 51(%rsp,%rdi)
+	jnb	.L230
+	movq	8(%rsp), %rsi
+	leaq	(%rax,%rax,2), %rdx
+	leaq	16(%rsi), %r8
+	leaq	(%r8,%rdx,8), %rcx
+	movq	(%rcx), %rdx
+	subq	8(%rcx), %rdx
+	cmpq	16(%rcx), %rdx
+	ja	.L231
+	jmp	.L230
+	.p2align 4,,10
+	.p2align 3
+.L233:
+	cmpb	%r9b, %dl
+	jnb	.L230
+	leaq	(%rcx,%rcx,2), %rdx
+	leaq	(%r8,%rdx,8), %rcx
+	movq	(%rcx), %rdx
+	subq	8(%rcx), %rdx
+	cmpq	%rdx, 16(%rcx)
+	jnb	.L230
+.L231:
+	addl	$1, %eax
+	andl	$7, %eax
+	movl	%eax, %edx
+	movb	%al, 48(%rsp)
+	cltq
+	leaq	(%rax,%rax,2), %rax
+	leaq	(%r8,%rax,8), %rax
+	testq	%rax, %rax
+	je	.L232
+	movdqu	(%rcx), %xmm0
+	movups	%xmm0, (%rax)
+	movq	16(%rcx), %rdx
+	movq	%rdx, 16(%rax)
+	movzbl	48(%rsp), %edx
+.L232:
+	movzbl	%dl, %eax
+	leaq	(%rax,%rax,2), %rax
+	leaq	(%r8,%rax,8), %rax
+	movq	(%rax), %rdx
+	movq	%rdx, (%rcx)
+	movq	(%rax), %r10
+	movq	8(%rax), %rdx
+	subq	%rdx, %r10
+	movq	%r10, %rsi
+	shrq	$63, %rsi
+	addq	%r10, %rsi
+	sarq	%rsi
+	addq	%rsi, %rdx
+	movq	%rdx, (%rax)
+	movq	%rdx, 8(%rcx)
+	movq	16(%rax), %rax
+	movzbl	50(%rsp), %esi
+	movq	%rax, 16(%rcx)
+	movzbl	51(%rsp,%rdi), %eax
+	movzbl	48(%rsp), %ecx
+	addl	$1, %esi
+	cmpb	$7, %sil
+	movb	%sil, 50(%rsp)
+	leal	1(%rax), %edx
+	movb	%dl, 51(%rsp,%rdi)
+	movzbl	%cl, %edi
+	movq	%rdi, %rax
+	movb	%dl, 51(%rsp,%rdi)
+	jbe	.L233
+.L230:
+	movq	-32(%r12), %rax
+	movzbl	8(%rax), %eax
+	testb	%al, %al
+	je	.L304
+	movzbl	52(%r12), %eax
+	movzbl	50(%rsp), %r13d
+	addl	$1, %eax
+	cmpb	$1, %r13b
+	movb	%al, 52(%r12)
+	ja	.L305
+	movzbl	48(%rsp), %edx
+	movq	8(%rsp), %rdi
+	movq	%rdx, %r15
+	leaq	(%rdx,%rdx,2), %rdx
+	movzbl	%r15b, %ecx
+	leaq	16(%rdi,%rdx,8), %rdx
+	cmpb	51(%rsp,%rcx), %al
+	movq	(%rdx), %rdi
+	movq	8(%rdx), %r14
+	movq	%rdi, (%rsp)
+	jbe	.L301
+	movq	%rdi, %rax
+	subq	%r14, %rax
+	cmpq	%rax, 16(%rdx)
+	jnb	.L301
+.L237:
+	testb	%r13b, %r13b
+	je	.L245
+	movq	-56(%r12), %rdi
+.LEHB6:
+	call	_ZNK3tbb18task_group_context28is_group_execution_cancelledEv@PLT
+	testb	%al, %al
+	jne	.L245
+	movzbl	52(%r12), %r9d
+	jmp	.L222
+	.p2align 4,,10
+	.p2align 3
+.L307:
+	subl	$1, %esi
+	jne	.L241
+.L239:
+	leaq	.LC1(%rip), %rdi
+	call	puts@PLT
+	addq	$1, %r14
+.L301:
+	cmpq	%r14, (%rsp)
+	je	.L306
+	movq	24(%rsp), %rdi
+	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128
+	movq	24(%rax), %rbx
+	movq	40(%rax), %rbp
+	leaq	.LC0(%rip), %rdi
+	movl	16(%rax), %eax
+	movl	%eax, 20(%rsp)
+	call	puts@PLT
+	movl	20(%rsp), %eax
+	testl	%eax, %eax
+	je	.L239
+	subl	$1, %eax
+	movl	$73, %esi
+	leaq	8(%rbp,%rax,8), %rcx
+	.p2align 4,,10
+	.p2align 3
+.L241:
+	movq	%rbp, %rax
+	.p2align 4,,10
+	.p2align 3
+.L240:
+	movq	(%rax), %rdx
+	addq	$8, %rax
+	addq	%rbx, %rdx
+	cmpq	%rcx, %rax
+	movq	(%rdx), %rdx
+	jne	.L240
+	jmp	.L307
+.L306:
+	leal	7(%r15), %eax
+	subl	$1, %r13d
+	movb	%r13b, 50(%rsp)
+	andl	$7, %eax
+	movb	%al, 48(%rsp)
+	jmp	.L237
+.L304:
+	movzbl	48(%rsp), %eax
+	movq	8(%rsp), %rdi
+	movzbl	50(%rsp), %r13d
+	movq	%rax, %r15
+	leaq	(%rax,%rax,2), %rax
+	leaq	16(%rdi,%rax,8), %rax
+	movq	(%rax), %rdi
+	movq	8(%rax), %r14
+	movq	%rdi, (%rsp)
+	jmp	.L301
+.L305:
+	movzbl	49(%rsp), %edx
+	movq	8(%rsp), %rdi
 	movl	$16, %esi
+	leaq	(%rdx,%rdx,2), %rax
+	movzbl	51(%rsp,%rdx), %ebp
+	leaq	16(%rdi,%rax,8), %rbx
 	movq	%r12, %rdi
 	call	_ZNK3tbb8internal27allocate_continuation_proxy8allocateEm@PLT
+	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rdi
 	movb	$1, -11(%rax)
-	movq	%rbp, (%rax)
+	movq	%rdi, (%rax)
 	movl	$56, %esi
 	movb	$0, 8(%rax)
 	movq	%rax, %rdi
@@ -1728,10 +1744,80 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	$2, -24(%rax)
 	call	_ZNK3tbb8internal20allocate_child_proxy8allocateEm@PLT
 	testq	%rax, %rax
-	je	.L225
+	je	.L236
+	movq	16(%rbx), %rdx
+	movb	$1, -11(%rax)
+	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rdi
+	movdqu	(%rbx), %xmm0
+	movq	%rdi, (%rax)
+	movq	%rdx, 24(%rax)
+	movq	32(%r12), %rdx
+	movups	%xmm0, 8(%rax)
+	movq	%rdx, 32(%rax)
+	movq	40(%r12), %rdx
+	shrq	%rdx
+	movq	%rdx, 40(%r12)
+	movq	%rdx, 40(%rax)
+	movl	$2, 48(%rax)
+	movzbl	52(%r12), %edx
+	subl	%ebp, %edx
+	movb	%dl, 52(%rax)
+.L236:
+	movq	-40(%rax), %rdi
+	leaq	-8(%rax), %rdx
+	movq	%rax, %rsi
+	movq	(%rdi), %rcx
+	call	*(%rcx)
+.LEHE6:
+	movzbl	50(%rsp), %eax
+	leal	-1(%rax), %r13d
+	movzbl	49(%rsp), %eax
+	movb	%r13b, 50(%rsp)
+	addl	$1, %eax
+	andl	$7, %eax
+	movb	%al, 49(%rsp)
+	jmp	.L237
+.L302:
+	movq	-32(%rdi), %rax
+	cmpl	$1, -24(%rax)
+	jle	.L212
+	movb	$1, 8(%rax)
+	cmpb	$0, 52(%rdi)
+	jne	.L213
+	movb	$1, 52(%rdi)
+.L213:
+	addb	$1, 52(%r12)
+.L211:
+	movq	8(%r12), %rbx
+	movq	16(%r12), %rax
+	movq	%rbx, %rdx
+	subq	%rax, %rdx
+	cmpq	%rdx, 24(%r12)
+	jnb	.L250
+	movq	40(%r12), %rdx
+	cmpq	$1, %rdx
+	jbe	.L308
+.L215:
+	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %r13
+	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rbp
+.L218:
+	movl	$16, %esi
+	movq	%r12, %rdi
+.LEHB7:
+	call	_ZNK3tbb8internal27allocate_continuation_proxy8allocateEm@PLT
+	movb	$1, -11(%rax)
+	movq	%r13, (%rax)
+	movl	$56, %esi
+	movb	$0, 8(%rax)
+	movq	%rax, %rdi
+	movq	%rax, -32(%r12)
+	movq	$2, -24(%rax)
+	call	_ZNK3tbb8internal20allocate_child_proxy8allocateEm@PLT
+	testq	%rax, %rax
+	je	.L217
 	movb	$1, -11(%rax)
 	movq	8(%r12), %rdx
-	movq	%r13, (%rax)
+	movq	%rbp, (%rax)
 	movq	%rdx, 8(%rax)
 	movq	16(%r12), %rdx
 	movq	8(%r12), %rsi
@@ -1754,356 +1840,42 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movl	$2, 48(%rax)
 	movzbl	52(%r12), %edx
 	movb	%dl, 52(%rax)
-.L225:
+.L217:
 	movq	-40(%rax), %rdi
 	leaq	-8(%rax), %rdx
 	movq	%rax, %rsi
 	movq	(%rdi), %rcx
 	call	*(%rcx)
-.LEHE5:
 	movq	8(%r12), %rbx
 	movq	16(%r12), %rax
 	movq	%rbx, %rdx
 	subq	%rax, %rdx
 	cmpq	%rdx, 24(%r12)
-	jb	.L311
-	jmp	.L260
-.L310:
-	testq	%rdx, %rdx
-	movzbl	52(%r12), %r8d
-	je	.L222
-	testb	%r8b, %r8b
-	je	.L260
-	subl	$1, %r8d
-	movq	$0, 40(%r12)
-	movb	%r8b, 52(%r12)
-	jmp	.L226
-.L309:
-	testq	%rsi, %rsi
-	movzbl	52(%r12), %r8d
-	jne	.L259
-.L222:
-	testb	%r8b, %r8b
-	je	.L260
-	movq	24(%r12), %rax
-	movl	$65536, 80(%rsp)
-	movdqu	8(%r12), %xmm0
-	movb	$1, 30(%rsp)
-	movq	%rax, 112(%rsp)
-	leaq	80(%rsp), %rax
-	movaps	%xmm0, 96(%rsp)
-	movq	%rax, 16(%rsp)
-.L230:
-	cmpb	$7, 30(%rsp)
-	ja	.L239
-	movzbl	80(%rsp), %eax
-	movslq	%eax, %rdi
-	cmpb	%r8b, 83(%rsp,%rdi)
-	jnb	.L239
-	movq	16(%rsp), %rsi
-	leaq	(%rax,%rax,2), %rdx
-	leaq	16(%rsi), %r9
-	jmp	.L306
-	.p2align 4,,10
-	.p2align 3
-.L312:
-	addl	$1, %eax
-	andl	$7, %eax
-	movl	%eax, %ecx
-	movb	%al, 80(%rsp)
-	cltq
-	leaq	(%rax,%rax,2), %rax
-	leaq	(%r9,%rax,8), %rax
-	testq	%rax, %rax
-	je	.L241
-	movdqu	(%rdx), %xmm0
-	movups	%xmm0, (%rax)
-	movq	16(%rdx), %rcx
-	movq	%rcx, 16(%rax)
-	movzbl	80(%rsp), %ecx
-.L241:
-	movzbl	%cl, %eax
-	leaq	(%rax,%rax,2), %rax
-	leaq	(%r9,%rax,8), %rax
-	movq	(%rax), %rcx
-	movq	%rcx, (%rdx)
-	movq	8(%rax), %rsi
-	movq	(%rax), %r10
-	subq	%rsi, %r10
-	movq	%r10, %rcx
-	shrq	$63, %rcx
-	addq	%r10, %rcx
-	sarq	%rcx
-	addq	%rsi, %rcx
-	movq	%rcx, (%rax)
-	movq	%rcx, 8(%rdx)
-	movq	16(%rax), %rax
-	movzbl	82(%rsp), %esi
-	movzbl	80(%rsp), %ecx
-	movq	%rax, 16(%rdx)
-	movzbl	83(%rsp,%rdi), %eax
-	addl	$1, %esi
-	cmpb	$7, %sil
-	movb	%sil, 82(%rsp)
-	leal	1(%rax), %edx
-	movb	%dl, 83(%rsp,%rdi)
-	movzbl	%cl, %edi
-	movq	%rdi, %rax
-	movb	%dl, 83(%rsp,%rdi)
-	ja	.L239
-	cmpb	%r8b, %dl
-	jnb	.L239
-	leaq	(%rcx,%rcx,2), %rdx
-.L306:
-	leaq	(%r9,%rdx,8), %rdx
-	movq	(%rdx), %rcx
-	subq	8(%rdx), %rcx
-	cmpq	%rcx, 16(%rdx)
-	jb	.L312
-.L239:
-	movq	-32(%r12), %rax
-	movzbl	8(%rax), %eax
-	testb	%al, %al
-	je	.L313
-	movzbl	52(%r12), %eax
-	movzbl	82(%rsp), %edi
-	addl	$1, %eax
-	cmpb	$1, %dil
-	movb	%dil, 30(%rsp)
-	movb	%al, 52(%r12)
-	ja	.L314
-	movzbl	80(%rsp), %edx
-	movq	16(%rsp), %rsi
-	movq	%rdx, %rdi
-	movb	%dl, 31(%rsp)
-	leaq	(%rdx,%rdx,2), %rdx
-	movzbl	%dil, %ecx
-	leaq	16(%rsi,%rdx,8), %rdx
-	cmpb	83(%rsp,%rcx), %al
-	movq	(%rdx), %rsi
-	movq	8(%rdx), %r13
-	movq	%rsi, (%rsp)
-	jbe	.L243
-	movq	%rsi, %rax
-	subq	%r13, %rax
-	cmpq	%rax, 16(%rdx)
-	jb	.L246
-.L243:
-	cmpq	%r13, (%rsp)
-	je	.L247
-	leaq	47(%rsp), %rax
-	leaq	48(%rsp), %r14
-	leaq	64(%rsp), %r15
-	movq	%rax, 8(%rsp)
-	.p2align 4,,10
-	.p2align 3
-.L252:
-	movq	8(%rsp), %rsi
-	leaq	local_thread_vars(%rip), %rdi
-.LEHB6:
-	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
-	movq	16(%rax), %rbx
-	movq	24(%rax), %rbp
-	xorl	%eax, %eax
-	.p2align 4,,10
-	.p2align 3
-.L248:
-	movq	$170, (%rbx,%rax)
-	movq	$170, 0(%rbp,%rax)
-	addq	$8, %rax
-	cmpq	$1073741824, %rax
-	jne	.L248
-	xorl	%esi, %esi
-	movq	%r14, %rdi
-	call	gettimeofday@PLT
-	xorl	%eax, %eax
-	.p2align 4,,10
-	.p2align 3
-.L249:
-	movq	(%rbx,%rax), %rdx
-	movq	%rdx, 0(%rbp,%rax)
-	addq	$8, %rax
-	cmpq	$1073741824, %rax
-	jne	.L249
-	xorl	%esi, %esi
-	movq	%r15, %rdi
-	call	gettimeofday@PLT
-	imulq	$1000000, 64(%rsp), %rax
-	imulq	$-1000000, 48(%rsp), %rdx
-	pxor	%xmm0, %xmm0
-	leaq	.LC4(%rip), %rsi
-	movsd	.LC3(%rip), %xmm1
-	movl	$1, %edi
-	addq	%rdx, %rax
-	addq	72(%rsp), %rax
-	subq	56(%rsp), %rax
-	cvtsi2sdq	%rax, %xmm0
-	movl	$1, %eax
-	divsd	.LC2(%rip), %xmm0
-	divsd	%xmm0, %xmm1
-	movapd	%xmm1, %xmm0
-	call	__printf_chk@PLT
-	movl	$8, %esi
-	movl	$134217728, %edi
-	call	calloc@PLT
-	movl	$8, %esi
-	movl	$134217728, %edi
-	movq	%rax, %rbp
-	call	calloc@PLT
-	movq	%rax, %rbx
-	xorl	%eax, %eax
-	.p2align 4,,10
-	.p2align 3
-.L250:
-	movq	$170, 0(%rbp,%rax)
-	movq	$170, (%rbx,%rax)
-	addq	$8, %rax
-	cmpq	$1073741824, %rax
-	jne	.L250
-	xorl	%esi, %esi
-	movq	%r14, %rdi
-	call	gettimeofday@PLT
-	xorl	%eax, %eax
-	.p2align 4,,10
-	.p2align 3
-.L251:
-	movq	0(%rbp,%rax), %rdx
-	movq	%rdx, (%rbx,%rax)
-	addq	$8, %rax
-	cmpq	$1073741824, %rax
-	jne	.L251
-	xorl	%esi, %esi
-	movq	%r15, %rdi
-	call	gettimeofday@PLT
-	imulq	$1000000, 64(%rsp), %rax
-	imulq	$-1000000, 48(%rsp), %rdx
-	pxor	%xmm0, %xmm0
-	leaq	.LC5(%rip), %rsi
-	movsd	.LC3(%rip), %xmm2
-	movl	$1, %edi
-	addq	%rdx, %rax
-	addq	72(%rsp), %rax
-	subq	56(%rsp), %rax
-	cvtsi2sdq	%rax, %xmm0
-	movl	$1, %eax
-	divsd	.LC2(%rip), %xmm0
-	divsd	%xmm0, %xmm2
-	movapd	%xmm2, %xmm0
-	call	__printf_chk@PLT
-	movq	%rbp, %rdi
-	addq	$1, %r13
-	call	free@PLT
-	movq	%rbx, %rdi
-	call	free@PLT
-	cmpq	%r13, (%rsp)
-	jne	.L252
-.L247:
-	subb	$1, 30(%rsp)
-	movzbl	30(%rsp), %eax
-	movb	%al, 82(%rsp)
-	movzbl	31(%rsp), %eax
-	addl	$7, %eax
-	andl	$7, %eax
-	movb	%al, 80(%rsp)
-.L246:
-	cmpb	$0, 30(%rsp)
-	je	.L255
-	movq	-56(%r12), %rdi
-	call	_ZNK3tbb18task_group_context28is_group_execution_cancelledEv@PLT
-	testb	%al, %al
-	jne	.L255
-	movzbl	52(%r12), %r8d
-	jmp	.L230
-.L313:
-	movzbl	82(%rsp), %edi
-	movzbl	80(%rsp), %eax
-	movb	%dil, 30(%rsp)
-	movq	16(%rsp), %rdi
-	movb	%al, 31(%rsp)
-	leaq	(%rax,%rax,2), %rax
-	leaq	16(%rdi,%rax,8), %rax
-	movq	(%rax), %rdi
-	movq	8(%rax), %r13
-	movq	%rdi, (%rsp)
-	jmp	.L243
-.L314:
-	movzbl	81(%rsp), %edx
-	movq	16(%rsp), %rdi
-	movl	$16, %esi
-	leaq	(%rdx,%rdx,2), %rax
-	movzbl	83(%rsp,%rdx), %ebp
-	leaq	16(%rdi,%rax,8), %rbx
-	movq	%r12, %rdi
-	call	_ZNK3tbb8internal27allocate_continuation_proxy8allocateEm@PLT
-	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rdi
-	movb	$1, -11(%rax)
-	movq	%rdi, (%rax)
-	movl	$56, %esi
-	movb	$0, 8(%rax)
-	movq	%rax, %rdi
-	movq	%rax, -32(%r12)
-	movq	$2, -24(%rax)
-	call	_ZNK3tbb8internal20allocate_child_proxy8allocateEm@PLT
-	testq	%rax, %rax
-	je	.L245
-	movq	16(%rbx), %rdx
-	movb	$1, -11(%rax)
-	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rdi
-	movdqu	(%rbx), %xmm0
-	movq	%rdi, (%rax)
-	movq	%rdx, 24(%rax)
-	movq	32(%r12), %rdx
-	movups	%xmm0, 8(%rax)
-	movq	%rdx, 32(%rax)
-	movq	40(%r12), %rdx
-	shrq	%rdx
-	movq	%rdx, 40(%r12)
-	movq	%rdx, 40(%rax)
-	movl	$2, 48(%rax)
+	jnb	.L250
+	movq	40(%r12), %rcx
+	cmpq	$1, %rcx
+	ja	.L218
+	testq	%rcx, %rcx
 	movzbl	52(%r12), %edx
-	subl	%ebp, %edx
-	movb	%dl, 52(%rax)
-.L245:
-	movq	-40(%rax), %rdi
-	leaq	-8(%rax), %rdx
-	movq	%rax, %rsi
-	movq	(%rdi), %rcx
-	call	*(%rcx)
-.LEHE6:
-	movzbl	82(%rsp), %eax
-	subl	$1, %eax
-	movb	%al, 30(%rsp)
-	movb	%al, 82(%rsp)
-	movzbl	81(%rsp), %eax
-	addl	$1, %eax
-	andl	$7, %eax
-	movb	%al, 81(%rsp)
-	jmp	.L246
-.L259:
-	movzbl	52(%r12), %eax
-	testb	%al, %al
-	je	.L315
-	subl	$1, %eax
-	movq	$0, 40(%r12)
-	movb	%al, 52(%r12)
-	jmp	.L221
-.L315:
-	movq	%rcx, %rax
-	movq	%rdx, %rbx
-	jmp	.L260
-.L308:
-	call	__stack_chk_fail@PLT
-.L264:
-.L258:
-	movzbl	82(%rsp), %edx
+	je	.L216
 	testb	%dl, %dl
-	je	.L257
+	je	.L216
 	subl	$1, %edx
-	movb	%dl, 82(%rsp)
-	jmp	.L258
-.L257:
+	movq	$0, 40(%r12)
+	movb	%dl, 52(%r12)
+	jmp	.L218
+.L253:
+.L248:
+	movzbl	50(%rsp), %edx
+	testb	%dl, %dl
+	je	.L247
+	subl	$1, %edx
+	movb	%dl, 50(%rsp)
+	jmp	.L248
+.L303:
+	call	__stack_chk_fail@PLT
+.L247:
 	movq	%rax, %rdi
-.LEHB7:
 	call	_Unwind_Resume@PLT
 .LEHE7:
 	.cfi_endproc
@@ -2121,7 +1893,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	.uleb128 0
 	.uleb128 .LEHB6-.LFB6642
 	.uleb128 .LEHE6-.LEHB6
-	.uleb128 .L264-.LFB6642
+	.uleb128 .L253-.LFB6642
 	.uleb128 0
 	.uleb128 .LEHB7-.LFB6642
 	.uleb128 .LEHE7-.LEHB7
@@ -2141,8 +1913,8 @@ _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm429496
 	movq	4992(%rdi), %rax
 	cmpq	$623, %rax
 	leaq	1(%rax), %rdx
-	ja	.L335
-.L318:
+	ja	.L324
+.L311:
 	movq	(%rdi,%rax,8), %rax
 	movq	%rdx, 4992(%rdi)
 	movq	%rax, %rcx
@@ -2163,51 +1935,55 @@ _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm429496
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L335:
-	leaq	1816(%rdi), %r8
+.L324:
+	movq	(%rdi), %r8
+	leaq	1816(%rdi), %r9
 	movq	%rdi, %rax
 	movq	%rdi, %rdx
+	movl	$2567483615, %r10d
+	.p2align 4,,10
+	.p2align 3
+.L312:
+	movq	%r8, %rcx
+	movq	8(%rdx), %r8
+	andq	$-2147483648, %rcx
+	movq	%r8, %rsi
+	andl	$2147483647, %esi
+	orq	%rcx, %rsi
+	movq	%rsi, %rcx
+	shrq	%rcx
+	xorq	3176(%rdx), %rcx
+	andl	$1, %esi
+	je	.L313
+	xorq	%r10, %rcx
+	addq	$8, %rdx
+	movq	%rcx, -8(%rdx)
+	cmpq	%rdx, %r9
+	jne	.L312
+.L314:
+	movq	1816(%rdi), %rsi
+	leaq	3168(%rdi), %r8
 	movl	$2567483615, %r9d
 	.p2align 4,,10
 	.p2align 3
-.L320:
-	movq	(%rdx), %rcx
-	movq	8(%rdx), %rsi
-	andq	$-2147483648, %rcx
-	andl	$2147483647, %esi
-	orq	%rsi, %rcx
-	movq	%rcx, %rsi
-	shrq	%rsi
-	xorq	3176(%rdx), %rsi
-	andl	$1, %ecx
-	je	.L319
-	xorq	%r9, %rsi
-.L319:
-	movq	%rsi, (%rdx)
-	addq	$8, %rdx
-	cmpq	%rdx, %r8
-	jne	.L320
-	leaq	3168(%rdi), %rsi
-	movl	$2567483615, %r8d
-	.p2align 4,,10
-	.p2align 3
-.L322:
-	movq	1816(%rax), %rdx
-	movq	1824(%rax), %rcx
-	andq	$-2147483648, %rdx
+.L316:
+	andq	$-2147483648, %rsi
+	movq	%rsi, %rdx
+	movq	1824(%rax), %rsi
+	movq	%rsi, %rcx
 	andl	$2147483647, %ecx
-	orq	%rcx, %rdx
-	movq	%rdx, %rcx
-	shrq	%rcx
-	xorq	(%rax), %rcx
-	andl	$1, %edx
-	je	.L321
-	xorq	%r8, %rcx
-.L321:
-	movq	%rcx, 1816(%rax)
+	orq	%rdx, %rcx
+	movq	%rcx, %rdx
+	shrq	%rdx
+	xorq	(%rax), %rdx
+	andl	$1, %ecx
+	je	.L317
+	xorq	%r9, %rdx
 	addq	$8, %rax
-	cmpq	%rax, %rsi
-	jne	.L322
+	movq	%rdx, 1808(%rax)
+	cmpq	%rax, %r8
+	jne	.L316
+.L318:
 	movq	4984(%rdi), %rax
 	movq	(%rdi), %rdx
 	andq	$-2147483648, %rax
@@ -2217,14 +1993,30 @@ _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm429496
 	shrq	%rdx
 	xorq	3168(%rdi), %rdx
 	testb	$1, %al
-	je	.L323
+	je	.L320
 	movl	$2567483615, %eax
 	xorq	%rax, %rdx
-.L323:
+.L320:
 	movq	%rdx, 4984(%rdi)
 	xorl	%eax, %eax
 	movl	$1, %edx
+	jmp	.L311
+	.p2align 4,,10
+	.p2align 3
+.L317:
+	movq	%rdx, 1816(%rax)
+	addq	$8, %rax
+	cmpq	%r8, %rax
+	jne	.L316
 	jmp	.L318
+	.p2align 4,,10
+	.p2align 3
+.L313:
+	movq	%rcx, (%rdx)
+	addq	$8, %rdx
+	cmpq	%r9, %rdx
+	jne	.L312
+	jmp	.L314
 	.cfi_endproc
 .LFE6202:
 	.size	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv, .-_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
@@ -2236,121 +2028,126 @@ _ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm429496
 _ZNSt24uniform_int_distributionIjEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEjRT_RKNS0_10param_typeE:
 .LFB5854:
 	.cfi_startproc
-	pushq	%r15
-	.cfi_def_cfa_offset 16
-	.cfi_offset 15, -16
-	pushq	%r14
-	.cfi_def_cfa_offset 24
-	.cfi_offset 14, -24
 	pushq	%r13
-	.cfi_def_cfa_offset 32
-	.cfi_offset 13, -32
+	.cfi_def_cfa_offset 16
+	.cfi_offset 13, -16
 	pushq	%r12
-	.cfi_def_cfa_offset 40
-	.cfi_offset 12, -40
+	.cfi_def_cfa_offset 24
+	.cfi_offset 12, -24
+	movq	%rdx, %r12
 	pushq	%rbp
-	.cfi_def_cfa_offset 48
-	.cfi_offset 6, -48
+	.cfi_def_cfa_offset 32
+	.cfi_offset 6, -32
 	pushq	%rbx
-	.cfi_def_cfa_offset 56
-	.cfi_offset 3, -56
-	movq	%rdx, %rbp
-	movq	%rsi, %rbx
-	subq	$40, %rsp
-	.cfi_def_cfa_offset 96
-	movl	4(%rdx), %r15d
-	movq	%fs:40, %rax
-	movq	%rax, 24(%rsp)
-	xorl	%eax, %eax
+	.cfi_def_cfa_offset 40
+	.cfi_offset 3, -40
+	movq	%rsi, %rbp
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 48
 	movl	(%rdx), %eax
-	subq	%rax, %r15
+	movl	4(%rdx), %r13d
+	subq	%rax, %r13
 	movl	$4294967294, %eax
-	cmpq	%rax, %r15
-	ja	.L337
-	leaq	1(%r15), %r12
+	cmpq	%rax, %r13
+	ja	.L326
+	leaq	1(%r13), %rbx
 	addq	$1, %rax
 	xorl	%edx, %edx
-	divq	%r12
-	imulq	%rax, %r12
+	divq	%rbx
+	imulq	%rax, %rbx
 	movq	%rax, %r13
 	.p2align 4,,10
 	.p2align 3
-.L338:
-	movq	%rbx, %rdi
+.L327:
+	movq	%rbp, %rdi
 	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
-	cmpq	%rax, %r12
-	jbe	.L338
+	cmpq	%rax, %rbx
+	jbe	.L327
 	xorl	%edx, %edx
 	divq	%r13
-.L339:
-	addl	0(%rbp), %eax
-	movq	24(%rsp), %rcx
-	xorq	%fs:40, %rcx
-	jne	.L352
-	addq	$40, %rsp
+.L328:
+	addl	(%r12), %eax
+	addq	$8, %rsp
 	.cfi_remember_state
-	.cfi_def_cfa_offset 56
-	popq	%rbx
-	.cfi_def_cfa_offset 48
-	popq	%rbp
 	.cfi_def_cfa_offset 40
-	popq	%r12
+	popq	%rbx
 	.cfi_def_cfa_offset 32
-	popq	%r13
+	popq	%rbp
 	.cfi_def_cfa_offset 24
-	popq	%r14
+	popq	%r12
 	.cfi_def_cfa_offset 16
-	popq	%r15
+	popq	%r13
 	.cfi_def_cfa_offset 8
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L337:
+.L326:
 	.cfi_restore_state
 	movl	$4294967295, %eax
-	cmpq	%rax, %r15
-	jne	.L353
+	cmpq	%rax, %r13
+	jne	.L333
 	movq	%rsi, %rdi
 	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
-	jmp	.L339
+	addl	(%r12), %eax
+	addq	$8, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 40
+	popq	%rbx
+	.cfi_def_cfa_offset 32
+	popq	%rbp
+	.cfi_def_cfa_offset 24
+	popq	%r12
+	.cfi_def_cfa_offset 16
+	popq	%r13
+	.cfi_def_cfa_offset 8
+	ret
 	.p2align 4,,10
 	.p2align 3
-.L353:
-	leaq	16(%rsp), %rax
-	movq	%rdi, %r13
-	movabsq	$-4294967296, %r12
-	movq	%rax, 8(%rsp)
-.L344:
-	movq	8(%rsp), %rdx
-	movq	%rbx, %rsi
-	movq	%r13, %rdi
-	movq	%r12, 16(%rsp)
-	call	_ZNSt24uniform_int_distributionIjEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEjRT_RKNS0_10param_typeE
-	movq	%rbx, %rdi
-	movl	%eax, %r14d
+.L340:
+	.cfi_restore_state
+	testq	%rdx, %rdx
+	je	.L328
+.L333:
+	movq	%rbp, %rdi
 	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
-	movq	%r14, %rdx
+	movq	%rbp, %rdi
+	movq	%rax, %rbx
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	movq	%rbx, %rdx
 	salq	$32, %rdx
 	addq	%rdx, %rax
 	setc	%dl
-	cmpq	%rax, %r15
+	cmpq	%rax, %r13
 	movzbl	%dl, %edx
-	jb	.L344
-	testq	%rdx, %rdx
-	jne	.L344
-	jmp	.L339
-.L352:
-	call	__stack_chk_fail@PLT
+	jnb	.L340
+	jmp	.L333
 	.cfi_endproc
 .LFE5854:
 	.size	_ZNSt24uniform_int_distributionIjEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEjRT_RKNS0_10param_typeE, .-_ZNSt24uniform_int_distributionIjEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEjRT_RKNS0_10param_typeE
-	.section	.text._ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_,"axG",@progbits,_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_,comdat
+	.section	.rodata._ZN9init_taskclEv.str1.8,"aMS",@progbits,1
+	.align 8
+.LC2:
+	.string	"Error in pinning thread to core id "
+	.section	.rodata._ZN9init_taskclEv.str1.1,"aMS",@progbits,1
+.LC3:
+	.string	" aborting..."
+	.section	.rodata._ZN9init_taskclEv.str1.8
+	.align 8
+.LC4:
+	.string	"Failure in allocating huge buffer, aborting"
+	.align 8
+.LC5:
+	.string	"Failure in allocating dst huge buffer, aborting"
+	.align 8
+.LC6:
+	.string	"Failure in allocating offsets buffer, aborting"
+	.section	.text._ZN9init_taskclEv,"axG",@progbits,_ZN9init_taskclEv,comdat
 	.align 2
 	.p2align 4,,15
-	.weak	_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_
-	.type	_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_, @function
-_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_:
-.LFB6238:
+	.weak	_ZN9init_taskclEv
+	.type	_ZN9init_taskclEv, @function
+_ZN9init_taskclEv:
+.LFB5207:
 	.cfi_startproc
 	pushq	%r15
 	.cfi_def_cfa_offset 16
@@ -2364,97 +2161,255 @@ _ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal
 	pushq	%r12
 	.cfi_def_cfa_offset 40
 	.cfi_offset 12, -40
+	movq	%rdi, %r12
 	pushq	%rbp
 	.cfi_def_cfa_offset 48
 	.cfi_offset 6, -48
 	pushq	%rbx
 	.cfi_def_cfa_offset 56
 	.cfi_offset 3, -56
-	movq	%rdi, %rbp
-	movq	%rsi, %rbx
-	subq	$24, %rsp
-	.cfi_def_cfa_offset 80
-	movq	8(%rbp), %rsi
-	movq	(%rdi), %rdi
-	movq	%rbx, %r13
-	movq	%rsi, %rax
-	subq	%rdi, %r13
-	subq	%rdi, %rax
-	sarq	$4, %rax
+	subq	$264, %rsp
+	.cfi_def_cfa_offset 320
+	leaq	111(%rsp), %rdi
+	movq	%fs:40, %rax
+	movq	%rax, 248(%rsp)
+	xorl	%eax, %eax
+	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb.constprop.128
+	movl	(%r12), %esi
+	leaq	112(%rsp), %rdx
+	movq	%rax, %rbp
+	movl	$16, %ecx
+	movq	%rdx, %rdi
+	movl	%esi, (%rax)
+	xorl	%eax, %eax
+	rep stosq
+	movl	%esi, %eax
+	cmpq	$1023, %rax
+	ja	.L342
+	shrq	$6, %rax
+	movl	$1, %edi
+	movl	%esi, %ecx
+	salq	%cl, %rdi
+	orq	%rdi, (%rdx,%rax,8)
+.L342:
+	xorl	%edi, %edi
+	movl	$128, %esi
+	call	sched_setaffinity@PLT
+	testl	%eax, %eax
+	jne	.L411
+	movq	8(%r12), %rbx
+	movl	16(%r12), %eax
+	movl	$4096, %edi
+	movq	%rbx, 8(%rbp)
+	movl	%eax, 16(%rbp)
+	movq	%rbx, %rsi
+	call	aligned_alloc@PLT
 	testq	%rax, %rax
-	je	.L366
-	leaq	(%rax,%rax), %rcx
-	movq	$-16, %r14
-	cmpq	%rcx, %rax
-	jbe	.L385
-.L356:
-	movq	%r14, %rdi
-	movq	%rdx, 8(%rsp)
-	call	_Znwm@PLT
-	movq	0(%rbp), %rdi
-	movq	8(%rbp), %rsi
-	leaq	16(%rax), %r15
-	movq	8(%rsp), %rdx
-	movq	%rax, %r12
-	addq	%rax, %r14
-.L357:
-	addq	%r12, %r13
-	je	.L358
-	movdqu	(%rdx), %xmm0
-	movups	%xmm0, 0(%r13)
-.L358:
-	cmpq	%rdi, %rbx
-	je	.L359
-	movq	%r12, %rcx
-	movq	%rdi, %rdx
-	.p2align 4,,10
-	.p2align 3
-.L361:
-	testq	%rcx, %rcx
-	je	.L360
-	movdqu	(%rdx), %xmm0
-	movups	%xmm0, (%rcx)
-.L360:
-	addq	$16, %rdx
-	addq	$16, %rcx
-	cmpq	%rdx, %rbx
-	jne	.L361
-	leaq	16(%rdi), %rax
-	movq	%rbx, %rcx
-	subq	%rax, %rcx
-	movq	%rcx, %rax
-	andq	$-16, %rax
-	leaq	32(%r12,%rax), %r15
-.L359:
-	cmpq	%rsi, %rbx
-	je	.L362
+	movq	%rax, %r13
+	movq	%rax, 24(%rbp)
+	je	.L412
+	movq	%rbx, %rsi
+	movl	$4096, %edi
+	call	aligned_alloc@PLT
+	testq	%rax, %rax
+	movq	%rax, 32(%rbp)
+	je	.L413
 	movq	%rbx, %rdx
-	movq	%r15, %rcx
+	movl	$204, %esi
+	movq	%r13, %rdi
+	call	memset@PLT
+	movq	8(%rbp), %rdx
+	movq	32(%rbp), %rdi
+	movl	$51, %esi
+	call	memset@PLT
+	movl	16(%r12), %esi
+	movl	$4096, %edi
+	salq	$3, %rsi
+	call	aligned_alloc@PLT
+	testq	%rax, %rax
+	movq	%rax, 40(%rbp)
+	je	.L414
+	movl	$5000, %edi
+	call	_Znwm@PLT
+	movq	%rax, %rbx
+	movl	(%r12), %eax
+	movl	$1, %edx
+	movq	%rax, (%rbx)
+	movq	%rax, %rcx
 	.p2align 4,,10
 	.p2align 3
-.L364:
-	testq	%rcx, %rcx
-	je	.L363
-	movdqu	(%rdx), %xmm0
-	movups	%xmm0, (%rcx)
-.L363:
-	addq	$16, %rdx
-	addq	$16, %rcx
-	cmpq	%rsi, %rdx
-	jne	.L364
-	addq	$16, %rbx
-	subq	%rbx, %rdx
-	andq	$-16, %rdx
-	leaq	16(%r15,%rdx), %r15
-.L362:
-	testq	%rdi, %rdi
-	je	.L365
-	call	_ZdlPv@PLT
-.L365:
-	movq	%r12, 0(%rbp)
-	movq	%r15, 8(%rbp)
-	movq	%r14, 16(%rbp)
-	addq	$24, %rsp
+.L347:
+	movq	%rcx, %rax
+	shrq	$30, %rax
+	xorq	%rcx, %rax
+	imulq	$1812433253, %rax, %rax
+	leal	(%rax,%rdx), %ecx
+	movq	%rcx, (%rbx,%rdx,8)
+	addq	$1, %rdx
+	cmpq	$624, %rdx
+	jne	.L347
+	movq	8(%r12), %r14
+	movl	20(%r12), %edx
+	movq	$624, 4992(%rbx)
+	movl	16(%r12), %r13d
+	movq	40(%rbp), %rbp
+	movq	%r14, %rax
+	movq	%r14, %r15
+	shrq	$6, %rax
+	shrq	$10, %r15
+	movl	%eax, %edi
+	movl	%eax, %esi
+	shrl	$10, %edi
+	cmpl	$1, %edx
+	movl	%edi, 72(%rsp)
+	je	.L349
+	jb	.L350
+	cmpl	$2, %edx
+	je	.L351
+	cmpl	$3, %edx
+	jne	.L341
+	testl	%r13d, %r13d
+	je	.L341
+	leal	-1(%r13), %edx
+	pxor	%xmm6, %xmm6
+	movsd	.LC8(%rip), %xmm7
+	xorl	%r12d, %r12d
+	leaq	1(%rdx), %rsi
+	movl	$-858993459, %edx
+	mull	%edx
+	movq	%r14, %rax
+	movsd	%xmm6, 8(%rsp)
+	movsd	.LC9(%rip), %xmm4
+	movq	%rsi, 88(%rsp)
+	movsd	%xmm7, 16(%rsp)
+	shrl	$3, %edx
+	movsd	%xmm4, 24(%rsp)
+	movl	%edx, 80(%rsp)
+	movabsq	$-3689348814741910323, %rdx
+	mulq	%rdx
+	movsd	.LC10(%rip), %xmm5
+	movsd	.LC11(%rip), %xmm6
+	movsd	.LC12(%rip), %xmm7
+	movsd	.LC13(%rip), %xmm4
+	shrq	$3, %rdx
+	movsd	%xmm5, (%rsp)
+	movsd	%xmm6, 48(%rsp)
+	movl	%edx, 84(%rsp)
+	movsd	%xmm7, 56(%rsp)
+	movsd	%xmm4, 64(%rsp)
+	.p2align 4,,10
+	.p2align 3
+.L388:
+	movl	%r12d, 76(%rsp)
+	.p2align 4,,10
+	.p2align 3
+.L404:
+	movq	%rbx, %rdi
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	js	.L373
+	pxor	%xmm0, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+.L374:
+	addsd	8(%rsp), %xmm0
+	movq	%rbx, %rdi
+	movsd	%xmm0, 32(%rsp)
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	js	.L375
+	pxor	%xmm0, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+.L376:
+	mulsd	16(%rsp), %xmm0
+	addsd	32(%rsp), %xmm0
+	mulsd	24(%rsp), %xmm0
+	ucomisd	(%rsp), %xmm0
+	jnb	.L415
+.L377:
+	addsd	%xmm0, %xmm0
+	movq	%rbx, %rdi
+	subsd	(%rsp), %xmm0
+	movsd	%xmm0, 32(%rsp)
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	js	.L379
+	pxor	%xmm0, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+.L380:
+	addsd	8(%rsp), %xmm0
+	movq	%rbx, %rdi
+	movsd	%xmm0, 40(%rsp)
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	js	.L381
+	pxor	%xmm0, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+.L382:
+	mulsd	16(%rsp), %xmm0
+	addsd	40(%rsp), %xmm0
+	mulsd	24(%rsp), %xmm0
+	ucomisd	(%rsp), %xmm0
+	jnb	.L416
+.L383:
+	addsd	%xmm0, %xmm0
+	movsd	(%rsp), %xmm4
+	movsd	32(%rsp), %xmm2
+	mulsd	%xmm2, %xmm2
+	movapd	%xmm0, %xmm1
+	subsd	%xmm4, %xmm1
+	movapd	%xmm1, %xmm0
+	mulsd	%xmm1, %xmm0
+	addsd	%xmm0, %xmm2
+	ucomisd	%xmm4, %xmm2
+	ja	.L404
+	ucomisd	8(%rsp), %xmm2
+	jp	.L395
+	je	.L404
+.L395:
+	movapd	%xmm2, %xmm0
+	movsd	%xmm1, 40(%rsp)
+	movsd	%xmm2, 32(%rsp)
+	call	log@PLT
+	mulsd	48(%rsp), %xmm0
+	movsd	32(%rsp), %xmm2
+	movsd	8(%rsp), %xmm6
+	movsd	40(%rsp), %xmm1
+	divsd	%xmm2, %xmm0
+	ucomisd	%xmm0, %xmm6
+	sqrtsd	%xmm0, %xmm2
+	ja	.L417
+.L387:
+	mulsd	%xmm2, %xmm1
+	movsd	56(%rsp), %xmm0
+	mulsd	%xmm1, %xmm0
+	addsd	64(%rsp), %xmm0
+	call	round@PLT
+	cvttsd2siq	%xmm0, %rcx
+	xorl	%edx, %edx
+	movl	%r13d, %eax
+	divl	72(%rsp)
+	movl	76(%rsp), %eax
+	sall	$6, %edx
+	andl	$1023, %ecx
+	imull	%r15d, %ecx
+	addl	%edx, %ecx
+	xorl	%edx, %edx
+	divl	80(%rsp)
+	xorl	%edx, %edx
+	imull	84(%rsp), %eax
+	addq	%rcx, %rax
+	divq	%r14
+	movq	%rdx, 0(%rbp,%r12,8)
+	addq	$1, %r12
+	cmpq	%r12, 88(%rsp)
+	jne	.L388
+	.p2align 4,,10
+	.p2align 3
+.L341:
+	movq	248(%rsp), %rax
+	xorq	%fs:40, %rax
+	jne	.L418
+	addq	$264, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
 	popq	%rbx
@@ -2470,116 +2425,336 @@ _ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal
 	popq	%r15
 	.cfi_def_cfa_offset 8
 	ret
-	.p2align 4,,10
-	.p2align 3
-.L366:
+.L351:
 	.cfi_restore_state
-	movl	$1, %ecx
-.L355:
-	salq	$4, %rcx
-	movq	%rcx, %r14
-	jmp	.L356
+	testl	%r13d, %r13d
+	je	.L341
+	pxor	%xmm4, %xmm4
+	leal	-1(%r13), %eax
+	movsd	.LC13(%rip), %xmm5
+	leaq	8(%rbp,%rax,8), %r12
+	movsd	%xmm4, 8(%rsp)
+	movsd	.LC8(%rip), %xmm4
+	movsd	%xmm5, 64(%rsp)
+	movsd	%xmm4, 16(%rsp)
+	movsd	.LC9(%rip), %xmm4
+	movsd	%xmm4, 24(%rsp)
+	movsd	.LC10(%rip), %xmm4
+	movsd	%xmm4, (%rsp)
+	movsd	.LC11(%rip), %xmm4
+	movsd	%xmm4, 48(%rsp)
+	movsd	.LC12(%rip), %xmm4
+	movsd	%xmm4, 56(%rsp)
 	.p2align 4,,10
 	.p2align 3
-.L385:
-	movabsq	$1152921504606846975, %rax
-	cmpq	%rax, %rcx
-	ja	.L356
-	testq	%rcx, %rcx
-	jne	.L355
-	movl	$16, %r15d
-	xorl	%r14d, %r14d
-	xorl	%r12d, %r12d
-	jmp	.L357
-	.cfi_endproc
-.LFE6238:
-	.size	_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_, .-_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_
-	.section	.text._ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_,"axG",@progbits,_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_,comdat
-	.p2align 4,,15
-	.weak	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	.type	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_, @function
-_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_:
-.LFB6362:
-	.cfi_startproc
-	pushq	%rbx
-	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
-	movq	%rdi, %rbx
-	subq	$16, %rsp
-	.cfi_def_cfa_offset 32
-	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
-	testq	%rax, %rax
-	js	.L387
-	pxor	%xmm0, %xmm0
-	cvtsi2sdq	%rax, %xmm0
-.L388:
-	addsd	.LC6(%rip), %xmm0
+.L403:
 	movq	%rbx, %rdi
-	movsd	%xmm0, 8(%rsp)
 	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
 	testq	%rax, %rax
-	js	.L389
+	js	.L357
+.L422:
 	pxor	%xmm0, %xmm0
 	cvtsi2sdq	%rax, %xmm0
-.L390:
-	mulsd	.LC7(%rip), %xmm0
-	movsd	.LC9(%rip), %xmm2
+.L358:
 	addsd	8(%rsp), %xmm0
-	mulsd	.LC8(%rip), %xmm0
-	ucomisd	%xmm2, %xmm0
-	jnb	.L396
-	addq	$16, %rsp
-	.cfi_remember_state
-	.cfi_def_cfa_offset 16
-	popq	%rbx
-	.cfi_def_cfa_offset 8
-	ret
-	.p2align 4,,10
-	.p2align 3
-.L387:
-	.cfi_restore_state
-	movq	%rax, %rdx
+	movq	%rbx, %rdi
+	movsd	%xmm0, 32(%rsp)
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	js	.L359
 	pxor	%xmm0, %xmm0
-	shrq	%rdx
-	andl	$1, %eax
-	orq	%rax, %rdx
-	cvtsi2sdq	%rdx, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+.L360:
+	mulsd	16(%rsp), %xmm0
+	addsd	32(%rsp), %xmm0
+	mulsd	24(%rsp), %xmm0
+	ucomisd	(%rsp), %xmm0
+	jnb	.L419
+.L361:
 	addsd	%xmm0, %xmm0
-	jmp	.L388
-	.p2align 4,,10
-	.p2align 3
-.L389:
-	movq	%rax, %rdx
+	movq	%rbx, %rdi
+	subsd	(%rsp), %xmm0
+	movsd	%xmm0, 32(%rsp)
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	js	.L363
 	pxor	%xmm0, %xmm0
-	shrq	%rdx
-	andl	$1, %eax
-	orq	%rax, %rdx
-	cvtsi2sdq	%rdx, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+.L364:
+	addsd	8(%rsp), %xmm0
+	movq	%rbx, %rdi
+	movsd	%xmm0, 40(%rsp)
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	js	.L365
+	pxor	%xmm0, %xmm0
+	cvtsi2sdq	%rax, %xmm0
+.L366:
+	mulsd	16(%rsp), %xmm0
+	addsd	40(%rsp), %xmm0
+	mulsd	24(%rsp), %xmm0
+	ucomisd	(%rsp), %xmm0
+	jnb	.L420
+.L367:
 	addsd	%xmm0, %xmm0
-	jmp	.L390
-	.p2align 4,,10
-	.p2align 3
-.L396:
-	addq	$16, %rsp
-	.cfi_def_cfa_offset 16
-	pxor	%xmm1, %xmm1
-	popq	%rbx
-	.cfi_def_cfa_offset 8
+	movsd	(%rsp), %xmm3
+	movsd	32(%rsp), %xmm2
+	mulsd	%xmm2, %xmm2
+	movapd	%xmm0, %xmm1
+	subsd	%xmm3, %xmm1
+	movapd	%xmm1, %xmm0
+	mulsd	%xmm1, %xmm0
+	addsd	%xmm0, %xmm2
+	ucomisd	%xmm3, %xmm2
+	ja	.L403
+	ucomisd	8(%rsp), %xmm2
+	jp	.L392
+	je	.L403
+.L392:
 	movapd	%xmm2, %xmm0
-	jmp	nextafter@PLT
+	movsd	%xmm1, 40(%rsp)
+	movsd	%xmm2, 32(%rsp)
+	call	log@PLT
+	mulsd	48(%rsp), %xmm0
+	movsd	32(%rsp), %xmm2
+	movsd	8(%rsp), %xmm4
+	movsd	40(%rsp), %xmm1
+	divsd	%xmm2, %xmm0
+	ucomisd	%xmm0, %xmm4
+	sqrtsd	%xmm0, %xmm2
+	ja	.L421
+.L371:
+	mulsd	%xmm2, %xmm1
+	addq	$8, %rbp
+	movsd	56(%rsp), %xmm0
+	mulsd	%xmm1, %xmm0
+	addsd	64(%rsp), %xmm0
+	call	round@PLT
+	cvttsd2siq	%xmm0, %rcx
+	xorl	%edx, %edx
+	movl	%r13d, %eax
+	divl	72(%rsp)
+	sall	$6, %edx
+	andl	$1023, %ecx
+	imull	%r15d, %ecx
+	leal	(%rcx,%rdx), %eax
+	movq	%rax, -8(%rbp)
+	cmpq	%rbp, %r12
+	je	.L341
+	movq	%rbx, %rdi
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	testq	%rax, %rax
+	jns	.L422
+	.p2align 4,,10
+	.p2align 3
+.L357:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L358
+.L350:
+	testl	%r13d, %r13d
+	je	.L341
+	leal	-1(%r13), %edi
+	xorl	%ecx, %ecx
+	addq	$1, %rdi
+	.p2align 4,,10
+	.p2align 3
+.L355:
+	movl	%ecx, %eax
+	xorl	%edx, %edx
+	divl	%esi
+	sall	$6, %edx
+	movl	%edx, %eax
+	movq	%rax, 0(%rbp,%rcx,8)
+	addq	$1, %rcx
+	cmpq	%rcx, %rdi
+	jne	.L355
+	jmp	.L341
+.L349:
+	testl	%r13d, %r13d
+	je	.L341
+	leal	-1(%r13), %eax
+	leaq	8(%rbp,%rax,8), %r12
+	.p2align 4,,10
+	.p2align 3
+.L356:
+	movq	%rbx, %rdi
+	movl	%esi, (%rsp)
+	addq	$8, %rbp
+	call	_ZNSt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEclEv
+	movl	(%rsp), %esi
+	xorl	%edx, %edx
+	divl	%esi
+	sall	$6, %edx
+	movl	%edx, %eax
+	movq	%rax, -8(%rbp)
+	cmpq	%rbp, %r12
+	jne	.L356
+	jmp	.L341
+	.p2align 4,,10
+	.p2align 3
+.L381:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L382
+	.p2align 4,,10
+	.p2align 3
+.L379:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L380
+	.p2align 4,,10
+	.p2align 3
+.L375:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L376
+	.p2align 4,,10
+	.p2align 3
+.L373:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L374
+	.p2align 4,,10
+	.p2align 3
+.L359:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L360
+	.p2align 4,,10
+	.p2align 3
+.L365:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L366
+	.p2align 4,,10
+	.p2align 3
+.L363:
+	movq	%rax, %rdx
+	pxor	%xmm0, %xmm0
+	shrq	%rdx
+	andl	$1, %eax
+	orq	%rax, %rdx
+	cvtsi2sdq	%rdx, %xmm0
+	addsd	%xmm0, %xmm0
+	jmp	.L364
+	.p2align 4,,10
+	.p2align 3
+.L419:
+	pxor	%xmm1, %xmm1
+	movsd	(%rsp), %xmm0
+	call	nextafter@PLT
+	jmp	.L361
+	.p2align 4,,10
+	.p2align 3
+.L416:
+	pxor	%xmm1, %xmm1
+	movsd	(%rsp), %xmm0
+	call	nextafter@PLT
+	jmp	.L383
+	.p2align 4,,10
+	.p2align 3
+.L415:
+	pxor	%xmm1, %xmm1
+	movsd	(%rsp), %xmm0
+	call	nextafter@PLT
+	jmp	.L377
+	.p2align 4,,10
+	.p2align 3
+.L420:
+	pxor	%xmm1, %xmm1
+	movsd	(%rsp), %xmm0
+	call	nextafter@PLT
+	jmp	.L367
+.L421:
+	movsd	%xmm2, 40(%rsp)
+	movsd	%xmm1, 32(%rsp)
+	call	sqrt@PLT
+	movsd	40(%rsp), %xmm2
+	movsd	32(%rsp), %xmm1
+	jmp	.L371
+.L417:
+	movsd	%xmm2, 40(%rsp)
+	movsd	%xmm1, 32(%rsp)
+	call	sqrt@PLT
+	movsd	40(%rsp), %xmm2
+	movsd	32(%rsp), %xmm1
+	jmp	.L387
+.L418:
+	call	__stack_chk_fail@PLT
+.L414:
+	leaq	.LC6(%rip), %rsi
+	movl	$46, %edx
+.L409:
+	leaq	_ZSt4cout(%rip), %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	leaq	_ZSt4cout(%rip), %rdi
+	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
+	orl	$-1, %edi
+	call	exit@PLT
+.L413:
+	movl	$47, %edx
+	leaq	.LC5(%rip), %rsi
+	jmp	.L409
+.L412:
+	movl	$43, %edx
+	leaq	.LC4(%rip), %rsi
+	jmp	.L409
+.L411:
+	leaq	.LC2(%rip), %rsi
+	leaq	_ZSt4cout(%rip), %rdi
+	movl	$35, %edx
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movl	(%r12), %esi
+	leaq	_ZSt4cout(%rip), %rdi
+	call	_ZNSo9_M_insertImEERSoT_@PLT
+	leaq	.LC3(%rip), %rsi
+	movq	%rax, %rbx
+	movl	$12, %edx
+	movq	%rax, %rdi
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
+	movq	%rbx, %rdi
+	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
+	orl	$-1, %edi
+	call	exit@PLT
 	.cfi_endproc
-.LFE6362:
-	.size	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_, .-_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	.section	.rodata._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv.str1.8,"aMS",@progbits,1
-	.align 8
-.LC10:
-	.string	"Failure in allocating huge buffer, aborting"
-	.align 8
-.LC11:
-	.string	"Failure in allocating dst huge buffer, aborting"
-	.align 8
-.LC12:
-	.string	"Failure in allocating offsets buffer, aborting"
+.LFE5207:
+	.size	_ZN9init_taskclEv, .-_ZN9init_taskclEv
 	.section	.text._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,"axG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,comdat
 	.align 2
 	.p2align 4,,15
@@ -2608,238 +2783,50 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	pushq	%rbx
 	.cfi_def_cfa_offset 56
 	.cfi_offset 3, -56
-	movq	%rdi, %rbp
-	subq	$504, %rsp
-	.cfi_def_cfa_offset 560
+	movq	%rdi, %rbx
+	subq	$248, %rsp
+	.cfi_def_cfa_offset 304
 	movq	%fs:40, %rax
-	movq	%rax, 488(%rsp)
+	movq	%rax, 232(%rsp)
 	xorl	%eax, %eax
 	cmpq	$0, 40(%rdi)
-	jne	.L398
+	jne	.L424
 	cmpb	$0, -11(%rdi)
 	movq	$1, 40(%rdi)
-	js	.L558
-.L399:
-	movq	8(%rbp), %rax
-	movq	16(%rbp), %rcx
-	movq	%rax, %rsi
-	movq	%rax, 56(%rsp)
-	movq	%rcx, %rdx
-	subq	%rcx, %rsi
-	sarq	$4, %rsi
-	cmpq	24(%rbp), %rsi
-	ja	.L481
-.L482:
-	cmpq	%rdx, 56(%rsp)
-	je	.L477
-	leaq	136(%rsp), %rax
-	movq	%rdx, %r15
-	movq	%rax, 80(%rsp)
-	leaq	272(%rsp), %rax
-	movq	%rax, 64(%rsp)
-.L436:
-	movq	80(%rsp), %rsi
-	leaq	local_thread_vars(%rip), %rdi
+	js	.L498
+.L425:
+	movq	8(%rbx), %rcx
+	movq	16(%rbx), %rdx
+	movabsq	$-6148914691236517205, %rsi
+	movq	%rcx, %rax
+	subq	%rdx, %rax
+	sarq	$3, %rax
+	imulq	%rsi, %rax
+	cmpq	24(%rbx), %rax
+	ja	.L457
+.L458:
+	cmpq	%rdx, %rcx
+	je	.L453
+	leaq	24(%rdx), %rbp
+	movq	%rdx, %rbx
+	subq	%rbp, %rcx
+	andq	$-8, %rcx
+	addq	%rcx, %rbp
+	.p2align 4,,10
+	.p2align 3
+.L437:
+	movq	%rbx, %rdi
+	addq	$24, %rbx
 .LEHB8:
-	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
-	movl	(%r15), %edx
-	movq	64(%rsp), %rdi
-	movq	%rax, %rbx
-	movl	$16, %ecx
-	movl	%edx, (%rax)
+	call	_ZN9init_taskclEv
+	cmpq	%rbp, %rbx
+	jne	.L437
+.L453:
 	xorl	%eax, %eax
-	rep stosq
-	movl	%edx, %eax
-	cmpq	$1023, %rax
-	ja	.L412
-	movq	64(%rsp), %rdi
-	shrq	$6, %rax
-	movl	$1, %esi
-	movl	%edx, %ecx
-	salq	%cl, %rsi
-	orq	%rsi, (%rdi,%rax,8)
-.L412:
-	movq	64(%rsp), %rdx
-	xorl	%edi, %edi
-	movl	$128, %esi
-	call	sched_setaffinity@PLT
-	testl	%eax, %eax
-	jne	.L559
-	movl	4(%r15), %r12d
-	movl	$4096, %edi
-	movl	%r12d, 4(%rbx)
-	movl	8(%r15), %ebp
-	movq	%r12, %rsi
-	movl	%ebp, 8(%rbx)
-	call	aligned_alloc@PLT
-	testq	%rax, %rax
-	movq	%rax, %r13
-	movq	%rax, 16(%rbx)
-	je	.L560
-	movq	%r12, %rsi
-	movl	$4096, %edi
-	call	aligned_alloc@PLT
-	testq	%rax, %rax
-	movq	%rax, 24(%rbx)
-	je	.L561
-	movq	%r12, %rdx
-	movl	$204, %esi
-	movq	%r13, %rdi
-	call	memset@PLT
-	movl	%ebp, %esi
-	movl	$4096, %edi
-	salq	$2, %rsi
-	call	aligned_alloc@PLT
-	testq	%rax, %rax
-	movq	%rax, 32(%rbx)
-	je	.L562
-	movl	$5000, %edi
-	call	_Znwm@PLT
-	movq	%rax, %r12
-	movl	(%r15), %eax
-	movl	$1, %esi
-	movq	%rax, (%r12)
-	movq	%rax, %rdx
-	jmp	.L418
-	.p2align 4,,10
-	.p2align 3
-.L563:
-	movq	-8(%r12,%rsi,8), %rdx
-.L418:
-	movq	%rdx, %rax
-	shrq	$30, %rax
-	xorq	%rdx, %rax
-	imulq	$1812433253, %rax, %rax
-	addl	%esi, %eax
-	movq	%rax, (%r12,%rsi,8)
-	addq	$1, %rsi
-	cmpq	$624, %rsi
-	jne	.L563
-	movl	4(%r15), %r13d
-	movl	8(%r15), %eax
-	movq	$624, 4992(%r12)
-	movq	32(%rbx), %rbp
-	movl	%eax, 24(%rsp)
-	movl	%r13d, %eax
-	movl	%r13d, %r14d
-	shrl	$16, %eax
-	shrl	$6, %r14d
-	movl	%eax, 8(%rsp)
-	movl	%r13d, %eax
-	shrl	$10, %eax
-	movl	%eax, 28(%rsp)
-	movl	12(%r15), %eax
-	cmpl	$1, %eax
-	je	.L420
-	jb	.L421
-	cmpl	$2, %eax
-	je	.L422
-	cmpl	$3, %eax
-	jne	.L419
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L419
-	movsd	.LC9(%rip), %xmm7
-	subl	$1, %eax
-	movl	$-858993459, %edx
-	addq	$1, %rax
-	movsd	.LC13(%rip), %xmm6
-	movq	%rax, 96(%rsp)
-	movsd	%xmm7, (%rsp)
-	movl	%r13d, %eax
-	pxor	%xmm7, %xmm7
-	movsd	%xmm6, 104(%rsp)
-	mull	%edx
-	movsd	.LC15(%rip), %xmm6
-	movq	%r15, 112(%rsp)
-	xorl	%r14d, %r14d
-	movsd	%xmm7, 16(%rsp)
-	movl	8(%rsp), %r15d
-	movsd	.LC14(%rip), %xmm7
-	movl	%edx, %eax
-	shrl	$3, %edx
-	shrl	$9, %eax
-	movsd	%xmm6, 32(%rsp)
-	movl	%edx, 88(%rsp)
-	movsd	%xmm7, 40(%rsp)
-	movl	%eax, 72(%rsp)
-.L435:
-	movl	%r14d, %ebx
-	.p2align 4,,10
-	.p2align 3
-.L524:
-	movq	%r12, %rdi
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movq	%r12, %rdi
-	movapd	%xmm0, %xmm1
-	subsd	(%rsp), %xmm1
-	movsd	%xmm1, 8(%rsp)
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movsd	(%rsp), %xmm5
-	movsd	8(%rsp), %xmm1
-	mulsd	%xmm1, %xmm1
-	movapd	%xmm0, %xmm3
-	subsd	%xmm5, %xmm3
-	movapd	%xmm3, %xmm2
-	mulsd	%xmm3, %xmm2
-	addsd	%xmm2, %xmm1
-	ucomisd	%xmm5, %xmm1
-	ja	.L524
-	ucomisd	16(%rsp), %xmm1
-	jp	.L488
-	je	.L524
-.L488:
-	movapd	%xmm1, %xmm0
-	movsd	%xmm3, 48(%rsp)
-	movsd	%xmm1, 8(%rsp)
-	call	log@PLT
-	mulsd	104(%rsp), %xmm0
-	movsd	8(%rsp), %xmm1
-	movsd	16(%rsp), %xmm6
-	movsd	48(%rsp), %xmm3
-	divsd	%xmm1, %xmm0
-	ucomisd	%xmm0, %xmm6
-	sqrtsd	%xmm0, %xmm1
-	ja	.L564
-.L434:
-	mulsd	%xmm1, %xmm3
-	movsd	40(%rsp), %xmm0
-	mulsd	%xmm3, %xmm0
-	addsd	32(%rsp), %xmm0
-	call	round@PLT
-	movl	24(%rsp), %eax
-	xorl	%edx, %edx
-	divl	%r15d
-	movl	%ebx, %eax
-	movl	%edx, %ecx
-	xorl	%edx, %edx
-	divl	72(%rsp)
-	sall	$6, %ecx
-	xorl	%edx, %edx
-	imull	88(%rsp), %eax
-	addl	%eax, %ecx
-	cvttsd2siq	%xmm0, %rax
-	andl	$1023, %eax
-	imull	28(%rsp), %eax
-	addl	%ecx, %eax
-	divl	%r13d
-	movl	%edx, 0(%rbp,%r14,4)
-	addq	$1, %r14
-	cmpq	%r14, 96(%rsp)
-	jne	.L435
-	movq	112(%rsp), %r15
-.L419:
-	addq	$16, %r15
-	cmpq	%r15, 56(%rsp)
-	jne	.L436
-.L477:
-	xorl	%eax, %eax
-	movq	488(%rsp), %rbx
-	xorq	%fs:40, %rbx
-	jne	.L565
-	addq	$504, %rsp
+	movq	232(%rsp), %rsi
+	xorq	%fs:40, %rsi
+	jne	.L499
+	addq	$248, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
 	popq	%rbx
@@ -2855,117 +2842,13 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	popq	%r15
 	.cfi_def_cfa_offset 8
 	ret
-.L422:
-	.cfi_restore_state
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L419
-	movsd	.LC14(%rip), %xmm7
-	subl	$1, %eax
-	leaq	4(%rbp,%rax,4), %rbx
-	movsd	%xmm7, 40(%rsp)
-	movsd	.LC15(%rip), %xmm7
-	movsd	%xmm7, 32(%rsp)
 	.p2align 4,,10
 	.p2align 3
-.L523:
-	movq	%r12, %rdi
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movq	%r12, %rdi
-	movapd	%xmm0, %xmm1
-	subsd	.LC9(%rip), %xmm1
-	movsd	%xmm1, (%rsp)
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movsd	(%rsp), %xmm1
-	mulsd	%xmm1, %xmm1
-	movapd	%xmm0, %xmm3
-	subsd	.LC9(%rip), %xmm3
-	movapd	%xmm3, %xmm2
-	mulsd	%xmm3, %xmm2
-	addsd	%xmm2, %xmm1
-	ucomisd	.LC9(%rip), %xmm1
-	ja	.L523
-	pxor	%xmm6, %xmm6
-	ucomisd	%xmm6, %xmm1
-	jp	.L487
-	je	.L523
-.L487:
-	movapd	%xmm1, %xmm0
-	movsd	%xmm3, 16(%rsp)
-	movsd	%xmm1, (%rsp)
-	call	log@PLT
-	mulsd	.LC13(%rip), %xmm0
-	movsd	(%rsp), %xmm1
-	pxor	%xmm7, %xmm7
-	movsd	16(%rsp), %xmm3
-	divsd	%xmm1, %xmm0
-	ucomisd	%xmm0, %xmm7
-	sqrtsd	%xmm0, %xmm1
-	ja	.L566
-.L430:
-	mulsd	%xmm1, %xmm3
-	addq	$4, %rbp
-	movsd	40(%rsp), %xmm0
-	mulsd	%xmm3, %xmm0
-	addsd	32(%rsp), %xmm0
-	call	round@PLT
-	cvttsd2siq	%xmm0, %rcx
-	movl	24(%rsp), %eax
-	xorl	%edx, %edx
-	divl	8(%rsp)
-	sall	$6, %edx
-	andl	$1023, %ecx
-	imull	28(%rsp), %ecx
-	addl	%edx, %ecx
-	movl	%ecx, -4(%rbp)
-	cmpq	%rbp, %rbx
-	jne	.L523
-	jmp	.L419
-.L421:
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L419
-	leal	-1(%rax), %esi
-	xorl	%ecx, %ecx
-	addq	$1, %rsi
-.L426:
-	movl	%ecx, %eax
-	xorl	%edx, %edx
-	divl	%r14d
-	sall	$6, %edx
-	movl	%edx, 0(%rbp,%rcx,4)
-	addq	$1, %rcx
-	cmpq	%rsi, %rcx
-	jne	.L426
-	jmp	.L419
-.L420:
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L419
-	subl	$1, %eax
-	movq	80(%rsp), %r13
-	leaq	4(%rbp,%rax,4), %rbx
-.L427:
-	movabsq	$-4294967296, %rax
-	movq	%r13, %rdx
-	movq	%r12, %rsi
-	movq	%r13, %rdi
-	movq	%rax, 136(%rsp)
-	addq	$4, %rbp
-	call	_ZNSt24uniform_int_distributionIjEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEjRT_RKNS0_10param_typeE
-	xorl	%edx, %edx
-	divl	%r14d
-	sall	$6, %edx
-	movl	%edx, -4(%rbp)
-	cmpq	%rbp, %rbx
-	jne	.L427
-	jmp	.L419
-.L558:
+.L498:
+	.cfi_restore_state
 	movq	-32(%rdi), %rax
 	cmpl	$1, -24(%rax)
-	jle	.L399
+	jle	.L425
 	movb	$1, 8(%rax)
 	movzbl	52(%rdi), %edx
 	leal	1(%rdx), %eax
@@ -2973,720 +2856,341 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movl	$2, %edx
 	cmove	%edx, %eax
 	movb	%al, 52(%rdi)
-.L398:
-	movq	8(%rbp), %rax
-	movq	16(%rbp), %rcx
-	movq	%rax, %rsi
-	movq	%rax, 56(%rsp)
-	movq	%rcx, %rdx
-	subq	%rcx, %rsi
-	sarq	$4, %rsi
-	cmpq	%rsi, 24(%rbp)
-	jnb	.L482
-	movq	40(%rbp), %rsi
-	cmpq	$1, %rsi
-	jbe	.L567
-.L402:
-	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rbx
-	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %r12
-	jmp	.L407
 	.p2align 4,,10
 	.p2align 3
-.L569:
-	movq	40(%rbp), %rax
+.L424:
+	movq	8(%rbx), %rcx
+	movq	16(%rbx), %rdx
+	movabsq	$-6148914691236517205, %rsi
+	movq	%rcx, %rax
+	subq	%rdx, %rax
+	sarq	$3, %rax
+	imulq	%rsi, %rax
+	cmpq	%rax, 24(%rbx)
+	jnb	.L458
+	movq	40(%rbx), %rax
 	cmpq	$1, %rax
-	jbe	.L568
-.L407:
+	jbe	.L500
+.L428:
+	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %r12
+	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %r13
+	movabsq	$-6148914691236517205, %rbp
+	jmp	.L432
+	.p2align 4,,10
+	.p2align 3
+.L502:
+	movq	40(%rbx), %rax
+	cmpq	$1, %rax
+	jbe	.L501
+.L432:
 	movl	$16, %esi
-	movq	%rbp, %rdi
+	movq	%rbx, %rdi
 	call	_ZNK3tbb8internal27allocate_continuation_proxy8allocateEm@PLT
 	movb	$1, -11(%rax)
-	movq	%rbx, (%rax)
+	movq	%r12, (%rax)
 	movl	$56, %esi
 	movb	$0, 8(%rax)
 	movq	%rax, %rdi
-	movq	%rax, -32(%rbp)
+	movq	%rax, -32(%rbx)
 	movq	$2, -24(%rax)
 	call	_ZNK3tbb8internal20allocate_child_proxy8allocateEm@PLT
 	testq	%rax, %rax
-	je	.L406
+	je	.L431
 	movb	$1, -11(%rax)
-	movq	8(%rbp), %rdx
-	movq	%r12, (%rax)
+	movq	8(%rbx), %rdx
+	movq	%r13, (%rax)
 	movq	%rdx, 8(%rax)
-	movq	16(%rbp), %rsi
-	movq	8(%rbp), %rdx
+	movq	16(%rbx), %rsi
+	movq	8(%rbx), %rdx
 	subq	%rsi, %rdx
+	sarq	$3, %rdx
+	imulq	%rbp, %rdx
 	movq	%rdx, %rcx
-	sarq	$4, %rcx
-	movq	%rcx, %rdx
-	shrq	$63, %rdx
+	shrq	$63, %rcx
 	addq	%rcx, %rdx
 	sarq	%rdx
-	salq	$4, %rdx
-	addq	%rsi, %rdx
-	movq	%rdx, 8(%rbp)
+	leaq	(%rdx,%rdx,2), %rdx
+	leaq	(%rsi,%rdx,8), %rdx
+	movq	%rdx, 8(%rbx)
 	movq	%rdx, 16(%rax)
-	movq	24(%rbp), %rdx
+	movq	24(%rbx), %rdx
 	movq	%rdx, 24(%rax)
-	movq	32(%rbp), %rdx
+	movq	32(%rbx), %rdx
 	movq	%rdx, 32(%rax)
-	movq	40(%rbp), %rdx
+	movq	40(%rbx), %rdx
 	shrq	%rdx
-	movq	%rdx, 40(%rbp)
+	movq	%rdx, 40(%rbx)
 	movq	%rdx, 40(%rax)
 	movl	$2, 48(%rax)
-	movzbl	52(%rbp), %edx
+	movzbl	52(%rbx), %edx
 	movb	%dl, 52(%rax)
-.L406:
+.L431:
 	movq	-40(%rax), %rdi
 	leaq	-8(%rax), %rdx
 	movq	%rax, %rsi
 	movq	(%rdi), %rcx
 	call	*(%rcx)
 .LEHE8:
-	movq	8(%rbp), %rcx
-	movq	16(%rbp), %rdx
+	movq	8(%rbx), %rcx
+	movq	16(%rbx), %rdx
 	movq	%rcx, %rax
 	subq	%rdx, %rax
-	sarq	$4, %rax
-	cmpq	%rax, 24(%rbp)
-	jb	.L569
-.L546:
-	movq	%rcx, 56(%rsp)
-	jmp	.L482
-.L568:
-	testq	%rax, %rax
-	movzbl	52(%rbp), %r9d
-	je	.L545
-	testb	%r9b, %r9b
-	je	.L546
-	subl	$1, %r9d
-	movq	$0, 40(%rbp)
-	movb	%r9b, 52(%rbp)
-	jmp	.L407
-.L481:
-	movzbl	52(%rbp), %edx
-	testb	%dl, %dl
-	je	.L570
-	subl	$1, %edx
-	movq	$0, 40(%rbp)
-	movb	%dl, 52(%rbp)
-	jmp	.L402
-.L567:
-	testq	%rsi, %rsi
-	movzbl	52(%rbp), %r9d
-	jne	.L481
-.L403:
-	testb	%r9b, %r9b
-	je	.L482
-	movq	24(%rbp), %rax
-	movl	$65536, 272(%rsp)
-	movl	$1, %edx
-	movdqu	8(%rbp), %xmm0
-	movq	%rax, 304(%rsp)
-	leaq	272(%rsp), %rax
-	movaps	%xmm0, 288(%rsp)
-	movq	%rax, 64(%rsp)
-.L411:
-	cmpb	$7, %dl
-	ja	.L440
-	movzbl	272(%rsp), %eax
-	movslq	%eax, %r8
-	cmpb	%r9b, 275(%rsp,%r8)
-	jnb	.L440
-	movq	64(%rsp), %rbx
-	leaq	(%rax,%rax,2), %rdx
-	leaq	16(%rbx), %r10
-	jmp	.L552
+	sarq	$3, %rax
+	imulq	%rbp, %rax
+	cmpq	%rax, 24(%rbx)
+	jb	.L502
+	jmp	.L458
 	.p2align 4,,10
 	.p2align 3
-.L571:
+.L501:
+	testq	%rax, %rax
+	movzbl	52(%rbx), %esi
+	je	.L429
+	testb	%sil, %sil
+	je	.L458
+	subl	$1, %esi
+	movq	$0, 40(%rbx)
+	movb	%sil, 52(%rbx)
+	jmp	.L432
+.L500:
+	testq	%rax, %rax
+	movzbl	52(%rbx), %esi
+	jne	.L457
+.L429:
+	testb	%sil, %sil
+	je	.L458
+	movdqu	8(%rbx), %xmm0
+	leaq	32(%rsp), %rbp
+	movl	$1, %r14d
+	movq	24(%rbx), %rax
+	movl	$65536, 16(%rsp)
+	movabsq	$-6148914691236517205, %r13
+	movaps	%xmm0, 32(%rsp)
+	movq	%rax, 48(%rsp)
+	.p2align 4,,10
+	.p2align 3
+.L436:
+	cmpb	$7, %r14b
+	ja	.L441
+	movzbl	16(%rsp), %eax
+	movslq	%eax, %rdi
+	cmpb	%sil, 19(%rsp,%rdi)
+	jnb	.L441
+	leaq	(%rax,%rax,2), %rdx
+	leaq	0(%rbp,%rdx,8), %rdx
+	movq	(%rdx), %rcx
+	subq	8(%rdx), %rcx
+	sarq	$3, %rcx
+	imulq	%r13, %rcx
+	cmpq	16(%rdx), %rcx
+	ja	.L442
+	jmp	.L441
+	.p2align 4,,10
+	.p2align 3
+.L444:
+	cmpb	%sil, %dl
+	jnb	.L441
+	leaq	(%rcx,%rcx,2), %rdx
+	leaq	0(%rbp,%rdx,8), %rdx
+	movq	(%rdx), %rcx
+	subq	8(%rdx), %rcx
+	sarq	$3, %rcx
+	imulq	%r13, %rcx
+	cmpq	%rcx, 16(%rdx)
+	jnb	.L441
+.L442:
 	addl	$1, %eax
 	andl	$7, %eax
-	movl	%eax, %edx
-	movb	%al, 272(%rsp)
+	movl	%eax, %ecx
+	movb	%al, 16(%rsp)
 	cltq
 	leaq	(%rax,%rax,2), %rax
-	leaq	(%r10,%rax,8), %rax
+	leaq	0(%rbp,%rax,8), %rax
 	testq	%rax, %rax
-	je	.L442
-	movdqu	(%rsi), %xmm0
+	je	.L443
+	movdqu	(%rdx), %xmm0
 	movups	%xmm0, (%rax)
-	movq	16(%rsi), %rdx
-	movq	%rdx, 16(%rax)
-	movzbl	272(%rsp), %edx
-.L442:
-	movzbl	%dl, %eax
+	movq	16(%rdx), %rcx
+	movq	%rcx, 16(%rax)
+	movzbl	16(%rsp), %ecx
+.L443:
+	movzbl	%cl, %eax
 	leaq	(%rax,%rax,2), %rax
-	leaq	(%r10,%rax,8), %rcx
-	movq	(%rcx), %rax
-	movq	%rax, (%rsi)
-	movq	8(%rcx), %rdi
-	movq	(%rcx), %rax
-	subq	%rdi, %rax
-	sarq	$4, %rax
-	movq	%rax, %rdx
-	shrq	$63, %rax
-	addq	%rdx, %rax
+	leaq	0(%rbp,%rax,8), %r8
+	movq	(%r8), %rax
+	movq	%rax, (%rdx)
+	movq	(%r8), %rax
+	movq	8(%r8), %r9
+	subq	%r9, %rax
+	sarq	$3, %rax
+	imulq	%r13, %rax
+	movq	%rax, %rcx
+	shrq	$63, %rcx
+	addq	%rcx, %rax
 	sarq	%rax
-	salq	$4, %rax
-	addq	%rdi, %rax
-	movq	%rax, (%rcx)
-	movq	%rax, 8(%rsi)
-	movq	16(%rcx), %rax
-	movq	%rax, 16(%rsi)
-	movzbl	275(%rsp,%r8), %eax
+	leaq	(%rax,%rax,2), %rax
+	leaq	(%r9,%rax,8), %rax
+	movq	%rax, (%r8)
+	movq	%rax, 8(%rdx)
+	movq	16(%r8), %rax
+	movzbl	18(%rsp), %r10d
+	movzbl	16(%rsp), %ecx
+	movq	%rax, 16(%rdx)
+	movzbl	19(%rsp,%rdi), %eax
+	leal	1(%r10), %r8d
+	cmpb	$7, %r8b
+	movb	%r8b, 18(%rsp)
 	leal	1(%rax), %edx
-	movb	%dl, 275(%rsp,%r8)
-	movzbl	272(%rsp), %ecx
-	movzbl	%cl, %r8d
-	movb	%dl, 275(%rsp,%r8)
-	movzbl	274(%rsp), %ebx
-	movq	%r8, %rax
-	leal	1(%rbx), %esi
-	cmpb	$7, %sil
-	movb	%sil, 274(%rsp)
-	ja	.L440
-	cmpb	%r9b, %dl
-	jnb	.L440
-	leaq	(%rcx,%rcx,2), %rdx
-.L552:
-	leaq	(%r10,%rdx,8), %rsi
-	movq	(%rsi), %rdx
-	subq	8(%rsi), %rdx
-	sarq	$4, %rdx
-	cmpq	%rdx, 16(%rsi)
-	jb	.L571
-.L440:
-	movq	-32(%rbp), %rax
+	movb	%dl, 19(%rsp,%rdi)
+	movzbl	%cl, %edi
+	movq	%rdi, %rax
+	movb	%dl, 19(%rsp,%rdi)
+	jbe	.L444
+.L441:
+	movq	-32(%rbx), %rax
 	movzbl	8(%rax), %eax
 	testb	%al, %al
-	je	.L572
-	movzbl	52(%rbp), %eax
-	leal	1(%rax), %ecx
-	movzbl	274(%rsp), %eax
-	movb	%cl, 52(%rbp)
-	cmpb	$1, %al
-	ja	.L573
-	movzbl	272(%rsp), %esi
-	movq	64(%rsp), %rbx
-	movq	%rsi, %rdx
-	leaq	(%rsi,%rsi,2), %rsi
-	movzbl	%dl, %edi
-	leaq	16(%rbx,%rsi,8), %rsi
-	cmpb	275(%rsp,%rdi), %cl
-	movq	(%rsi), %rbx
-	movq	8(%rsi), %r13
-	movq	%rbx, 88(%rsp)
-	jbe	.L444
-	subq	%r13, %rbx
-	movq	%rbx, %rcx
-	sarq	$4, %rcx
-	cmpq	%rcx, 16(%rsi)
-	jb	.L447
-.L444:
-	cmpq	88(%rsp), %r13
-	je	.L448
-	leaq	136(%rsp), %rax
-	movq	%rax, 80(%rsp)
+	je	.L503
+	movzbl	52(%rbx), %eax
+	movzbl	18(%rsp), %r14d
+	addl	$1, %eax
+	cmpb	$1, %r14b
+	movb	%al, 52(%rbx)
+	ja	.L504
+	movzbl	16(%rsp), %edx
+	movq	%rdx, %rsi
+	movb	%dl, 15(%rsp)
+	leaq	(%rdx,%rdx,2), %rdx
+	movzbl	%sil, %ecx
+	cmpb	19(%rsp,%rcx), %al
+	leaq	0(%rbp,%rdx,8), %rdx
+	movq	(%rdx), %r15
+	movq	8(%rdx), %r12
+	jbe	.L445
+	movq	%r15, %rax
+	subq	%r12, %rax
+	sarq	$3, %rax
+	imulq	%r13, %rax
+	cmpq	%rax, 16(%rdx)
+	jb	.L448
+.L445:
+	cmpq	%r15, %r12
+	je	.L449
 	.p2align 4,,10
 	.p2align 3
-.L474:
-	movq	80(%rsp), %rsi
-	leaq	local_thread_vars(%rip), %rdi
+.L450:
+	movq	%r12, %rdi
 .LEHB9:
-	call	_ZN3tbb10interface68internal8ets_baseILNS_18ets_key_usage_typeE1EE12table_lookupERb
-	movl	0(%r13), %esi
-	leaq	144(%rsp), %rdx
-	movq	%rax, %rbx
-	movl	$16, %ecx
-	movq	%rdx, %rdi
-	movl	%esi, (%rax)
-	xorl	%eax, %eax
-	rep stosq
-	movl	%esi, %eax
-	cmpq	$1023, %rax
-	ja	.L449
-	shrq	$6, %rax
-	movl	$1, %edi
-	movl	%esi, %ecx
-	salq	%cl, %rdi
-	orq	%rdi, (%rdx,%rax,8)
+	call	_ZN9init_taskclEv
+	addq	$24, %r12
+	cmpq	%r12, %r15
+	jne	.L450
 .L449:
-	xorl	%edi, %edi
-	movl	$128, %esi
-	call	sched_setaffinity@PLT
-	testl	%eax, %eax
-	jne	.L574
-	movl	4(%r13), %r14d
-	movl	$4096, %edi
-	movl	%r14d, 4(%rbx)
-	movl	8(%r13), %r12d
-	movq	%r14, %rsi
-	movl	%r12d, 8(%rbx)
-	call	aligned_alloc@PLT
-	testq	%rax, %rax
-	movq	%rax, %r15
-	movq	%rax, 16(%rbx)
-	je	.L575
-	movq	%r14, %rsi
-	movl	$4096, %edi
-	call	aligned_alloc@PLT
-	testq	%rax, %rax
-	movq	%rax, 24(%rbx)
-	je	.L576
-	movq	%r14, %rdx
-	movl	$204, %esi
-	movq	%r15, %rdi
-	call	memset@PLT
-	movl	%r12d, %esi
-	movl	$4096, %edi
-	salq	$2, %rsi
-	call	aligned_alloc@PLT
-	testq	%rax, %rax
-	movq	%rax, 32(%rbx)
-	je	.L577
-	movl	$5000, %edi
-	call	_Znwm@PLT
-	movq	%rax, %r14
-	movl	0(%r13), %eax
-	movl	$1, %esi
-	movq	%rax, (%r14)
-	movq	%rax, %rdx
-	jmp	.L456
-	.p2align 4,,10
-	.p2align 3
-.L578:
-	movq	-8(%r14,%rsi,8), %rdx
-.L456:
-	movq	%rdx, %rax
-	shrq	$30, %rax
-	xorq	%rdx, %rax
-	imulq	$1812433253, %rax, %rax
-	addl	%esi, %eax
-	movq	%rax, (%r14,%rsi,8)
-	addq	$1, %rsi
-	cmpq	$624, %rsi
-	jne	.L578
-	movl	8(%r13), %eax
-	movq	32(%rbx), %r12
-	movq	$624, 4992(%r14)
-	movl	%eax, 24(%rsp)
-	movl	4(%r13), %eax
-	movl	%eax, %r15d
-	movl	%eax, %ebx
-	movl	%eax, 56(%rsp)
-	shrl	$10, %eax
-	shrl	$16, %ebx
-	shrl	$6, %r15d
-	movl	%eax, 32(%rsp)
-	movl	12(%r13), %eax
-	movl	%ebx, 28(%rsp)
-	cmpl	$1, %eax
-	je	.L458
-	jb	.L459
-	cmpl	$2, %eax
-	je	.L460
-	cmpl	$3, %eax
-	jne	.L457
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L457
-	subl	$1, %eax
-	movsd	.LC9(%rip), %xmm7
-	addq	$1, %rax
-	pxor	%xmm6, %xmm6
-	movq	%rax, 96(%rsp)
-	movl	56(%rsp), %eax
-	movl	$-858993459, %edx
-	movsd	%xmm7, (%rsp)
-	movq	%r13, 112(%rsp)
-	movq	%rbp, 120(%rsp)
-	movsd	.LC13(%rip), %xmm7
-	xorl	%r15d, %r15d
-	mull	%edx
-	movsd	%xmm6, 16(%rsp)
-	movsd	%xmm7, 104(%rsp)
-	movsd	.LC14(%rip), %xmm6
-	movsd	.LC15(%rip), %xmm7
-	movl	%edx, %eax
-	movl	%edx, %ebx
-	shrl	$9, %eax
-	shrl	$3, %ebx
-	movsd	%xmm6, 40(%rsp)
-	movsd	%xmm7, 48(%rsp)
-	movl	%ebx, %r13d
-	movl	%eax, %ebp
-	.p2align 4,,10
-	.p2align 3
-.L473:
-	movl	%r15d, %ebx
-	.p2align 4,,10
-	.p2align 3
-.L526:
-	movq	%r14, %rdi
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movq	%r14, %rdi
-	movapd	%xmm0, %xmm1
-	subsd	(%rsp), %xmm1
-	movsd	%xmm1, 8(%rsp)
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movsd	(%rsp), %xmm4
-	movsd	8(%rsp), %xmm1
-	mulsd	%xmm1, %xmm1
-	movapd	%xmm0, %xmm3
-	subsd	%xmm4, %xmm3
-	movapd	%xmm3, %xmm2
-	mulsd	%xmm3, %xmm2
-	addsd	%xmm2, %xmm1
-	ucomisd	%xmm4, %xmm1
-	ja	.L526
-	ucomisd	16(%rsp), %xmm1
-	jp	.L490
-	je	.L526
-.L490:
-	movapd	%xmm1, %xmm0
-	movsd	%xmm3, 72(%rsp)
-	movsd	%xmm1, 8(%rsp)
-	call	log@PLT
-	mulsd	104(%rsp), %xmm0
-	movsd	8(%rsp), %xmm1
-	movsd	16(%rsp), %xmm6
-	movsd	72(%rsp), %xmm3
-	divsd	%xmm1, %xmm0
-	ucomisd	%xmm0, %xmm6
-	sqrtsd	%xmm0, %xmm1
-	ja	.L579
-.L472:
-	mulsd	%xmm1, %xmm3
-	movsd	40(%rsp), %xmm0
-	mulsd	%xmm3, %xmm0
-	addsd	48(%rsp), %xmm0
-	call	round@PLT
-	movl	24(%rsp), %eax
-	xorl	%edx, %edx
-	divl	28(%rsp)
-	movl	%ebx, %eax
-	movl	%edx, %ecx
-	xorl	%edx, %edx
-	divl	%ebp
-	sall	$6, %ecx
-	xorl	%edx, %edx
-	imull	%r13d, %eax
-	addl	%eax, %ecx
-	cvttsd2siq	%xmm0, %rax
-	andl	$1023, %eax
-	imull	32(%rsp), %eax
-	addl	%ecx, %eax
-	divl	56(%rsp)
-	movl	%edx, (%r12,%r15,4)
-	addq	$1, %r15
-	cmpq	%r15, 96(%rsp)
-	jne	.L473
-	movq	112(%rsp), %r13
-	movq	120(%rsp), %rbp
-	.p2align 4,,10
-	.p2align 3
-.L457:
-	addq	$16, %r13
-	cmpq	%r13, 88(%rsp)
-	jne	.L474
-	movzbl	272(%rsp), %edx
+	movzbl	15(%rsp), %eax
+	subl	$1, %r14d
+	movb	%r14b, 18(%rsp)
+	addl	$7, %eax
+	andl	$7, %eax
+	movb	%al, 16(%rsp)
 .L448:
-	movzbl	274(%rsp), %eax
-	addl	$7, %edx
-	andl	$7, %edx
-	movb	%dl, 272(%rsp)
-	subl	$1, %eax
-	movb	%al, 274(%rsp)
-.L447:
-	testb	%al, %al
-	je	.L477
-	movq	-56(%rbp), %rdi
+	testb	%r14b, %r14b
+	je	.L453
+	movq	-56(%rbx), %rdi
 	call	_ZNK3tbb18task_group_context28is_group_execution_cancelledEv@PLT
 	testb	%al, %al
-	movzbl	274(%rsp), %edx
-	jne	.L477
-	movzbl	52(%rbp), %r9d
-	jmp	.L411
-.L459:
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L457
-	leal	-1(%rax), %esi
-	xorl	%ecx, %ecx
-	addq	$1, %rsi
+	jne	.L453
+	movzbl	52(%rbx), %esi
+	jmp	.L436
 	.p2align 4,,10
 	.p2align 3
-.L464:
-	movl	%ecx, %eax
-	xorl	%edx, %edx
-	divl	%r15d
-	sall	$6, %edx
-	movl	%edx, (%r12,%rcx,4)
-	addq	$1, %rcx
-	cmpq	%rcx, %rsi
-	jne	.L464
-	jmp	.L457
-.L458:
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L457
-	subl	$1, %eax
-	movq	%rbp, (%rsp)
-	leaq	4(%r12,%rax,4), %rbx
-	movq	%rbx, %rbp
-	movq	80(%rsp), %rbx
-	.p2align 4,,10
-	.p2align 3
-.L465:
-	movabsq	$-4294967296, %rax
-	movq	%rbx, %rdx
-	movq	%r14, %rsi
-	movq	%rbx, %rdi
-	movq	%rax, 136(%rsp)
-	addq	$4, %r12
-	call	_ZNSt24uniform_int_distributionIjEclISt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEEEjRT_RKNS0_10param_typeE
-	xorl	%edx, %edx
-	divl	%r15d
-	sall	$6, %edx
-	movl	%edx, -4(%r12)
-	cmpq	%r12, %rbp
-	jne	.L465
-	movq	(%rsp), %rbp
-	jmp	.L457
-.L460:
-	movl	24(%rsp), %eax
-	testl	%eax, %eax
-	je	.L457
-	movsd	.LC14(%rip), %xmm7
-	subl	$1, %eax
-	movsd	.LC15(%rip), %xmm6
-	leaq	4(%r12,%rax,4), %rbx
-	movsd	%xmm7, 40(%rsp)
-	movsd	%xmm6, 48(%rsp)
-	.p2align 4,,10
-	.p2align 3
-.L525:
-	movq	%r14, %rdi
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movq	%r14, %rdi
-	movapd	%xmm0, %xmm1
-	subsd	.LC9(%rip), %xmm1
-	movsd	%xmm1, (%rsp)
-	call	_ZSt18generate_canonicalIdLm53ESt23mersenne_twister_engineImLm32ELm624ELm397ELm31ELm2567483615ELm11ELm4294967295ELm7ELm2636928640ELm15ELm4022730752ELm18ELm1812433253EEET_RT1_
-	addsd	%xmm0, %xmm0
-	movsd	(%rsp), %xmm1
-	mulsd	%xmm1, %xmm1
-	movapd	%xmm0, %xmm3
-	subsd	.LC9(%rip), %xmm3
-	movapd	%xmm3, %xmm2
-	mulsd	%xmm3, %xmm2
-	addsd	%xmm2, %xmm1
-	ucomisd	.LC9(%rip), %xmm1
-	ja	.L525
-	pxor	%xmm6, %xmm6
-	ucomisd	%xmm6, %xmm1
-	jp	.L489
-	je	.L525
-.L489:
-	movapd	%xmm1, %xmm0
-	movsd	%xmm3, 8(%rsp)
-	movsd	%xmm1, (%rsp)
-	call	log@PLT
-	mulsd	.LC13(%rip), %xmm0
-	movsd	(%rsp), %xmm1
-	pxor	%xmm6, %xmm6
-	movsd	8(%rsp), %xmm3
-	divsd	%xmm1, %xmm0
-	ucomisd	%xmm0, %xmm6
-	sqrtsd	%xmm0, %xmm1
-	ja	.L580
-.L468:
-	mulsd	%xmm1, %xmm3
-	addq	$4, %r12
-	movsd	40(%rsp), %xmm0
-	mulsd	%xmm3, %xmm0
-	addsd	48(%rsp), %xmm0
-	call	round@PLT
-	cvttsd2siq	%xmm0, %rcx
-	movl	24(%rsp), %eax
-	xorl	%edx, %edx
-	divl	28(%rsp)
-	sall	$6, %edx
-	andl	$1023, %ecx
-	imull	32(%rsp), %ecx
-	addl	%edx, %ecx
-	movl	%ecx, -4(%r12)
-	cmpq	%r12, %rbx
-	jne	.L525
-	jmp	.L457
-.L572:
-	movzbl	272(%rsp), %eax
-	movq	64(%rsp), %rbx
-	movq	%rax, %rdx
+.L503:
+	movzbl	16(%rsp), %eax
+	movzbl	18(%rsp), %r14d
+	movb	%al, 15(%rsp)
 	leaq	(%rax,%rax,2), %rax
-	leaq	16(%rbx,%rax,8), %rax
-	movq	8(%rax), %r13
-	movq	(%rax), %rax
-	movq	%rax, 88(%rsp)
-	jmp	.L444
-.L573:
-	movzbl	273(%rsp), %edx
-	movq	64(%rsp), %rbx
+	leaq	0(%rbp,%rax,8), %rax
+	movq	8(%rax), %r12
+	movq	(%rax), %r15
+	jmp	.L445
+	.p2align 4,,10
+	.p2align 3
+.L504:
+	movzbl	17(%rsp), %eax
 	movl	$16, %esi
-	movq	%rbp, %rdi
-	leaq	(%rdx,%rdx,2), %rax
-	movzbl	275(%rsp,%rdx), %r12d
-	leaq	16(%rbx,%rax,8), %rbx
+	movq	%rbx, %rdi
+	movq	%rax, %r12
+	movzbl	19(%rsp,%rax), %r14d
 	call	_ZNK3tbb8internal27allocate_continuation_proxy8allocateEm@PLT
-	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rcx
+	leaq	16+_ZTVN3tbb10interface98internal9flag_taskE(%rip), %rsi
 	movb	$1, -11(%rax)
-	movq	%rcx, (%rax)
+	movq	%rsi, (%rax)
 	movl	$56, %esi
 	movb	$0, 8(%rax)
 	movq	%rax, %rdi
-	movq	%rax, -32(%rbp)
+	movq	%rax, -32(%rbx)
 	movq	$2, -24(%rax)
 	call	_ZNK3tbb8internal20allocate_child_proxy8allocateEm@PLT
 	testq	%rax, %rax
-	je	.L446
+	je	.L447
+	leaq	(%r12,%r12,2), %rdx
 	movb	$1, -11(%rax)
-	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rcx
-	movdqu	(%rbx), %xmm0
-	movq	%rcx, (%rax)
+	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rsi
+	salq	$3, %rdx
+	movq	%rsi, (%rax)
+	movdqu	32(%rsp,%rdx), %xmm0
+	movq	48(%rsp,%rdx), %rdx
 	movups	%xmm0, 8(%rax)
-	movq	16(%rbx), %rdx
 	movq	%rdx, 24(%rax)
-	movq	32(%rbp), %rdx
+	movq	32(%rbx), %rdx
 	movq	%rdx, 32(%rax)
-	movq	40(%rbp), %rdx
+	movq	40(%rbx), %rdx
 	shrq	%rdx
-	movq	%rdx, 40(%rbp)
+	movq	%rdx, 40(%rbx)
 	movq	%rdx, 40(%rax)
 	movl	$2, 48(%rax)
-	movzbl	52(%rbp), %edx
-	subl	%r12d, %edx
+	movzbl	52(%rbx), %edx
+	subl	%r14d, %edx
 	movb	%dl, 52(%rax)
-.L446:
+.L447:
 	movq	-40(%rax), %rdi
 	leaq	-8(%rax), %rdx
 	movq	%rax, %rsi
 	movq	(%rdi), %rcx
 	call	*(%rcx)
 .LEHE9:
-	movzbl	273(%rsp), %edx
-	movzbl	274(%rsp), %eax
-	addl	$1, %edx
+	movzbl	18(%rsp), %eax
+	leal	-1(%rax), %r14d
+	movzbl	17(%rsp), %eax
+	movb	%r14b, 18(%rsp)
+	addl	$1, %eax
+	andl	$7, %eax
+	movb	%al, 17(%rsp)
+	jmp	.L448
+	.p2align 4,,10
+	.p2align 3
+.L457:
+	movzbl	52(%rbx), %eax
+	testb	%al, %al
+	je	.L458
 	subl	$1, %eax
-	andl	$7, %edx
-	movb	%al, 274(%rsp)
-	movb	%dl, 273(%rsp)
-	jmp	.L447
-.L579:
-	movsd	%xmm1, 72(%rsp)
-	movsd	%xmm3, 8(%rsp)
-	call	sqrt@PLT
-	movsd	72(%rsp), %xmm1
-	movsd	8(%rsp), %xmm3
-	jmp	.L472
-.L580:
-	movsd	%xmm1, 8(%rsp)
-	movsd	%xmm3, (%rsp)
-	call	sqrt@PLT
-	movsd	8(%rsp), %xmm1
-	movsd	(%rsp), %xmm3
-	jmp	.L468
-.L564:
-	movsd	%xmm1, 48(%rsp)
-	movsd	%xmm3, 8(%rsp)
-	call	sqrt@PLT
-	movsd	48(%rsp), %xmm1
-	movsd	8(%rsp), %xmm3
-	jmp	.L434
-.L566:
-	movsd	%xmm1, 16(%rsp)
-	movsd	%xmm3, (%rsp)
-	call	sqrt@PLT
-	movsd	16(%rsp), %xmm1
-	movsd	(%rsp), %xmm3
-	jmp	.L430
-.L570:
-	movq	%rax, 56(%rsp)
-	movq	%rcx, %rdx
-	jmp	.L482
-.L545:
-	movq	%rcx, 56(%rsp)
-	jmp	.L403
-.L486:
-.L480:
-	movzbl	274(%rsp), %edx
+	movq	$0, 40(%rbx)
+	movb	%al, 52(%rbx)
+	jmp	.L428
+.L499:
+	call	__stack_chk_fail@PLT
+.L462:
+.L456:
+	movzbl	18(%rsp), %edx
 	testb	%dl, %dl
-	je	.L479
+	je	.L455
 	subl	$1, %edx
-	movb	%dl, 274(%rsp)
-	jmp	.L480
-.L561:
-	leaq	.LC11(%rip), %rsi
-	movl	$47, %edx
-.L556:
-	leaq	_ZSt4cout(%rip), %rdi
-.LEHB10:
-	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-	leaq	_ZSt4cout(%rip), %rdi
-	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-.L557:
-	orl	$-1, %edi
-	call	exit@PLT
-.L479:
+	movb	%dl, 18(%rsp)
+	jmp	.L456
+.L455:
 	movq	%rax, %rdi
+.LEHB10:
 	call	_Unwind_Resume@PLT
 .LEHE10:
-.L577:
-	leaq	.LC12(%rip), %rsi
-	leaq	_ZSt4cout(%rip), %rdi
-	movl	$46, %edx
-.LEHB11:
-	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-.L554:
-	leaq	_ZSt4cout(%rip), %rdi
-	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-	jmp	.L557
-.L576:
-	leaq	.LC11(%rip), %rsi
-	leaq	_ZSt4cout(%rip), %rdi
-	movl	$47, %edx
-	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-	jmp	.L554
-.L575:
-	leaq	.LC10(%rip), %rsi
-	leaq	_ZSt4cout(%rip), %rdi
-	movl	$43, %edx
-	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-	jmp	.L554
-.L574:
-	movq	%r13, %rdi
-	call	_ZN9init_taskclEv.part.39
-.LEHE11:
-.L562:
-	movl	$46, %edx
-	leaq	.LC12(%rip), %rsi
-	jmp	.L556
-.L559:
-	movq	%r15, %rdi
-.LEHB12:
-	call	_ZN9init_taskclEv.part.39
-.LEHE12:
-.L560:
-	movl	$43, %edx
-	leaq	.LC10(%rip), %rsi
-	jmp	.L556
-.L565:
-	call	__stack_chk_fail@PLT
 	.cfi_endproc
 .LFE6644:
 	.section	.gcc_except_table._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,"aG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,comdat
@@ -3702,23 +3206,191 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	.uleb128 0
 	.uleb128 .LEHB9-.LFB6644
 	.uleb128 .LEHE9-.LEHB9
-	.uleb128 .L486-.LFB6644
+	.uleb128 .L462-.LFB6644
 	.uleb128 0
 	.uleb128 .LEHB10-.LFB6644
 	.uleb128 .LEHE10-.LEHB10
 	.uleb128 0
 	.uleb128 0
-	.uleb128 .LEHB11-.LFB6644
-	.uleb128 .LEHE11-.LEHB11
-	.uleb128 .L486-.LFB6644
-	.uleb128 0
-	.uleb128 .LEHB12-.LFB6644
-	.uleb128 .LEHE12-.LEHB12
-	.uleb128 0
-	.uleb128 0
 .LLSDACSE6644:
 	.section	.text._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,"axG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv,comdat
 	.size	_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv, .-_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE7executeEv
+	.section	.text._ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_,"axG",@progbits,_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_
+	.type	_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_, @function
+_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_:
+.LFB6238:
+	.cfi_startproc
+	pushq	%r15
+	.cfi_def_cfa_offset 16
+	.cfi_offset 15, -16
+	pushq	%r14
+	.cfi_def_cfa_offset 24
+	.cfi_offset 14, -24
+	movq	%rdx, %r15
+	pushq	%r13
+	.cfi_def_cfa_offset 32
+	.cfi_offset 13, -32
+	pushq	%r12
+	.cfi_def_cfa_offset 40
+	.cfi_offset 12, -40
+	movabsq	$-6148914691236517205, %rdx
+	pushq	%rbp
+	.cfi_def_cfa_offset 48
+	.cfi_offset 6, -48
+	pushq	%rbx
+	.cfi_def_cfa_offset 56
+	.cfi_offset 3, -56
+	movq	%rdi, %rbp
+	movq	%rsi, %rbx
+	movq	%rsi, %r14
+	subq	$8, %rsp
+	.cfi_def_cfa_offset 64
+	movq	8(%rbp), %rax
+	movq	(%rdi), %rdi
+	movq	%rax, %rcx
+	subq	%rdi, %rbx
+	subq	%rdi, %rcx
+	sarq	$3, %rcx
+	imulq	%rdx, %rcx
+	testq	%rcx, %rcx
+	je	.L521
+	leaq	(%rcx,%rcx), %rdx
+	movq	$-16, %r13
+	cmpq	%rdx, %rcx
+	jbe	.L537
+.L507:
+	movq	%r13, %rdi
+	call	_Znwm@PLT
+	movq	0(%rbp), %rdi
+	movq	%rax, %r12
+	movq	8(%rbp), %rax
+	leaq	24(%r12), %rcx
+	addq	%r12, %r13
+.L508:
+	addq	%r12, %rbx
+	je	.L509
+	movdqu	(%r15), %xmm0
+	movq	16(%r15), %rdx
+	movups	%xmm0, (%rbx)
+	movq	%rdx, 16(%rbx)
+.L509:
+	cmpq	%rdi, %r14
+	je	.L510
+	leaq	24(%rdi), %rdx
+	movq	%r14, %rbx
+	movq	%rdi, %r8
+	subq	%rdx, %rbx
+	movq	%rbx, %rdx
+	shrq	$3, %rdx
+	leaq	24(%r12,%rdx,8), %rcx
+	movq	%r12, %rdx
+	.p2align 4,,10
+	.p2align 3
+.L512:
+	testq	%rdx, %rdx
+	je	.L538
+.L514:
+	movdqu	(%r8), %xmm0
+	addq	$24, %rdx
+	addq	$24, %r8
+	movups	%xmm0, -24(%rdx)
+	movq	-8(%r8), %r9
+	movq	%r9, -8(%rdx)
+	cmpq	%rdx, %rcx
+	jne	.L512
+.L513:
+	addq	$24, %rcx
+.L510:
+	cmpq	%rax, %r14
+	je	.L526
+	leaq	24(%r14), %rdx
+	movq	%r14, %rsi
+	subq	%rdx, %rax
+	movq	%rax, %rdx
+	shrq	$3, %rdx
+	leaq	24(%rcx,%rdx,8), %rbx
+	.p2align 4,,10
+	.p2align 3
+.L517:
+	testq	%rcx, %rcx
+	je	.L539
+.L519:
+	movq	16(%rsi), %rdx
+	addq	$24, %rcx
+	addq	$24, %rsi
+	movdqu	-24(%rsi), %xmm0
+	movq	%rdx, -8(%rcx)
+	movups	%xmm0, -24(%rcx)
+	cmpq	%rbx, %rcx
+	jne	.L517
+.L515:
+	testq	%rdi, %rdi
+	je	.L520
+	call	_ZdlPv@PLT
+.L520:
+	movq	%r12, 0(%rbp)
+	movq	%rbx, 8(%rbp)
+	movq	%r13, 16(%rbp)
+	addq	$8, %rsp
+	.cfi_remember_state
+	.cfi_def_cfa_offset 56
+	popq	%rbx
+	.cfi_def_cfa_offset 48
+	popq	%rbp
+	.cfi_def_cfa_offset 40
+	popq	%r12
+	.cfi_def_cfa_offset 32
+	popq	%r13
+	.cfi_def_cfa_offset 24
+	popq	%r14
+	.cfi_def_cfa_offset 16
+	popq	%r15
+	.cfi_def_cfa_offset 8
+	ret
+	.p2align 4,,10
+	.p2align 3
+.L521:
+	.cfi_restore_state
+	movl	$1, %edx
+.L506:
+	leaq	(%rdx,%rdx,2), %r13
+	salq	$3, %r13
+	jmp	.L507
+	.p2align 4,,10
+	.p2align 3
+.L537:
+	movabsq	$768614336404564650, %rcx
+	cmpq	%rcx, %rdx
+	ja	.L507
+	testq	%rdx, %rdx
+	jne	.L506
+	movl	$24, %ecx
+	xorl	%r13d, %r13d
+	xorl	%r12d, %r12d
+	jmp	.L508
+	.p2align 4,,10
+	.p2align 3
+.L526:
+	movq	%rcx, %rbx
+	jmp	.L515
+.L538:
+	addq	$24, %r8
+	cmpq	$24, %rcx
+	je	.L513
+	movl	$24, %edx
+	jmp	.L514
+.L539:
+	addq	$24, %rsi
+	cmpq	$24, %rbx
+	je	.L515
+	movl	$24, %ecx
+	jmp	.L519
+	.cfi_endproc
+.LFE6238:
+	.size	_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_, .-_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_
 	.section	.text._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,"axG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,comdat
 	.p2align 4,,15
 	.weak	_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_
@@ -3750,11 +3422,11 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	xorl	%eax, %eax
 	movq	(%rdi), %rax
 	cmpq	%rax, 8(%rdi)
-	jb	.L589
-.L581:
+	jb	.L548
+.L540:
 	movq	280(%rsp), %rax
 	xorq	%fs:40, %rax
-	jne	.L590
+	jne	.L549
 	addq	$288, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 48
@@ -3771,7 +3443,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L589:
+.L548:
 	.cfi_restore_state
 	leaq	16(%rsp), %r12
 	leaq	8(%rsp), %r14
@@ -3780,15 +3452,15 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movl	$1, 16(%rsp)
 	movq	$65538, 144(%rsp)
 	movq	%r12, %rdi
-.LEHB13:
+.LEHB11:
 	call	_ZN3tbb18task_group_context4initEv@PLT
-.LEHE13:
+.LEHE11:
 	movl	$56, %esi
 	movq	%r14, %rdi
 	movq	%r12, 8(%rsp)
-.LEHB14:
+.LEHB12:
 	call	_ZNK3tbb8internal32allocate_root_with_context_proxy8allocateEm@PLT
-.LEHE14:
+.LEHE12:
 	movb	$1, -11(%rax)
 	movq	%rax, %rbx
 	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rax
@@ -3799,9 +3471,9 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 24(%rbx)
 	movq	0(%r13), %rax
 	movq	%rax, 32(%rbx)
-.LEHB15:
+.LEHB13:
 	call	_ZN3tbb8internal36get_initial_auto_partitioner_divisorEv@PLT
-.LEHE15:
+.LEHE13:
 	movq	-40(%rbx), %rdi
 	shrq	$2, %rax
 	movb	$5, 52(%rbx)
@@ -3811,29 +3483,29 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 40(%rbx)
 	movq	%rbx, %rsi
 	movq	(%rdi), %rax
-.LEHB16:
+.LEHB14:
 	call	*16(%rax)
-.LEHE16:
+.LEHE14:
 	movq	%r12, %rdi
 	call	_ZN3tbb18task_group_contextD1Ev@PLT
-	jmp	.L581
-.L590:
+	jmp	.L540
+.L549:
 	call	__stack_chk_fail@PLT
-.L587:
+.L546:
 	movq	%rax, %rbp
-.L584:
+.L543:
 	movq	%r12, %rdi
 	call	_ZN3tbb18task_group_contextD1Ev@PLT
 	movq	%rbp, %rdi
-.LEHB17:
+.LEHB15:
 	call	_Unwind_Resume@PLT
-.LEHE17:
-.L586:
+.LEHE15:
+.L545:
 	movq	%rbx, %rsi
 	movq	%r14, %rdi
 	movq	%rax, %rbp
 	call	_ZNK3tbb8internal32allocate_root_with_context_proxy4freeERNS_4taskE@PLT
-	jmp	.L584
+	jmp	.L543
 	.cfi_endproc
 .LFE6398:
 	.section	.gcc_except_table._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,"aG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,comdat
@@ -3843,24 +3515,24 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	.byte	0x1
 	.uleb128 .LLSDACSE6398-.LLSDACSB6398
 .LLSDACSB6398:
+	.uleb128 .LEHB11-.LFB6398
+	.uleb128 .LEHE11-.LEHB11
+	.uleb128 0
+	.uleb128 0
+	.uleb128 .LEHB12-.LFB6398
+	.uleb128 .LEHE12-.LEHB12
+	.uleb128 .L546-.LFB6398
+	.uleb128 0
 	.uleb128 .LEHB13-.LFB6398
 	.uleb128 .LEHE13-.LEHB13
-	.uleb128 0
+	.uleb128 .L545-.LFB6398
 	.uleb128 0
 	.uleb128 .LEHB14-.LFB6398
 	.uleb128 .LEHE14-.LEHB14
-	.uleb128 .L587-.LFB6398
+	.uleb128 .L546-.LFB6398
 	.uleb128 0
 	.uleb128 .LEHB15-.LFB6398
 	.uleb128 .LEHE15-.LEHB15
-	.uleb128 .L586-.LFB6398
-	.uleb128 0
-	.uleb128 .LEHB16-.LFB6398
-	.uleb128 .LEHE16-.LEHB16
-	.uleb128 .L587-.LFB6398
-	.uleb128 0
-	.uleb128 .LEHB17-.LFB6398
-	.uleb128 .LEHE17-.LEHB17
 	.uleb128 0
 	.uleb128 0
 .LLSDACSE6398:
@@ -3897,11 +3569,11 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	xorl	%eax, %eax
 	movq	(%rdi), %rax
 	cmpq	%rax, 8(%rdi)
-	jb	.L599
-.L591:
+	jb	.L558
+.L550:
 	movq	280(%rsp), %rax
 	xorq	%fs:40, %rax
-	jne	.L600
+	jne	.L559
 	addq	$288, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 48
@@ -3918,7 +3590,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L599:
+.L558:
 	.cfi_restore_state
 	leaq	16(%rsp), %r12
 	leaq	8(%rsp), %r14
@@ -3927,15 +3599,15 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movl	$1, 16(%rsp)
 	movq	$65538, 144(%rsp)
 	movq	%r12, %rdi
-.LEHB18:
+.LEHB16:
 	call	_ZN3tbb18task_group_context4initEv@PLT
-.LEHE18:
+.LEHE16:
 	movl	$56, %esi
 	movq	%r14, %rdi
 	movq	%r12, 8(%rsp)
-.LEHB19:
+.LEHB17:
 	call	_ZNK3tbb8internal32allocate_root_with_context_proxy8allocateEm@PLT
-.LEHE19:
+.LEHE17:
 	movb	$1, -11(%rax)
 	movq	%rax, %rbx
 	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rax
@@ -3946,9 +3618,9 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 24(%rbx)
 	movq	0(%r13), %rax
 	movq	%rax, 32(%rbx)
-.LEHB20:
+.LEHB18:
 	call	_ZN3tbb8internal36get_initial_auto_partitioner_divisorEv@PLT
-.LEHE20:
+.LEHE18:
 	movq	-40(%rbx), %rdi
 	shrq	$2, %rax
 	movb	$5, 52(%rbx)
@@ -3958,29 +3630,29 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 40(%rbx)
 	movq	%rbx, %rsi
 	movq	(%rdi), %rax
-.LEHB21:
+.LEHB19:
 	call	*16(%rax)
-.LEHE21:
+.LEHE19:
 	movq	%r12, %rdi
 	call	_ZN3tbb18task_group_contextD1Ev@PLT
-	jmp	.L591
-.L600:
+	jmp	.L550
+.L559:
 	call	__stack_chk_fail@PLT
-.L597:
+.L556:
 	movq	%rax, %rbp
-.L594:
+.L553:
 	movq	%r12, %rdi
 	call	_ZN3tbb18task_group_contextD1Ev@PLT
 	movq	%rbp, %rdi
-.LEHB22:
+.LEHB20:
 	call	_Unwind_Resume@PLT
-.LEHE22:
-.L596:
+.LEHE20:
+.L555:
 	movq	%rbx, %rsi
 	movq	%r14, %rdi
 	movq	%rax, %rbp
 	call	_ZNK3tbb8internal32allocate_root_with_context_proxy4freeERNS_4taskE@PLT
-	jmp	.L594
+	jmp	.L553
 	.cfi_endproc
 .LFE6406:
 	.section	.gcc_except_table._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,"aG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,comdat
@@ -3990,24 +3662,24 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	.byte	0x1
 	.uleb128 .LLSDACSE6406-.LLSDACSB6406
 .LLSDACSB6406:
+	.uleb128 .LEHB16-.LFB6406
+	.uleb128 .LEHE16-.LEHB16
+	.uleb128 0
+	.uleb128 0
+	.uleb128 .LEHB17-.LFB6406
+	.uleb128 .LEHE17-.LEHB17
+	.uleb128 .L556-.LFB6406
+	.uleb128 0
 	.uleb128 .LEHB18-.LFB6406
 	.uleb128 .LEHE18-.LEHB18
-	.uleb128 0
+	.uleb128 .L555-.LFB6406
 	.uleb128 0
 	.uleb128 .LEHB19-.LFB6406
 	.uleb128 .LEHE19-.LEHB19
-	.uleb128 .L597-.LFB6406
+	.uleb128 .L556-.LFB6406
 	.uleb128 0
 	.uleb128 .LEHB20-.LFB6406
 	.uleb128 .LEHE20-.LEHB20
-	.uleb128 .L596-.LFB6406
-	.uleb128 0
-	.uleb128 .LEHB21-.LFB6406
-	.uleb128 .LEHE21-.LEHB21
-	.uleb128 .L597-.LFB6406
-	.uleb128 0
-	.uleb128 .LEHB22-.LFB6406
-	.uleb128 .LEHE22-.LEHB22
 	.uleb128 0
 	.uleb128 0
 .LLSDACSE6406:
@@ -4044,11 +3716,11 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	xorl	%eax, %eax
 	movq	(%rdi), %rax
 	cmpq	%rax, 8(%rdi)
-	jb	.L609
-.L601:
+	jb	.L568
+.L560:
 	movq	280(%rsp), %rax
 	xorq	%fs:40, %rax
-	jne	.L610
+	jne	.L569
 	addq	$288, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 48
@@ -4065,7 +3737,7 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	ret
 	.p2align 4,,10
 	.p2align 3
-.L609:
+.L568:
 	.cfi_restore_state
 	leaq	16(%rsp), %r12
 	leaq	8(%rsp), %r14
@@ -4074,15 +3746,15 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movl	$1, 16(%rsp)
 	movq	$65538, 144(%rsp)
 	movq	%r12, %rdi
-.LEHB23:
+.LEHB21:
 	call	_ZN3tbb18task_group_context4initEv@PLT
-.LEHE23:
+.LEHE21:
 	movl	$56, %esi
 	movq	%r14, %rdi
 	movq	%r12, 8(%rsp)
-.LEHB24:
+.LEHB22:
 	call	_ZNK3tbb8internal32allocate_root_with_context_proxy8allocateEm@PLT
-.LEHE24:
+.LEHE22:
 	movb	$1, -11(%rax)
 	movq	%rax, %rbx
 	leaq	16+_ZTVN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEEE(%rip), %rax
@@ -4093,9 +3765,9 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 24(%rbx)
 	movq	0(%r13), %rax
 	movq	%rax, 32(%rbx)
-.LEHB25:
+.LEHB23:
 	call	_ZN3tbb8internal36get_initial_auto_partitioner_divisorEv@PLT
-.LEHE25:
+.LEHE23:
 	movq	-40(%rbx), %rdi
 	shrq	$2, %rax
 	movb	$5, 52(%rbx)
@@ -4105,29 +3777,29 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	movq	%rax, 40(%rbx)
 	movq	%rbx, %rsi
 	movq	(%rdi), %rax
-.LEHB26:
+.LEHB24:
 	call	*16(%rax)
-.LEHE26:
+.LEHE24:
 	movq	%r12, %rdi
 	call	_ZN3tbb18task_group_contextD1Ev@PLT
-	jmp	.L601
-.L610:
+	jmp	.L560
+.L569:
 	call	__stack_chk_fail@PLT
-.L607:
+.L566:
 	movq	%rax, %rbp
-.L604:
+.L563:
 	movq	%r12, %rdi
 	call	_ZN3tbb18task_group_contextD1Ev@PLT
 	movq	%rbp, %rdi
-.LEHB27:
+.LEHB25:
 	call	_Unwind_Resume@PLT
-.LEHE27:
-.L606:
+.LEHE25:
+.L565:
 	movq	%rbx, %rsi
 	movq	%r14, %rdi
 	movq	%rax, %rbp
 	call	_ZNK3tbb8internal32allocate_root_with_context_proxy4freeERNS_4taskE@PLT
-	jmp	.L604
+	jmp	.L563
 	.cfi_endproc
 .LFE6414:
 	.section	.gcc_except_table._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,"aG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,comdat
@@ -4137,51 +3809,51 @@ _ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_
 	.byte	0x1
 	.uleb128 .LLSDACSE6414-.LLSDACSB6414
 .LLSDACSB6414:
+	.uleb128 .LEHB21-.LFB6414
+	.uleb128 .LEHE21-.LEHB21
+	.uleb128 0
+	.uleb128 0
+	.uleb128 .LEHB22-.LFB6414
+	.uleb128 .LEHE22-.LEHB22
+	.uleb128 .L566-.LFB6414
+	.uleb128 0
 	.uleb128 .LEHB23-.LFB6414
 	.uleb128 .LEHE23-.LEHB23
-	.uleb128 0
+	.uleb128 .L565-.LFB6414
 	.uleb128 0
 	.uleb128 .LEHB24-.LFB6414
 	.uleb128 .LEHE24-.LEHB24
-	.uleb128 .L607-.LFB6414
+	.uleb128 .L566-.LFB6414
 	.uleb128 0
 	.uleb128 .LEHB25-.LFB6414
 	.uleb128 .LEHE25-.LEHB25
-	.uleb128 .L606-.LFB6414
-	.uleb128 0
-	.uleb128 .LEHB26-.LFB6414
-	.uleb128 .LEHE26-.LEHB26
-	.uleb128 .L607-.LFB6414
-	.uleb128 0
-	.uleb128 .LEHB27-.LFB6414
-	.uleb128 .LEHE27-.LEHB27
 	.uleb128 0
 	.uleb128 0
 .LLSDACSE6414:
 	.section	.text._ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,"axG",@progbits,_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_,comdat
 	.size	_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_, .-_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_
-	.section	.rodata.str1.8
+	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
-.LC16:
+.LC14:
 	.string	"Failure in allocating dummy buffers, aborting"
-	.section	.rodata.str1.1
-.LC17:
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC15:
 	.string	"vector::_M_realloc_insert"
 	.section	.rodata.str1.8
 	.align 8
-.LC18:
+.LC16:
 	.string	"# Initialization done! strating test..."
 	.align 8
-.LC19:
+.LC17:
 	.string	"********************************************"
 	.section	.rodata.str1.1
-.LC21:
+.LC19:
 	.string	"# Elapsed time: "
-.LC22:
+.LC20:
 	.string	" seconds"
-.LC24:
-	.string	"# Bandwidth: "
 .LC25:
+	.string	"# Bandwidth: "
+.LC26:
 	.string	" GiB per second"
 	.section	.text.startup,"ax",@progbits
 	.p2align 4,,15
@@ -4195,6 +3867,7 @@ main:
 	pushq	%r15
 	.cfi_def_cfa_offset 16
 	.cfi_offset 15, -16
+	pxor	%xmm0, %xmm0
 	pushq	%r14
 	.cfi_def_cfa_offset 24
 	.cfi_offset 14, -24
@@ -4207,92 +3880,93 @@ main:
 	pushq	%rbp
 	.cfi_def_cfa_offset 48
 	.cfi_offset 6, -48
+	movq	%rsi, %rbp
 	pushq	%rbx
 	.cfi_def_cfa_offset 56
 	.cfi_offset 3, -56
 	movl	%edi, %ebx
 	movl	$84, %edi
-	movq	%rsi, %rbp
-	subq	$232, %rsp
-	.cfi_def_cfa_offset 288
+	subq	$264, %rsp
+	.cfi_def_cfa_offset 320
 	movq	%fs:40, %rax
-	movq	%rax, 216(%rsp)
+	movq	%rax, 248(%rsp)
 	xorl	%eax, %eax
-	movq	$0, 96(%rsp)
-	movq	$0, 104(%rsp)
+	movaps	%xmm0, 96(%rsp)
 	movq	$0, 112(%rsp)
 	call	sysconf@PLT
-	leaq	80(%rsp), %rdx
+	leaq	128(%rsp), %rdx
 	movq	%rbp, %rsi
 	movl	%ebx, %edi
 	movl	%eax, cpus_num(%rip)
-.LEHB28:
+.LEHB26:
 	call	_Z9parse_cmdiPPcP10cmd_params@PLT
-.LEHE28:
-	leaq	48(%rsp), %rax
-	movl	80(%rsp), %esi
+.LEHE26:
+	leaq	64(%rsp), %rax
+	movl	128(%rsp), %esi
 	movl	$1, %edx
-	movq	$0, 48(%rsp)
+	movq	$0, 64(%rsp)
 	movq	%rax, %rdi
-	movq	%rax, 16(%rsp)
-.LEHB29:
+	movq	%rax, 32(%rsp)
+.LEHB27:
 	call	_ZN3tbb19task_scheduler_init10initializeEim@PLT
-.LEHE29:
-	movl	80(%rsp), %ecx
+.LEHE27:
+	movl	128(%rsp), %eax
 	movq	104(%rsp), %rsi
-	leaq	192(%rsp), %r14
-	testl	%ecx, %ecx
-	je	.L617
+	leaq	224(%rsp), %r14
+	testl	%eax, %eax
+	je	.L576
 	xorl	%ebx, %ebx
-	leaq	192(%rsp), %r14
+	leaq	224(%rsp), %r14
 	leaq	96(%rsp), %rbp
-	jmp	.L624
+	jmp	.L583
 	.p2align 4,,10
 	.p2align 3
-.L741:
+.L700:
 	testq	%rsi, %rsi
-	je	.L619
-	movdqa	192(%rsp), %xmm0
+	je	.L578
+	movdqa	224(%rsp), %xmm0
 	movups	%xmm0, (%rsi)
-.L619:
-	addq	$16, %rsi
+	movq	240(%rsp), %rax
+	movq	%rax, 16(%rsi)
+.L578:
+	addq	$24, %rsi
 	addl	$1, %ebx
-	cmpl	%ebx, 80(%rsp)
+	cmpl	%ebx, 128(%rsp)
 	movq	%rsi, 104(%rsp)
-	jbe	.L617
-.L624:
-	movl	84(%rsp), %eax
-	cmpq	112(%rsp), %rsi
-	movl	%ebx, 192(%rsp)
-	movl	%eax, 196(%rsp)
-	movl	88(%rsp), %eax
-	movl	%eax, 200(%rsp)
-	movl	92(%rsp), %eax
-	movl	%eax, 204(%rsp)
-	jne	.L741
+	jbe	.L576
+.L583:
+	movq	136(%rsp), %rax
+	cmpq	%rsi, 112(%rsp)
+	movl	%ebx, 224(%rsp)
+	movq	%rax, 232(%rsp)
+	movl	144(%rsp), %eax
+	movl	%eax, 240(%rsp)
+	movl	148(%rsp), %eax
+	movl	%eax, 244(%rsp)
+	jne	.L700
 	movq	%r14, %rdx
 	movq	%rbp, %rdi
-.LEHB30:
+.LEHB28:
 	call	_ZNSt6vectorI9init_taskSaIS0_EE17_M_realloc_insertIJS0_EEEvN9__gnu_cxx17__normal_iteratorIPS0_S2_EEDpOT_
-.LEHE30:
+.LEHE28:
 	addl	$1, %ebx
-	cmpl	%ebx, 80(%rsp)
+	cmpl	%ebx, 128(%rsp)
 	movq	104(%rsp), %rsi
-	ja	.L624
+	ja	.L583
 	.p2align 4,,10
 	.p2align 3
-.L617:
+.L576:
 	movq	96(%rsp), %rax
-	movq	%rsi, 128(%rsp)
-	leaq	45(%rsp), %rdx
-	leaq	56(%rsp), %rsi
-	leaq	128(%rsp), %rdi
-	movq	%r14, 56(%rsp)
-	movq	$1, 144(%rsp)
-	movq	%rax, 136(%rsp)
-.LEHB31:
+	movq	%rsi, 160(%rsp)
+	leaq	61(%rsp), %rdx
+	leaq	72(%rsp), %rsi
+	leaq	160(%rsp), %rdi
+	movq	%r14, 72(%rsp)
+	movq	$1, 176(%rsp)
+	movq	%rax, 168(%rsp)
+.LEHB29:
 	call	_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP9init_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_
-.LEHE31:
+.LEHE29:
 	movl	$134217728, %edi
 	call	malloc@PLT
 	movl	$134217728, %edi
@@ -4300,256 +3974,269 @@ main:
 	call	malloc@PLT
 	testq	%rbp, %rbp
 	movq	%rax, %rbx
-	je	.L694
+	je	.L653
 	testq	%rax, %rax
-	je	.L694
+	je	.L653
 	movq	%rbp, %rdi
 	call	free@PLT
 	movq	%rbx, %rdi
 	call	free@PLT
-	movl	80(%rsp), %edx
+	movl	128(%rsp), %edx
 	testl	%edx, %edx
-	je	.L674
+	je	.L633
 	xorl	%r12d, %r12d
 	xorl	%ebx, %ebx
 	xorl	%r13d, %r13d
 	xorl	%ebp, %ebp
-	jmp	.L641
+	jmp	.L600
 	.p2align 4,,10
 	.p2align 3
-.L742:
-	addq	$1, %rbx
+.L701:
 	addl	$1, %ebp
-	cmpl	%ebp, 80(%rsp)
-	jbe	.L631
-.L641:
+	addq	$1, %rbx
+	cmpl	%edx, %ebp
+	jnb	.L590
+.L600:
 	cmpq	%r12, %rbx
-	jne	.L742
+	jne	.L701
 	subq	%r13, %rbx
 	cmpq	$-1, %rbx
-	je	.L743
+	je	.L702
 	testq	%rbx, %rbx
 	movl	$1, %r15d
-	je	.L636
+	je	.L595
 	leaq	(%rbx,%rbx), %r15
 	movq	$-1, %rax
 	cmpq	%r15, %rbx
 	cmova	%rax, %r15
-.L636:
+.L595:
 	movq	%r15, %rdi
-.LEHB32:
+.LEHB30:
 	call	_Znwm@PLT
-.LEHE32:
+.LEHE30:
 	cmpq	%r13, %r12
-	je	.L744
+	je	.L703
 	subq	%r13, %r12
 	leaq	(%rax,%r12), %rbx
-.L639:
+.L598:
 	addq	$1, %rbx
 	testq	%r13, %r13
-	je	.L640
+	je	.L599
 	movq	%r13, %rdi
 	movq	%rax, (%rsp)
 	call	_ZdlPv@PLT
 	movq	(%rsp), %rax
-.L640:
+.L599:
+	movl	128(%rsp), %edx
 	addl	$1, %ebp
-	cmpl	%ebp, 80(%rsp)
 	leaq	(%rax,%r15), %r12
 	movq	%rax, %r13
-	ja	.L641
+	cmpl	%edx, %ebp
+	jb	.L600
 	.p2align 4,,10
 	.p2align 3
-.L631:
-	leaq	.LC18(%rip), %rsi
+.L590:
+	leaq	.LC16(%rip), %rsi
 	leaq	_ZSt4cout(%rip), %rdi
 	movl	$39, %edx
-.LEHB33:
+.LEHB31:
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-.LEHE33:
+.LEHE31:
 	leaq	_ZSt4cout(%rip), %rdi
-.LEHB34:
+.LEHB32:
 	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-.LEHE34:
-	leaq	.LC19(%rip), %rsi
+.LEHE32:
+	leaq	.LC17(%rip), %rsi
 	movl	$44, %edx
 	movq	%rax, %rdi
 	movq	%rax, %rbp
-.LEHB35:
+.LEHB33:
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-.LEHE35:
+.LEHE33:
 	movq	%rbp, %rdi
-.LEHB36:
+.LEHB34:
 	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-.LEHE36:
+.LEHE34:
+	movq	%rbx, (%rsp)
 	movq	%r14, %rsi
 	xorl	%edi, %edi
+	movq	(%rsp), %xmm0
+	movq	%r13, (%rsp)
+	movhps	(%rsp), %xmm0
+	movaps	%xmm0, (%rsp)
 	call	clock_gettime@PLT
-	imulq	$1000000000, 192(%rsp), %rbp
-	leaq	160(%rsp), %rax
-	leaq	46(%rsp), %rdx
-	leaq	64(%rsp), %rsi
-	movq	%r14, 64(%rsp)
-	movq	%rbx, 160(%rsp)
+	leaq	192(%rsp), %rax
+	leaq	62(%rsp), %rdx
+	leaq	80(%rsp), %rsi
+	imulq	$1000000000, 224(%rsp), %rbx
+	movdqa	(%rsp), %xmm0
 	movq	%rax, %rdi
-	movq	%r13, 168(%rsp)
-	movq	$1, 176(%rsp)
-	addq	200(%rsp), %rbp
-	movq	%rax, 8(%rsp)
-.LEHB37:
+	movq	%r14, 80(%rsp)
+	movq	$1, 208(%rsp)
+	movaps	%xmm0, 192(%rsp)
+	addq	232(%rsp), %rbx
+	movq	%rax, 24(%rsp)
+.LEHB35:
 	call	_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP11access_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_
-.LEHE37:
+.LEHE35:
 	xorl	%edi, %edi
 	movq	%r14, %rsi
 	call	clock_gettime@PLT
-	imulq	$1000000000, 192(%rsp), %rax
+	imulq	$1000000000, 224(%rsp), %rax
 	pxor	%xmm0, %xmm0
-	addq	200(%rsp), %rax
-	subq	%rbp, %rax
+	movl	128(%rsp), %edx
+	addq	232(%rsp), %rax
+	subq	%rbx, %rax
+	testl	%edx, %edx
 	cvtsi2sdq	%rax, %xmm0
-	movl	80(%rsp), %eax
-	testl	%eax, %eax
-	mulsd	.LC20(%rip), %xmm0
+	mulsd	.LC18(%rip), %xmm0
 	movsd	%xmm0, (%rsp)
-	je	.L677
+	je	.L636
 	xorl	%r15d, %r15d
 	xorl	%ebx, %ebx
 	xorl	%r12d, %r12d
 	xorl	%ebp, %ebp
-	jmp	.L659
+	jmp	.L618
 	.p2align 4,,10
 	.p2align 3
-.L745:
-	addq	$1, %rbx
+.L704:
 	addl	$1, %ebp
-	cmpl	%ebp, 80(%rsp)
-	jbe	.L652
-.L659:
+	addq	$1, %rbx
+	cmpl	%edx, %ebp
+	jnb	.L611
+.L618:
 	cmpq	%rbx, %r15
-	jne	.L745
+	jne	.L704
 	movq	%r15, %rax
 	subq	%r12, %rax
 	cmpq	$-1, %rax
-	je	.L746
+	je	.L705
 	testq	%rax, %rax
 	movl	$1, %r15d
-	je	.L656
+	je	.L615
 	leaq	(%rax,%rax), %r15
 	cmpq	%r15, %rax
 	movq	$-1, %rax
 	cmova	%rax, %r15
-.L656:
+.L615:
 	movq	%r15, %rdi
-.LEHB38:
+.LEHB36:
 	call	_Znwm@PLT
 	cmpq	%rbx, %r12
-	je	.L679
+	je	.L638
 	subq	%r12, %rbx
 	addq	%rax, %rbx
-.L657:
+.L616:
 	addq	$1, %rbx
 	testq	%r12, %r12
-	je	.L658
+	je	.L617
 	movq	%r12, %rdi
-	movq	%rax, 24(%rsp)
+	movq	%rax, 40(%rsp)
 	call	_ZdlPv@PLT
-	movq	24(%rsp), %rax
-.L658:
-	addq	%rax, %r15
+	movq	40(%rsp), %rax
+.L617:
+	movl	128(%rsp), %edx
 	addl	$1, %ebp
-	cmpl	%ebp, 80(%rsp)
+	addq	%rax, %r15
 	movq	%rax, %r12
-	ja	.L659
+	cmpl	%edx, %ebp
+	jb	.L618
 	.p2align 4,,10
 	.p2align 3
-.L652:
-	movq	8(%rsp), %rax
-	leaq	47(%rsp), %rdx
-	leaq	72(%rsp), %rsi
+.L611:
+	movq	24(%rsp), %rax
+	movq	%rbx, 24(%rsp)
+	leaq	63(%rsp), %rdx
+	movq	24(%rsp), %xmm0
+	movq	%r12, 24(%rsp)
+	movhps	24(%rsp), %xmm0
+	leaq	88(%rsp), %rsi
 	movq	%r14, %rdi
-	movq	%rbx, 192(%rsp)
-	movq	%r12, 200(%rsp)
-	movq	$1, 208(%rsp)
-	movq	%rax, 72(%rsp)
+	movq	%rax, 88(%rsp)
+	movq	$1, 240(%rsp)
+	movaps	%xmm0, 224(%rsp)
 	call	_ZN3tbb10interface98internal9start_forINS_13blocked_rangeIN9__gnu_cxx17__normal_iteratorIP14tear_down_taskSt6vectorIS6_SaIS6_EEEEEENS_8internal26parallel_for_each_body_forI7invokerIS6_ESB_EEKNS_16auto_partitionerEE3runERKSC_RKSH_RSJ_
-	leaq	.LC21(%rip), %rsi
+	leaq	.LC19(%rip), %rsi
 	leaq	_ZSt4cout(%rip), %rdi
 	movl	$16, %edx
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
 	movsd	(%rsp), %xmm0
 	leaq	_ZSt4cout(%rip), %rdi
 	call	_ZNSo9_M_insertIdEERSoT_@PLT
-	leaq	.LC22(%rip), %rsi
+	leaq	.LC20(%rip), %rsi
 	movl	$8, %edx
 	movq	%rax, %rdi
 	movq	%rax, %rbx
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
 	movq	%rbx, %rdi
 	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-	leaq	.LC19(%rip), %rsi
+	leaq	.LC17(%rip), %rsi
 	movl	$44, %edx
 	movq	%rax, %rdi
 	movq	%rax, %rbx
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
 	movq	%rbx, %rdi
 	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-	movl	84(%rsp), %eax
+	movl	144(%rsp), %eax
 	pxor	%xmm0, %xmm0
 	pxor	%xmm1, %xmm1
-	leaq	.LC24(%rip), %rsi
+	leaq	.LC25(%rip), %rsi
 	leaq	_ZSt4cout(%rip), %rdi
 	movl	$13, %edx
 	cvtsi2sdq	%rax, %xmm0
-	movl	80(%rsp), %eax
+	movl	128(%rsp), %eax
 	cvtsi2sdq	%rax, %xmm1
 	mulsd	%xmm1, %xmm0
+	mulsd	.LC21(%rip), %xmm0
+	mulsd	.LC22(%rip), %xmm0
 	mulsd	.LC23(%rip), %xmm0
 	divsd	(%rsp), %xmm0
+	mulsd	.LC24(%rip), %xmm0
 	movsd	%xmm0, (%rsp)
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
 	movsd	(%rsp), %xmm0
 	leaq	_ZSt4cout(%rip), %rdi
 	call	_ZNSo9_M_insertIdEERSoT_@PLT
-	leaq	.LC25(%rip), %rsi
+	leaq	.LC26(%rip), %rsi
 	movl	$15, %edx
 	movq	%rax, %rdi
 	movq	%rax, %rbx
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
 	movq	%rbx, %rdi
 	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-	leaq	.LC19(%rip), %rsi
+	leaq	.LC17(%rip), %rsi
 	movl	$44, %edx
 	movq	%rax, %rdi
 	movq	%rax, %rbx
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
 	movq	%rbx, %rdi
 	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-.LEHE38:
-	cmpq	$0, 48(%rsp)
-	je	.L664
-	movq	16(%rsp), %rdi
+.LEHE36:
+	cmpq	$0, 64(%rsp)
+	je	.L623
+	movq	32(%rsp), %rdi
 	call	_ZN3tbb19task_scheduler_init9terminateEv@PLT
-.L664:
+.L623:
 	testq	%r12, %r12
-	je	.L665
+	je	.L624
 	movq	%r12, %rdi
 	call	_ZdlPv@PLT
-.L665:
+.L624:
 	testq	%r13, %r13
-	je	.L666
+	je	.L625
 	movq	%r13, %rdi
 	call	_ZdlPv@PLT
-.L666:
+.L625:
 	movq	96(%rsp), %rdi
 	testq	%rdi, %rdi
-	je	.L667
+	je	.L626
 	call	_ZdlPv@PLT
-.L667:
+.L626:
 	xorl	%eax, %eax
-	movq	216(%rsp), %rcx
+	movq	248(%rsp), %rcx
 	xorq	%fs:40, %rcx
-	jne	.L747
-	addq	$232, %rsp
+	jne	.L706
+	addq	$264, %rsp
 	.cfi_remember_state
 	.cfi_def_cfa_offset 56
 	popq	%rbx
@@ -4565,108 +4252,108 @@ main:
 	popq	%r15
 	.cfi_def_cfa_offset 8
 	ret
-.L677:
+.L636:
 	.cfi_restore_state
 	xorl	%ebx, %ebx
 	xorl	%r12d, %r12d
-	jmp	.L652
-.L674:
+	jmp	.L611
+.L633:
 	xorl	%ebx, %ebx
 	xorl	%r13d, %r13d
-	jmp	.L631
-.L679:
+	jmp	.L590
+.L638:
 	movq	%rax, %rbx
-	jmp	.L657
-.L744:
+	jmp	.L616
+.L703:
 	movq	%rax, %rbx
-	jmp	.L639
-.L746:
-	leaq	.LC17(%rip), %rdi
-.LEHB39:
+	jmp	.L598
+.L705:
+	leaq	.LC15(%rip), %rdi
+.LEHB37:
 	call	_ZSt20__throw_length_errorPKc@PLT
-.LEHE39:
-.L680:
-.L623:
-	cmpq	$0, 48(%rsp)
-	je	.L669
-	movq	16(%rsp), %rdi
+.LEHE37:
+.L639:
+.L582:
+	cmpq	$0, 64(%rsp)
+	je	.L628
+	movq	32(%rsp), %rdi
 	movq	%rax, (%rsp)
 	call	_ZN3tbb19task_scheduler_init9terminateEv@PLT
 	movq	(%rsp), %rax
-.L669:
+.L628:
 	testq	%r12, %r12
 	movq	%rax, %rbx
-	je	.L614
+	je	.L573
 	movq	%r12, %rdi
 	call	_ZdlPv@PLT
-.L614:
+.L573:
 	testq	%r13, %r13
-	je	.L671
+	je	.L630
 	movq	%r13, %rdi
 	call	_ZdlPv@PLT
-.L671:
+.L630:
 	movq	96(%rsp), %rdi
 	testq	%rdi, %rdi
-	je	.L672
+	je	.L631
 	call	_ZdlPv@PLT
-.L672:
+.L631:
 	movq	%rbx, %rdi
-.LEHB40:
+.LEHB38:
 	call	_Unwind_Resume@PLT
-.LEHE40:
-.L694:
-	leaq	.LC16(%rip), %rsi
+.LEHE38:
+.L653:
+	leaq	.LC14(%rip), %rsi
 	leaq	_ZSt4cout(%rip), %rdi
 	movl	$45, %edx
-.LEHB41:
+.LEHB39:
 	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l@PLT
-.LEHE41:
+.LEHE39:
 	leaq	_ZSt4cout(%rip), %rdi
-.LEHB42:
+.LEHB40:
 	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_@PLT
-.LEHE42:
+.LEHE40:
 	orl	$-1, %edi
 	call	exit@PLT
-.L743:
-	leaq	.LC17(%rip), %rdi
-.LEHB43:
+.L702:
+	leaq	.LC15(%rip), %rdi
+.LEHB41:
 	call	_ZSt20__throw_length_errorPKc@PLT
-.LEHE43:
-.L692:
-.L738:
+.LEHE41:
+.L651:
+.L697:
 	xorl	%r12d, %r12d
-	jmp	.L623
-.L747:
+	jmp	.L582
+.L706:
 	call	__stack_chk_fail@PLT
-.L688:
-.L739:
+.L647:
+.L698:
 	xorl	%r12d, %r12d
 	xorl	%r13d, %r13d
-	jmp	.L623
-.L687:
-	jmp	.L739
-.L682:
-	jmp	.L739
-.L691:
-	jmp	.L739
-.L681:
-.L740:
+	jmp	.L582
+.L646:
+	jmp	.L698
+.L641:
+	jmp	.L698
+.L650:
+	jmp	.L698
+.L640:
+.L699:
 	movq	%rax, %rbx
-	jmp	.L671
-.L686:
-	jmp	.L738
-.L685:
-	jmp	.L738
-.L684:
-	jmp	.L738
-.L683:
-	jmp	.L738
-.L689:
-	jmp	.L738
-.L690:
-	jmp	.L738
-.L693:
-	jmp	.L740
+	jmp	.L630
+.L645:
+	jmp	.L697
+.L644:
+	jmp	.L697
+.L643:
+	jmp	.L697
+.L642:
+	jmp	.L697
+.L648:
+	jmp	.L697
+.L649:
+	jmp	.L697
+.L652:
+	jmp	.L699
 	.cfi_endproc
 .LFE5218:
 	.section	.gcc_except_table,"a",@progbits
@@ -4676,69 +4363,69 @@ main:
 	.byte	0x1
 	.uleb128 .LLSDACSE5218-.LLSDACSB5218
 .LLSDACSB5218:
+	.uleb128 .LEHB26-.LFB5218
+	.uleb128 .LEHE26-.LEHB26
+	.uleb128 .L652-.LFB5218
+	.uleb128 0
+	.uleb128 .LEHB27-.LFB5218
+	.uleb128 .LEHE27-.LEHB27
+	.uleb128 .L640-.LFB5218
+	.uleb128 0
 	.uleb128 .LEHB28-.LFB5218
 	.uleb128 .LEHE28-.LEHB28
-	.uleb128 .L693-.LFB5218
+	.uleb128 .L646-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB29-.LFB5218
 	.uleb128 .LEHE29-.LEHB29
-	.uleb128 .L681-.LFB5218
+	.uleb128 .L647-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB30-.LFB5218
 	.uleb128 .LEHE30-.LEHB30
-	.uleb128 .L687-.LFB5218
+	.uleb128 .L648-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB31-.LFB5218
 	.uleb128 .LEHE31-.LEHB31
-	.uleb128 .L688-.LFB5218
+	.uleb128 .L642-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB32-.LFB5218
 	.uleb128 .LEHE32-.LEHB32
-	.uleb128 .L689-.LFB5218
+	.uleb128 .L643-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB33-.LFB5218
 	.uleb128 .LEHE33-.LEHB33
-	.uleb128 .L683-.LFB5218
+	.uleb128 .L644-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB34-.LFB5218
 	.uleb128 .LEHE34-.LEHB34
-	.uleb128 .L684-.LFB5218
+	.uleb128 .L645-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB35-.LFB5218
 	.uleb128 .LEHE35-.LEHB35
-	.uleb128 .L685-.LFB5218
+	.uleb128 .L649-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB36-.LFB5218
 	.uleb128 .LEHE36-.LEHB36
-	.uleb128 .L686-.LFB5218
+	.uleb128 .L639-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB37-.LFB5218
 	.uleb128 .LEHE37-.LEHB37
-	.uleb128 .L690-.LFB5218
+	.uleb128 .L639-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB38-.LFB5218
 	.uleb128 .LEHE38-.LEHB38
-	.uleb128 .L680-.LFB5218
+	.uleb128 0
 	.uleb128 0
 	.uleb128 .LEHB39-.LFB5218
 	.uleb128 .LEHE39-.LEHB39
-	.uleb128 .L680-.LFB5218
+	.uleb128 .L650-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB40-.LFB5218
 	.uleb128 .LEHE40-.LEHB40
-	.uleb128 0
+	.uleb128 .L641-.LFB5218
 	.uleb128 0
 	.uleb128 .LEHB41-.LFB5218
 	.uleb128 .LEHE41-.LEHB41
-	.uleb128 .L691-.LFB5218
-	.uleb128 0
-	.uleb128 .LEHB42-.LFB5218
-	.uleb128 .LEHE42-.LEHB42
-	.uleb128 .L682-.LFB5218
-	.uleb128 0
-	.uleb128 .LEHB43-.LFB5218
-	.uleb128 .LEHE43-.LEHB43
-	.uleb128 .L692-.LFB5218
+	.uleb128 .L651-.LFB5218
 	.uleb128 0
 .LLSDACSE5218:
 	.section	.text.startup
@@ -4765,11 +4452,11 @@ _GLOBAL__sub_I_cpus_num:
 	movq	%rax, local_thread_vars(%rip)
 	call	_ZN3tbb8internal23allocate_via_handler_v3Em@PLT
 	testq	%rax, %rax
-	je	.L749
+	je	.L708
 	leaq	16+_ZTVN3tbb10interface68internal13callback_leafI17thread_local_varsNS1_17construct_by_argsIS3_JjEEEEE(%rip), %rcx
 	movl	$-1, 8(%rax)
 	movq	%rcx, (%rax)
-.L749:
+.L708:
 	movq	%rax, 24+local_thread_vars(%rip)
 	leaq	72+local_thread_vars(%rip), %rax
 	movq	$0, 72+local_thread_vars(%rip)
@@ -5084,49 +4771,49 @@ cpus_num:
 	.comm	_ZStL8__ioinit,1,1
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8
-.LC2:
-	.long	0
-	.long	1093567616
-	.align 8
-.LC3:
-	.long	0
-	.long	1083179008
-	.align 8
-.LC6:
-	.long	0
-	.long	0
-	.align 8
-.LC7:
+.LC8:
 	.long	0
 	.long	1106247680
 	.align 8
-.LC8:
+.LC9:
 	.long	0
 	.long	1005584384
 	.align 8
-.LC9:
+.LC10:
 	.long	0
 	.long	1072693248
 	.align 8
-.LC13:
+.LC11:
 	.long	0
 	.long	-1073741824
 	.align 8
-.LC14:
+.LC12:
 	.long	0
 	.long	1077870592
 	.align 8
-.LC15:
+.LC13:
 	.long	0
 	.long	1082126336
 	.align 8
-.LC20:
+.LC18:
 	.long	3894859413
 	.long	1041313291
 	.align 8
+.LC21:
+	.long	0
+	.long	1051721728
+	.align 8
+.LC22:
+	.long	0
+	.long	1078984704
+	.align 8
 .LC23:
 	.long	0
-	.long	1041235968
+	.long	1082130432
+	.align 8
+.LC24:
+	.long	0
+	.long	1062207488
 	.hidden	DW.ref.__gxx_personality_v0
 	.weak	DW.ref.__gxx_personality_v0
 	.section	.data.rel.local.DW.ref.__gxx_personality_v0,"awG",@progbits,DW.ref.__gxx_personality_v0,comdat
