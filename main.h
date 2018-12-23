@@ -22,6 +22,7 @@ struct thread_local_vars {
 	void *buffer;
 	void *dst_buffer;
 	uint64_t *access_offsets;
+	uint64_t sum;
 
 	thread_local_vars(uint32_t _core_id)
 	: core_id(_core_id),

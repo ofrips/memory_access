@@ -202,7 +202,7 @@ struct access_task {
 	access_task() { }
 
 	void operator()() {
-		volatile char *buffer;
+		char *buffer;
 		uint64_t sum = 0;
 		uint64_t *offsets;
 		uint32_t i;
@@ -217,8 +217,10 @@ struct access_task {
 		// access the memory
 		for (j = 0; j < TEST_RUNS_NUM; ++j) {
 			for (i = 0; i < access_num; ++i)
-				sum = sum + *(volatile uint64_t *)(buffer + offsets[i]);
+				sum = sum + *(uint64_t *)(buffer + offsets[i]);
 		}
+
+		my_vars.sum = sum; // so memory reads won't compile out with -O3 flag
 	}
 };
 
