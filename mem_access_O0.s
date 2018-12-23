@@ -2827,7 +2827,7 @@ _ZN11access_taskclEv:
 	cmpl	$72, -40(%rbp)
 	ja	.L167
 	movl	$0, -44(%rbp)
-.L169:
+.L169: # inner loop
 	movl	-44(%rbp), %eax
 	cmpl	-36(%rbp), %eax
 	jnb	.L168
@@ -2836,7 +2836,7 @@ _ZN11access_taskclEv:
 	movq	-8(%rbp), %rax
 	addq	%rdx, %rax
 	movq	(%rax), %rdx		# heap - read offset
-	movq	-16(%rbp), %rax		#%rax = buffer
+	movq	-16(%rbp), %rax		# %rax = buffer
 	addq	%rdx, %rax		# buffer + offset
 	movq	(%rax), %rax		# heap - read from buffer
 	addq	%rax, -32(%rbp)		# sum +=
