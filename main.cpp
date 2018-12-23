@@ -56,6 +56,8 @@ static void access_offsets_generate(uint64_t *access_offsets,
 {
 	uint32_t access_num_per_buffer = thread_buffer_size / CACHE_LINE_SIZE;
 	uint32_t i;
+	// real sequential access pattern variables
+	uint32_t real_access_num_per_buffer = thread_buffer_size / sizeof(uint64_t);
 	// random skewed access pattern variables
 	uint32_t access_num_per_bin = access_num_per_buffer / SKEWED_BIN_NUM;
 	uint32_t bytes_per_bin = thread_buffer_size / SKEWED_BIN_NUM;
@@ -67,6 +69,11 @@ static void access_offsets_generate(uint64_t *access_offsets,
 	case MEMORY_ACCESS_TYPE_SEQUENTIAL:
 		for (i = 0; i < access_num; ++i)
 			access_offsets[i] = (i % access_num_per_buffer) * CACHE_LINE_SIZE;
+
+		break;
+	case MEMORY_ACCESS_TYPE_REAL_SEQUENTIAL:
+		for (i = 0; i < access_num; ++i)
+			access_offsets[i] = (i % real_access_num_per_buffer) * sizeof(uint64_t);
 
 		break;
 	case MEMORY_ACCESS_TYPE_RANDOM:
@@ -293,6 +300,10 @@ int main(int argc, char **argv)
 
 	bw_GiBPS = ((double)params.access_num * params.threads_num / (1024 * 1024)) *
 		   CACHE_LINE_SIZE * TEST_RUNS_NUM / elapsed_time / 1024;
+
+	if (params.access_type == MEMORY_ACCESS_TYPE_REAL_SEQUENTIAL) {
+		bw_GiBPS /= (CACHE_LINE_SIZE / sizeof(uint64_t));
+	}
 
 
 	cout << "# Bandwidth: " << bw_GiBPS << " GiB per second" << endl <<
