@@ -101,8 +101,10 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 				}
 			}
 
-			if (i == MEMORY_ACCESS_TYPE_NUM)
+			if (i == MEMORY_ACCESS_TYPE_NUM) {
 				cout << "Error: invalid access type!" << endl;
+				exit(-1);
+			}
 
 			SET_ARGS_MASK(args_mask);
 
