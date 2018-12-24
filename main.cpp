@@ -154,14 +154,8 @@ struct init_task {
 			cout << "Failure in allocating huge buffer, aborting" << endl;
 			exit(-1);
 		}
-		my_vars.dst_buffer = aligned_alloc(PAGE_SIZE, my_vars.buffer_size);
-		if (!my_vars.dst_buffer) {
-			cout << "Failure in allocating dst huge buffer, aborting" << endl;
-			exit(-1);
-		}
 
 		memset(my_vars.buffer, 0xCC, my_vars.buffer_size);
-		memset(my_vars.dst_buffer, 0x33, my_vars.buffer_size);
 
 		// generate access offsets according to access pattern
 		my_vars.access_offsets = (uint64_t *)aligned_alloc(PAGE_SIZE,
