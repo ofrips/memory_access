@@ -301,11 +301,7 @@ int main(int argc, char **argv)
 		"********************************************" << endl;
 
 	bw_GiBPS = ((double)params.access_num * params.threads_num / (1024 * 1024)) *
-		   CACHE_LINE_SIZE * TEST_RUNS_NUM / elapsed_time / 1024;
-
-	if (params.access_type == MEMORY_ACCESS_TYPE_REAL_SEQUENTIAL) {
-		bw_GiBPS /= (CACHE_LINE_SIZE / sizeof(uint64_t));
-	}
+			sizeof(uint64_t) * TEST_RUNS_NUM / elapsed_time / 1024;
 
 
 	cout << "# Bandwidth: " << bw_GiBPS << " GiB per second" << endl <<
