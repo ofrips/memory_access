@@ -16,7 +16,7 @@
 #include "tbb/task_scheduler_init.h"
 #include "tbb/tick_count.h"
 
-#define TEST_RUNS_NUM		(512)
+#define TEST_RUNS_NUM		(16)
 #define CACHE_LINE_SIZE		(64)
 #define PAGE_SIZE		(4 * 1024)
 #define DUMMY_BUFFER_SIZE	(128 * 1024 * 1024) /* 128MiB */
@@ -48,7 +48,7 @@ static inline uint32_t rand_skewed_bin_get(std::mt19937 *generator)
 	return (uint32_t)std::round(distribution(*generator)) % SKEWED_BIN_NUM;
 }
 
-static void access_offsets_generate(uint64_t *access_offsets,
+static void access_offsets_generate(uint32_t *access_offsets,
 				    uint64_t thread_buffer_size,
 				    uint32_t access_num,
 				    std::mt19937 *generator,
@@ -68,18 +68,20 @@ static void access_offsets_generate(uint64_t *access_offsets,
 	switch (access_type) {
 	case MEMORY_ACCESS_TYPE_SEQUENTIAL:
 		for (i = 0; i < access_num; ++i)
-			access_offsets[i] = (i % access_num_per_buffer) * CACHE_LINE_SIZE;
+			access_offsets[i] = (i % access_num_per_buffer) * CACHE_LINE_SIZE /
+			sizeof(uint64_t); /* offsets kept in uint64_t index */
 
 		break;
 	case MEMORY_ACCESS_TYPE_REAL_SEQUENTIAL:
 		for (i = 0; i < access_num; ++i)
-			access_offsets[i] = (i % real_access_num_per_buffer) * sizeof(uint64_t);
+			access_offsets[i] = (i % real_access_num_per_buffer);
 
 		break;
 	case MEMORY_ACCESS_TYPE_RANDOM:
 		for (i = 0; i < access_num; ++i) {
 			access_offsets[i] = (rand_uint32_get(generator) % access_num_per_buffer) *
-					    CACHE_LINE_SIZE;
+					    CACHE_LINE_SIZE /
+					    sizeof(uint64_t); /* offsets kept in uint64_t index */
 		}
 
 		break;
@@ -88,7 +90,8 @@ static void access_offsets_generate(uint64_t *access_offsets,
 			// first advance offset to the right bin, then use pseudo random to
 			// chose cache line in the bin
 			access_offsets[i] = rand_skewed_bin_get(generator) * bytes_per_bin +
-					    (access_num % access_num_per_bin) * CACHE_LINE_SIZE;
+					    (access_num % access_num_per_bin) * CACHE_LINE_SIZE /
+					    sizeof(uint64_t); /* offsets kept in uint64_t index */
 		}
 
 		break;
@@ -101,8 +104,10 @@ static void access_offsets_generate(uint64_t *access_offsets,
 			access_offsets[i] = rand_skewed_bin_get(generator) * bytes_per_bin +
 					    (access_num % access_num_per_bin) * CACHE_LINE_SIZE;
 
-			access_offsets[i] = (access_offsets[i] + (i / access_num_per_tenth_buffer) *
-					     bytes_per_tenth_buffer) % thread_buffer_size;
+			access_offsets[i] = (access_offsets[i] +
+					    ((i / access_num_per_tenth_buffer) *
+					    bytes_per_tenth_buffer) % thread_buffer_size) /
+					    sizeof(uint64_t); /* offsets kept in uint64_t index */
 		}
 
 		break;
@@ -158,7 +163,7 @@ struct init_task {
 		memset(my_vars.buffer, 0xCC, my_vars.buffer_size);
 
 		// generate access offsets according to access pattern
-		my_vars.access_offsets = (uint64_t *)aligned_alloc(PAGE_SIZE,
+		my_vars.access_offsets = (uint32_t *)aligned_alloc(PAGE_SIZE,
 								   access_num *
 								   sizeof(*my_vars.access_offsets));
 		if (!my_vars.access_offsets) {
@@ -198,7 +203,7 @@ struct access_task {
 	void operator()() {
 		char *buffer;
 		uint64_t sum = 0;
-		uint64_t *offsets;
+		uint32_t *offsets;
 		uint32_t i;
 		uint32_t j;
 		uint32_t access_num;
@@ -210,8 +215,10 @@ struct access_task {
 
 		// access the memory
 		for (j = 0; j < TEST_RUNS_NUM; ++j) {
-			for (i = 0; i < access_num; ++i)
-				sum = sum + *(uint64_t *)(buffer + offsets[i]);
+			for (i = 0; i < access_num; ++i) {
+				/* multiply offset by 8, assuming it's equal to sizeof(uint64_t) */
+				sum = sum + *(uint64_t *)(buffer + (offsets[i] << 3));
+			}
 		}
 
 		my_vars.sum = sum; // so memory reads won't compile out with -O3 flag
