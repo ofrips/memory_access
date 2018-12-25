@@ -6,6 +6,7 @@ struct cmd_params {
 	uint64_t thread_buffer_size;
 	uint32_t access_num;
 	enum memory_access_type access_type;
+	bool create_memory_trace;
 };
 
 void parse_cmd(int argc, char **argv, struct cmd_params *params);

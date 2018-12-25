@@ -34,13 +34,14 @@ static struct option long_options[] = {
 	{"buffer-size",	required_argument, 0, 'b'},
 	{"access-num",	required_argument, 0, 'c'},
 	{"access-type",	required_argument, 0, 'd'},
+	{"mem-trace",	optional_argument, 0, 'e'},
 };
 
 void parse_cmd(int argc, char **argv, struct cmd_params *params)
 {
 	extern uint32_t cpus_num;
-	const uint32_t expected_args_num = 4;
-	uint32_t args_mask = 0;
+	const uint32_t required_args_num = 4;
+	uint32_t required_args_mask = 0;
 	double buffer_pretty_size;
 	double access_pretty_num;
 	std::string buffer_pretty_size_units;
@@ -49,12 +50,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	int opt;
 	int i;
 
-	if (argc != expected_args_num + 1) {
-		cout << "Error: invalid number of arguments!" << endl;
-		goto parse_err;
-	}
-
-	while ((opt = getopt_long(argc, argv, "a:b:c:d:", long_options, &long_index)) != -1) {
+	while ((opt = getopt_long(argc, argv, "a:b:c:d:e", long_options, &long_index)) != -1) {
 		switch (opt) {
 		case 'a':
 			params->threads_num = atoi(optarg);
@@ -64,7 +60,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 				exit(-1);
 			}
 
-			SET_ARGS_MASK(args_mask);
+			SET_ARGS_MASK(required_args_mask);
 
 			break;
 		case 'b':
@@ -76,7 +72,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 				exit(-1);
 			}
 
-			SET_ARGS_MASK(args_mask);
+			SET_ARGS_MASK(required_args_mask);
 
 			break;
 		case 'c':
@@ -88,7 +84,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 				exit(-1);
 			}
 
-			SET_ARGS_MASK(args_mask);
+			SET_ARGS_MASK(required_args_mask);
 
 			break;
 		case 'd':
@@ -106,15 +102,18 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 				exit(-1);
 			}
 
-			SET_ARGS_MASK(args_mask);
+			SET_ARGS_MASK(required_args_mask);
 
+			break;
+		case 'e':
+			params->create_memory_trace = true;
 			break;
 		default:
 			goto parse_err;
 		}
 	}
 
-	if (args_mask != ((1 << expected_args_num) - 1))
+	if (required_args_mask != ((1 << required_args_num) - 1))
 		goto parse_err;
 
 	if (params->thread_buffer_size >> 30) {

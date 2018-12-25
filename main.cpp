@@ -1,6 +1,7 @@
 #include <iostream>
 #include <pthread.h>
 #include <random>
+#include <sstream>
 #include <string.h>
 #include <vector>
 
@@ -182,6 +183,32 @@ struct init_task {
 
 /**************************************************************************************************/
 
+// dump memory trace task
+struct memory_trace_task {
+	memory_trace_task() { }
+
+	void operator()() {
+		FILE *dump_file;
+		std::ostringstream dump_file_name;
+		thread_vars::reference my_vars = local_thread_vars.local();
+
+		dump_file_name << "thread_" << my_vars.core_id << "_memory_trace.dmp";
+		dump_file = fopen(dump_file_name.str().c_str(), "w");
+		if (!dump_file) {
+			cout << "Failure in creating dump file, aborting" << endl;
+			exit(-1);
+		}
+
+		fwrite(my_vars.access_offsets,
+		       sizeof(*my_vars.access_offsets),
+		       my_vars.access_num,
+		       dump_file);
+		fclose(dump_file);
+	}
+};
+
+/**************************************************************************************************/
+
 // buffer free task
 struct tear_down_task {
 	tear_down_task() { }
@@ -255,6 +282,7 @@ int main(int argc, char **argv)
 	std::vector<init_task>		init_tasks;
 	std::vector<access_task>	access_tasks;
 	std::vector<tear_down_task>	free_tasks;
+	std::vector<memory_trace_task>	memory_trace_tasks;
 	struct cmd_params params;
 	tbb::tick_count start_time;
 	double elapsed_time;
@@ -292,6 +320,16 @@ int main(int argc, char **argv)
 	tbb::parallel_for_each(access_tasks.begin(), access_tasks.end(), invoker<access_task>());
 
 	elapsed_time = (tbb::tick_count::now() - start_time).seconds();
+
+	// dump memory trace to file
+	if (params.create_memory_trace) {
+		for (i = 0; i < params.threads_num; ++i)
+			memory_trace_tasks.push_back(memory_trace_task());
+
+		tbb::parallel_for_each(memory_trace_tasks.begin(),
+				       memory_trace_tasks.end(),
+				       invoker<memory_trace_task>());
+	}
 
 	// generate and execute buffer free tasks
 	for (i = 0; i < params.threads_num; ++i)
