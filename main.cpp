@@ -258,25 +258,6 @@ template <typename T> struct invoker {
 	void operator()(T& it) const {it();}
 };
 
-static void cache_clear()
-{
-	void *dummy_buffer_1;
-	void *dummy_buffer_2;
-
-	dummy_buffer_1 = malloc(DUMMY_BUFFER_SIZE);
-	dummy_buffer_2 = malloc(DUMMY_BUFFER_SIZE);
-	if (!dummy_buffer_1 || !dummy_buffer_2) {
-		cout << "Failure in allocating dummy buffers, aborting" << endl;
-		exit(-1);
-	}
-
-	memset(dummy_buffer_1, 0xAB, DUMMY_BUFFER_SIZE);
-	memcpy(dummy_buffer_2, dummy_buffer_1, DUMMY_BUFFER_SIZE);
-
-	free(dummy_buffer_1);
-	free(dummy_buffer_2);
-}
-
 int main(int argc, char **argv)
 {
 	std::vector<init_task>		init_tasks;
@@ -303,9 +284,6 @@ int main(int argc, char **argv)
 					       params.access_num,
 					       params.access_type));
 	tbb::parallel_for_each(init_tasks.begin(), init_tasks.end(), invoker<init_task>());
-
-	// make sure buffers are not in the cache, read and write to some dummy buffers
-	cache_clear();
 
 	// generate tasks, single task for each thread
 	for (i = 0; i < params.threads_num; ++i)
