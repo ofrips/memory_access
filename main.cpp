@@ -191,6 +191,10 @@ struct memory_trace_task {
 		FILE *dump_file;
 		std::ostringstream dump_file_name;
 		thread_vars::reference my_vars = local_thread_vars.local();
+		char *buffer = (char *)(my_vars.buffer);
+		uint32_t *offsets = my_vars.access_offsets;
+		uint32_t i;
+		uint64_t data;
 
 		dump_file_name << "thread_" << my_vars.core_id << "_memory_trace.dmp";
 		dump_file = fopen(dump_file_name.str().c_str(), "w");
@@ -199,10 +203,11 @@ struct memory_trace_task {
 			exit(-1);
 		}
 
-		fwrite(my_vars.access_offsets,
-		       sizeof(*my_vars.access_offsets),
-		       my_vars.access_num,
-		       dump_file);
+		for (i = 0; i < my_vars.access_num; ++i) {
+			data = (uint64_t)(buffer + (offsets[i] << 3));
+			fwrite(&data, sizeof(data), 1, dump_file);
+		}
+
 		fclose(dump_file);
 	}
 };
