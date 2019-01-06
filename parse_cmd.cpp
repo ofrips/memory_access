@@ -25,7 +25,9 @@ static void print_usage(char *program_name)
 		"  --threads-num=<threads_num>" << endl <<
 		"  --buffer_size=<buffer_size_per_thread_in_MiB>" << endl <<
 		"  --access-num=<access_num_in_millions>" << endl <<
-		"  --access-type=<sequential/real_sequential/random/random_skewed/moving_random_skewed>" <<
+		"  --access-type=<sequential/real_sequential/random/"
+		"random_skewed/moving_random_skewed>" << endl <<
+		"  [--mem-trace]" <<
 		endl;
 }
 
@@ -34,7 +36,8 @@ static struct option long_options[] = {
 	{"buffer-size",	required_argument, 0, 'b'},
 	{"access-num",	required_argument, 0, 'c'},
 	{"access-type",	required_argument, 0, 'd'},
-	{"mem-trace",	optional_argument, 0, 'e'},
+	{"mem-trace",	no_argument,	   0, 'e'},
+	{"help",	no_argument,       0, 'f'},
 };
 
 void parse_cmd(int argc, char **argv, struct cmd_params *params)
@@ -50,7 +53,7 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 	int opt;
 	int i;
 
-	while ((opt = getopt_long(argc, argv, "a:b:c:d:e", long_options, &long_index)) != -1) {
+	while ((opt = getopt_long(argc, argv, "a:b:c:d:ef", long_options, &long_index)) != -1) {
 		switch (opt) {
 		case 'a':
 			params->threads_num = atoi(optarg);
@@ -108,6 +111,9 @@ void parse_cmd(int argc, char **argv, struct cmd_params *params)
 		case 'e':
 			params->create_memory_trace = true;
 			break;
+		case 'f':
+			print_usage(argv[0]);
+			exit(0);
 		default:
 			goto parse_err;
 		}
